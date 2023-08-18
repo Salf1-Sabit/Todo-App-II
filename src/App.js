@@ -6,7 +6,7 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 // import { useState } from "react";
 import Registration from "./components/Registration";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   // const [wantToSignUp, setWantToSignUp] = useState(true);
