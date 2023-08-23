@@ -8,10 +8,10 @@ function CollapsibleExample() {
   return (
     <Navbar collapseOnSelect expand="md" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="#home">Todo Hive</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
+            <Navbar.Brand href="/">Todo Hive</Navbar.Brand>
             <Link to="/" className="nav-link active">
               Home
             </Link>
