@@ -16,13 +16,15 @@ function CollapsibleExample() {
               Home
             </Link>
             <Nav.Link href="#features">Tasks</Nav.Link>
-            <Nav.Link href="#pricing">Calendar</Nav.Link>
             <Nav.Link href="#pricing">Settings</Nav.Link>
             <Link to="/register " className="nav-link active">
               Register
             </Link>
             <Link to="/login" className="nav-link active">
               Login
+            </Link>
+            <Link to="/admin" className="nav-link active">
+              Admin
             </Link>
           </Nav>
           <Nav>

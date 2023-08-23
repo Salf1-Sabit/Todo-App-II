@@ -1,43 +1,49 @@
 import React, { useState } from "react";
-import axios from "axios";
 
 import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const Registration = (props) => {
-  const history = useNavigate();
+  const navigate = useNavigate();
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
   });
+
   const { firstName, lastName, email, password } = data;
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const url =
+      "http://localhost/php-react/register-login-php-simple/insert.php";
+
     const sendData = {
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
       password: data.password,
     };
-    // setUser({ firstName: "", lastName: "", email: "", password: "" });
-    axios
-      .post(
-        "http://localhost/php-react/register-login-php-simple/insert.php",
-        sendData
-      )
-      .then((result) => {
-        if (result.data.Status === "Invalid") {
-          alert("Invalid User");
-        } else {
-          history(`/dashboard`);
-        }
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify(sendData),
+    })
+      .then((res) => {
+        return res.text();
+      })
+      .then((data) => {
+        console.log(data);
+        navigate("/Login");
       });
   };
+
   return (
     <div>
       <div
@@ -76,7 +82,7 @@ const Registration = (props) => {
             <Form.Control
               type="email"
               name="email"
-              placeholder="Enter email"
+              placeholder="example@gmail.com"
               defaultValue={email}
               onChange={handleChange}
             />
@@ -92,12 +98,12 @@ const Registration = (props) => {
               onChange={handleChange}
             />
           </Form.Group>
-          {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-        <Form.Check
-          type="checkbox"
-          label="By signing up you agree to our Terms and conditions and Privacy Policy"
-        />
-      </Form.Group> */}
+          <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            <Form.Check
+              type="checkbox"
+              label="By signing up you agree to our Terms and conditions and Privacy Policy"
+            />
+          </Form.Group>
           <Button className="w-100" variant="primary" type="submit">
             Sign Up
           </Button>

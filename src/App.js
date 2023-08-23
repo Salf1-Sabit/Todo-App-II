@@ -2,14 +2,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // import { Row, Col } from "react-bootstrap";
 
 import Nav from "./components/Nav";
-import Home from "./components/Home";
-import Login from "./components/Login";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
 // import { useState } from "react";
-import Registration from "./components/Registration";
+import Registration from "./pages/Registration";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   // const [wantToSignUp, setWantToSignUp] = useState(true);
+  const getLoginStatus = (loginMessage) => {};
   return (
     <Router>
       <div className="App">
