@@ -1,0 +1,31 @@
+@import url("https://fonts.cdnfonts.com/css/source-sans-pro");
+
+body {
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.sidebar {
+  height: 100vh;
+  width: 256px;
+  background-color: #fafafa;
+  border-right: 1px solid #cccfe0;
+  color: #283132;
+}
+
+.icon-text-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 28px;
+}
+
+.icon {
+  height: 20px;
+  back: #283132;
+}
+
+.brand-name {
+  font-weight: bolder;
+  font-size: 34px;
+  margin: 16px 0 28px 28px;
+}
