@@ -1,6 +1,7 @@
 import React from "react";
 
 import Topbar from "./global/Topbar";
+import Sidebar from "./global/Sidebar";
 
 import { ColorModeContext, useMode } from "../../theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -13,6 +14,7 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
+          <Sidebar />
           <main className="content">
             <Topbar />
           </main>
