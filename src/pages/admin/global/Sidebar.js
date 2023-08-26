@@ -2,24 +2,19 @@ import React from "react";
 
 import "./Sidebar.css";
 
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import { Link } from "react-router-dom";
-
-import Analytics from "../../../assets/Analytics.png";
-import Feedback from "../../../assets/Feedback.png";
-import Home from "../../../assets/Home.png";
-import Information from "../../../assets/Information.png";
-import Logout from "../../../assets/Logout.png";
-import Settings from "../../../assets/Settings.png";
-import Tasks from "../../../assets/Tasks.png";
-import Users from "../../../assets/Users.png";
-
 import SidebarData from "../../../Data/SidebarData";
 
 const Sidebar = () => {
   return (
     <div className="sidebar">
+      <h3
+        className="brand-name"
+        onClick={() => {
+          window.location.pathname = "/";
+        }}
+      >
+        TODO HIVE
+      </h3>
       <div className="sidebarList">
         {SidebarData.map((val, key) => {
           return (

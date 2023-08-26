@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Admin from "./pages/admin/Admin";
-import Sidebar from "./pages/admin/global/Sidebar";
 import Registration from "./pages/Registration";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";

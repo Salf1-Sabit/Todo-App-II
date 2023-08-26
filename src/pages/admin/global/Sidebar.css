@@ -22,6 +22,19 @@ html {
   height: 50px;
   display: grid;
   grid-template-columns: 20% 80%;
+  color: #a6aaac;
+}
+
+.sidebarList .row:hover {
+  color: #283132;
+}
+
+.active {
+  color: #283132;
+}
+
+.sidebarList .row:nth-child(1) {
+  color: #283132;
 }
 
 .row #icon {
@@ -30,4 +43,10 @@ html {
 
 .row #title {
   margin-left: 5px;
+}
+
+.sidebar h3 {
+  padding: 2rem 0 1.5rem 0;
+  margin-left: 25px;
+  font-weight: 800;
 }

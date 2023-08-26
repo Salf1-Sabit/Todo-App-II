@@ -11,7 +11,9 @@ function CollapsibleExample() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Navbar.Brand href="/">Todo Hive</Navbar.Brand>
+            <Navbar.Brand href="/" style={{ fontWeight: 800 }}>
+              TODO HIVE
+            </Navbar.Brand>
             <Link to="/" className="nav-link active">
               Home
             </Link>
