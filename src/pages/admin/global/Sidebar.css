@@ -26,6 +26,7 @@ html {
 }
 
 .sidebarList .row:hover {
+  cursor: pointer;
   color: #283132;
 }
 
