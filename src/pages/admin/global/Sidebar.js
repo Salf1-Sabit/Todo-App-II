@@ -19,105 +19,24 @@ import SidebarData from "../../../Data/SidebarData";
 
 const Sidebar = () => {
   return (
-    <>
-      <div className="sidebar">
-        <ul className="sidebarList">
-          {SidebarData.map((val, key) => {
-            return (
-              <li
-                key={key}
-                className="row"
-                onClick={() => {
-                  window.location.pathname = val.link;
-                }}
-              >
-                <div>{val.icon}</div>
-                <div>{val.title}</div>
-              </li>
-            );
-          })}
-        </ul>
+    <div className="sidebar">
+      <div className="sidebarList">
+        {SidebarData.map((val, key) => {
+          return (
+            <div
+              key={key}
+              className="row"
+              onClick={() => {
+                window.location.pathname = val.link;
+              }}
+            >
+              <div id="icon">{val.icon}</div>
+              <div id="title">{val.title}</div>
+            </div>
+          );
+        })}
       </div>
-
-      {/* <div className="sidebar">
-          <div className="brand-name">
-            <Navbar.Brand to="/">Todo Hive</Navbar.Brand>
-          </div>
-          <div className="navigation-items">
-            <div className="icon-text-container active">
-              <img className="icon" src={Home} />
-              <span>
-                <Link to="/admin/home" className="navigation-texts">
-                  Dashboard
-                </Link>
-              </span>
-            </div>
-
-            <div className="icon-text-container">
-              <img className="icon" src={Users} />
-              <span>
-                <Link to="/admin/users" className="navigation-texts">
-                  Users
-                </Link>
-              </span>
-            </div>
-
-            <div className="icon-text-container">
-              <img className="icon" src={Tasks} />
-              <span>
-                <Link to="/admin/monitor-tasks" className="navigation-texts">
-                  Monitor Tasks
-                </Link>
-              </span>
-            </div>
-
-            <div className="icon-text-container">
-              <img className="icon" src={Analytics} />
-              <span>
-                <Link to="/admin/analytics" className="navigation-texts">
-                  Analytics
-                </Link>
-              </span>
-            </div>
-
-            <div className="icon-text-container">
-              <img className="icon" src={Feedback} />
-              <span>
-                <Link to="/admin/feedback" className="navigation-texts">
-                  Users Feedback
-                </Link>
-              </span>
-            </div>
-
-            <div className="icon-text-container">
-              <img className="icon" src={Information} />
-              <span>
-                <Link to="/admin/support" className="navigation-texts">
-                  Help and Information
-                </Link>
-              </span>
-            </div>
-
-            <div className="icon-text-container">
-              <img className="icon" src={Settings} />
-              <span>
-                <Link to="/admin/settings" className="navigation-texts">
-                  Settings
-                </Link>
-              </span>
-            </div>
-
-            <div className="icon-text-container">
-              <img className="icon" src={Logout} />
-              <span>
-                <Link to="/admin/logout" className="navigation-texts">
-                  Logout
-                </Link>
-              </span>
-            </div>
-          </div>
-        </div> */}
-    </>
+    </div>
   );
 };
 
