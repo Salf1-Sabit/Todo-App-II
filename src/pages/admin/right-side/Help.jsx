@@ -1,20 +1,19 @@
 import React from "react";
-import "./Admin.css";
 
-import Sidebar from "./global/Sidebar";
+import Sidebar from "../global/Sidebar";
 import { Box, Typography } from "@mui/material/";
 
-const Admin = () => {
+const Help = () => {
   return (
     <>
-      <div className="admin-main">
+      <Box sx={{ display: "flex" }}>
         <Sidebar />
         <Box component="main" sx={{ flexGrow: 1, p: 3, marginTop: "55px" }}>
-          <Typography variant="h4">Welcome to Dashboard</Typography>
+          <Typography variant="h4">Welcome to Help and Information</Typography>
         </Box>
-      </div>
+      </Box>
     </>
   );
 };
 
-export default Admin;
+export default Help;
