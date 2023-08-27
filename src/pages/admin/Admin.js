@@ -2,16 +2,16 @@ import React from "react";
 import "./Admin.css";
 
 import Sidebar from "./global/Sidebar";
-import { Router, Route, Routes } from "react-router-dom";
-
-import Dashboard from "../admin/right-side/Dashboard";
+import { Box, Typography } from "@mui/material/";
 
 const Admin = () => {
   return (
     <>
       <div className="admin-main">
         <Sidebar />
-        <div className="content"></div>
+        <Box component="main" sx={{ flexGrow: 1, p: 3, marginTop: "55px" }}>
+          <Typography variant="h4">Welcome to Dashboard</Typography>
+        </Box>
       </div>
     </>
   );
