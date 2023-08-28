@@ -19,8 +19,6 @@ import ListItemText from "@mui/material/ListItemText";
 
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleIcon from "@mui/icons-material/People";
-import TaskIcon from "@mui/icons-material/Task";
-import AnalyticsIcon from "@mui/icons-material/Analytics";
 import FeedbackIcon from "@mui/icons-material/Feedback";
 import HelpIcon from "@mui/icons-material/Help";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -146,7 +144,7 @@ export default function Sidebar() {
         </DrawerHeader>
         <Divider />
         <List>
-          {/* Dashboard  */}
+          {/* Homw  */}
           <ListItem
             disablePadding
             sx={{ display: "block" }}
@@ -168,16 +166,10 @@ export default function Sidebar() {
               >
                 <DashboardIcon />
               </ListItemIcon>
-              <ListItemText
-                primary={"Dashboard"}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
+              <ListItemText primary={"Home"} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
-        </List>
-        <Divider />
-        <List>
-          {/* People  */}
+          {/* Users  */}
           <ListItem
             disablePadding
             sx={{ display: "block" }}
@@ -200,64 +192,6 @@ export default function Sidebar() {
                 <PeopleIcon />
               </ListItemIcon>
               <ListItemText primary={"Users"} sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-
-          {/* Tasks  */}
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => navigate("/admin/monitor-tasks")}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <TaskIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary={"Monitor Tasks"}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-            </ListItemButton>
-          </ListItem>
-
-          {/* Analytics  */}
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => navigate("/admin/analytics")}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <AnalyticsIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary={"Analytics"}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
             </ListItemButton>
           </ListItem>
         </List>
