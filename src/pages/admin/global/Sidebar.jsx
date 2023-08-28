@@ -25,6 +25,7 @@ import FeedbackIcon from "@mui/icons-material/Feedback";
 import HelpIcon from "@mui/icons-material/Help";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -93,9 +94,10 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function MiniDrawer() {
+export default function Sidebar() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
+  const navigate = useNavigate();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -145,7 +147,11 @@ export default function MiniDrawer() {
         <Divider />
         <List>
           {/* Dashboard  */}
-          <ListItem disablePadding sx={{ display: "block" }}>
+          <ListItem
+            disablePadding
+            sx={{ display: "block" }}
+            onClick={() => navigate("/admin")}
+          >
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -172,7 +178,11 @@ export default function MiniDrawer() {
         <Divider />
         <List>
           {/* People  */}
-          <ListItem disablePadding sx={{ display: "block" }}>
+          <ListItem
+            disablePadding
+            sx={{ display: "block" }}
+            onClick={() => navigate("/admin/users")}
+          >
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -194,7 +204,11 @@ export default function MiniDrawer() {
           </ListItem>
 
           {/* Tasks  */}
-          <ListItem disablePadding sx={{ display: "block" }}>
+          <ListItem
+            disablePadding
+            sx={{ display: "block" }}
+            onClick={() => navigate("/admin/monitor-tasks")}
+          >
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -219,7 +233,11 @@ export default function MiniDrawer() {
           </ListItem>
 
           {/* Analytics  */}
-          <ListItem disablePadding sx={{ display: "block" }}>
+          <ListItem
+            disablePadding
+            sx={{ display: "block" }}
+            onClick={() => navigate("/admin/analytics")}
+          >
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -246,7 +264,11 @@ export default function MiniDrawer() {
         <Divider />
         <List>
           {/* Users Feedback  */}
-          <ListItem disablePadding sx={{ display: "block" }}>
+          <ListItem
+            disablePadding
+            sx={{ display: "block" }}
+            onClick={() => navigate("/admin/feedback")}
+          >
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -271,7 +293,11 @@ export default function MiniDrawer() {
           </ListItem>
 
           {/* Help and Information  */}
-          <ListItem disablePadding sx={{ display: "block" }}>
+          <ListItem
+            disablePadding
+            sx={{ display: "block" }}
+            onClick={() => navigate("/admin/help")}
+          >
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -296,7 +322,11 @@ export default function MiniDrawer() {
           </ListItem>
 
           {/* Settings  */}
-          <ListItem disablePadding sx={{ display: "block" }}>
+          <ListItem
+            disablePadding
+            sx={{ display: "block" }}
+            onClick={() => navigate("/admin/settings")}
+          >
             <ListItemButton
               sx={{
                 minHeight: 48,
