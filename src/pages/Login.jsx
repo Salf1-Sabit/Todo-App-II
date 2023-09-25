@@ -1,7 +1,5 @@
 import React from "react";
 
-import Nav from "../components/Nav/Nav";
-
 import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -46,7 +44,6 @@ const Login = () => {
 
   return (
     <div>
-      <Nav />
       <div
         style={{
           width: "30%",

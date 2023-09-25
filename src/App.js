@@ -1,9 +1,12 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // NavBar Navigations
-import Home from "./pages/Home";
+import Home from "./pages/home/Home";
 import Login from "./pages/Login";
 import Admin from "./pages/admin/Admin";
+import Pricing from "./pages/pricing/Pricing";
+import About from "./pages/about/About";
+import Contact from "./pages/contact/Contact";
 import Registration from "./pages/Registration";
 import Users from "./pages/admin/right-side/Users";
 import MonitorTasks from "./pages/admin/right-side/MonitorTasks";
@@ -20,8 +23,11 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/pricing" element={<Pricing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Registration />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/users" element={<Users />} />
           <Route path="/admin/monitor-tasks" element={<MonitorTasks />} />

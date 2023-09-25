@@ -1,0 +1,9 @@
+.primary-button {
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 0.8rem 2rem;
+  background-color: #5762e3;
+  color: white;
+  border: none;
+}

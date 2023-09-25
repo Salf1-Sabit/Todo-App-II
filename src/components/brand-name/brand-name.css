@@ -1,0 +1,23 @@
+:root {
+  --blue: #5762e3;
+}
+
+.brand-name {
+  font-weight: 800;
+  color: black;
+  text-decoration: none;
+  font-size: 2rem;
+}
+
+.brand-name:hover {
+  cursor: pointer;
+}
+
+.brand-name-link {
+  text-decoration: none;
+}
+
+.brand-name-dot {
+  color: var(--blue);
+  font-size: 2rem;
+}
