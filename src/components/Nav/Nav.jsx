@@ -1,41 +1,34 @@
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
+import React from "react";
 
-import { Link } from "react-router-dom";
+import "./nav.css";
+import { Link, NavLink } from "react-router-dom";
+import BrandName from "../brand-name/BrandName";
 
-function CollapsibleExample() {
+function NavBar() {
   return (
-    <Navbar collapseOnSelect expand="md" className="bg-body-tertiary">
-      <Container>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
-            <Navbar.Brand href="/" style={{ fontWeight: 800 }}>
-              TODO HIVE
-            </Navbar.Brand>
-            <Link to="/" className="nav-link active">
-              Home
-            </Link>
-            <Nav.Link href="#tasks">Tasks</Nav.Link>
-            <Nav.Link href="#settings">Settings</Nav.Link>
-            <Link to="/register " className="nav-link active">
-              Register
-            </Link>
-            <Link to="/login" className="nav-link active">
-              Login
-            </Link>
-            <Link to="/admin" className="nav-link active">
-              Admin
-            </Link>
-          </Nav>
-          <Nav>
-            <Nav.Link href="#profile">Profile</Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+    <div className="navbar">
+      <BrandName />
+
+      <div className="nav-items-container">
+        <NavLink to="/" className="nav-item" activeClassName="active-page">
+          Home
+        </NavLink>
+        <NavLink to="/pricing" className="nav-item">
+          Pricing
+        </NavLink>
+        <NavLink to="/about" className="nav-item">
+          About
+        </NavLink>
+        <NavLink to="/contact" className="nav-item">
+          Contact
+        </NavLink>
+      </div>
+
+      <Link to="/login" className="nav-item">
+        <button className="nav-item sign-in-button">Sign In</button>
+      </Link>
+    </div>
   );
 }
 
-export default CollapsibleExample;
+export default NavBar;

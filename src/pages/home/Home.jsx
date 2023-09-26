@@ -4,11 +4,10 @@ import { LocomotiveScrollProvider } from "react-locomotive-scroll";
 import "./Home.css";
 import "../../locomotive-scroll.css";
 
-import Nav from "../../components/nav/Nav";
+import Nav from "../../components/Nav/Nav";
 import PrimaryButton from "../../components/primary-button/PrimaryButton";
 import HeroImage from "../../assets/images/hero-section-img.png";
 
-import FeatureCard from "../../components/features-card/FeaturesCard";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import TaskIcon from "@mui/icons-material/Task";
 import GroupsIcon from "@mui/icons-material/Groups";
@@ -82,9 +81,47 @@ const Home = () => {
 
             <div className="lower-section">
               <div className="card-container">
-                <div className="cards"></div>
-                <div className="cards"></div>
-                <div className="cards"></div>
+                <div className="cards">
+                  <div className="card-headline">
+                    <TaskIcon
+                      className="feature-icon"
+                      sx={{ height: "4rem", width: "4rem", color: "#5762E3" }}
+                    />
+                    <h2 className="card-title">Task management</h2>
+                  </div>
+                  <p className="card-desc">
+                    Easily add, edit, and delete tasks with a user-friendly
+                    interface.
+                  </p>
+                </div>
+
+                <div className="cards">
+                  <div className="card-headline">
+                    <GroupsIcon
+                      className="feature-icon"
+                      sx={{ height: "4rem", width: "4rem", color: "#5762E3" }}
+                    />
+                    <h2 className="card-title">Collaboration</h2>
+                  </div>
+                  <p className="card-desc">
+                    Share tasks and collaborate with others, ideal for team
+                    projects and household chores.
+                  </p>
+                </div>
+
+                <div className="cards">
+                  <div className="card-headline">
+                    <BarChartIcon
+                      className="feature-icon"
+                      sx={{ height: "4rem", width: "4rem", color: "#5762E3" }}
+                    />
+                    <h2 className="card-title">Progress Tracking</h2>
+                  </div>
+                  <p className="card-desc">
+                    Monitor task completion and track your productivity over
+                    time.
+                  </p>
+                </div>
               </div>
             </div>
           </div>

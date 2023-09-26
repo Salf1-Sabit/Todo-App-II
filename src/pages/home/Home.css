@@ -84,7 +84,7 @@
 /* --- FEATURES SECTION STYLE ---  */
 
 .features-section {
-  height: 100vh;
+  height: 80vh;
   background-color: #eeeeee;
 }
 
@@ -127,6 +127,7 @@
 
 .features-section .lower-section {
   height: 50%;
+  padding-top: 2rem;
 }
 
 .features-section .lower-section .card-container {
@@ -142,8 +143,31 @@
 }
 
 .cards {
-  height: 100%;
   width: 30%;
   background-color: #fff;
   border-radius: 10px;
+  border: 1px solid #ced4da;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.card-headline {
+  display: flex;
+  align-items: center;
+}
+
+.feature-icon {
+  width: 30px;
+  height: 30px;
+  color: var(--blue);
+}
+
+.card-title {
+  margin-left: 1rem;
+}
+
+.card-desc {
+  font-size: var(--regular-paragraph-size);
 }
