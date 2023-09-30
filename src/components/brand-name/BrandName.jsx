@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./brand-name.css";
+import "./brandName.css";
 import { Link } from "react-router-dom";
 
 const BrandName = () => {
