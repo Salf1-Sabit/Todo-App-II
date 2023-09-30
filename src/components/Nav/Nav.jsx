@@ -62,7 +62,7 @@ function DrawerAppBar(props) {
               sx={{ textAlign: "center" }}
             >
               <ListItemText
-                sx={{ textTransform: "uppercase" }}
+                sx={{ textTransform: "capitalize" }}
                 primary={item}
               />
             </ListItemButton>
@@ -75,8 +75,8 @@ function DrawerAppBar(props) {
             sx={{ textAlign: "center" }}
           >
             <ListItemText
-              sx={{ color: "primary.main", textTransform: "uppercase" }}
-              primary={"SIGN UP"}
+              sx={{ color: "primary.main", textTransform: "capitalize" }}
+              primary={"Sign up"}
             />
           </ListItemButton>
         </ListItem>
@@ -106,14 +106,15 @@ function DrawerAppBar(props) {
               variant="h4"
               component="div"
               sx={{
-                fontWeight: 800,
-                fontSize: "1.5rem",
+                fontWeight: 900,
+                fontSize: "2rem",
                 flexGrow: 1,
                 display: { xs: "none", sm: "block" },
               }}
             >
               TODO HIVE<span style={{ color: "#5762e3" }}>.</span>
             </Typography>
+
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
               {navItems.map((item) => (
                 <Button
@@ -121,8 +122,9 @@ function DrawerAppBar(props) {
                   component={Link}
                   key={item}
                   sx={{
-                    fontWeight: 500,
-                    fontSize: 16,
+                    textTransform: "capitalize",
+                    fontWeight: 400,
+                    fontSize: 18,
                     fontFamily: "Inter",
                     color: "#000",
                   }}
@@ -140,14 +142,15 @@ function DrawerAppBar(props) {
                 to="/login"
                 component={Link}
                 sx={{
-                  fontWeight: 500,
-                  fontSize: 16,
+                  textTransform: "capitalize",
+                  fontWeight: 400,
+                  fontSize: 18,
                   fontFamily: "Inter",
                   color: "primary.main",
                 }}
                 variant="outlined"
               >
-                SIGN UP
+                Sign Up
               </Button>
             </Box>
           </Toolbar>

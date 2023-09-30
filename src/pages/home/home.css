@@ -21,7 +21,7 @@
 /* ---------------- Page 1 ------------------ */
 
 .hero-section {
-  margin: 1.5em;
+  margin: clamp(1.5em, 6vw, 5em);
 }
 
 .social-proof-1 {
@@ -32,11 +32,19 @@
   width: 100%;
 }
 
+.feature-sub-heading {
+  text-align: center;
+}
+
 .button-social-proof-group {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.card-title {
+  font-size: 1.5rem;
 }
 
 /* ---------------- Page 2 ------------------ */
@@ -102,4 +110,117 @@
   font-size: 1.5rem;
   font-weight: 700;
   margin-top: 2em;
+}
+
+/* ---------------------- Responsive 630px ----------------------  */
+
+@media (min-width: 630px) {
+  .feature-main-heading-1 {
+    margin: 0 max(8rem, 15vw) 1rem max(8rem, 15vw);
+  }
+}
+
+/* ---------------------- Responsive 670px ----------------------  */
+
+@media (min-width: 670px) {
+  .hero-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-section-container {
+    display: flex;
+    gap: 0.5em;
+  }
+
+  .hero-section-container > * {
+    flex-basis: 100%;
+  }
+
+  .main-heading {
+    text-align: left;
+  }
+
+  .sub-heading-line-1 {
+    max-width: 80%;
+  }
+
+  .sub-heading-style {
+    text-align: left;
+  }
+
+  .button-social-proof-group {
+    justify-content: start;
+    align-items: start;
+    flex-direction: column-reverse;
+  }
+
+  .right-side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+/* ---------------------- Responsive 800px ----------------------  */
+
+@media (min-width: 800px) {
+  .card-container {
+    flex-direction: row;
+    margin: 0 6vw;
+  }
+  .card-container > * {
+    flex-basis: 100%;
+  }
+  p {
+    font-size: 1.2rem;
+  }
+  .features-section {
+    padding: 2.5rem;
+  }
+  .lower-call-to-action > h2 {
+    margin: 0 max(10rem, 16vw) 1rem max(10rem, 15vw);
+  }
+}
+
+/* ---------------------- Responsive 1050px ----------------------  */
+
+@media (min-width: 1050px) {
+  .left-side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .button-social-proof-group {
+    align-items: center;
+    flex-direction: row;
+    gap: 1rem;
+  }
+  .social-proof-1 {
+    max-width: 40%;
+  }
+}
+
+/* ---------------------- Responsive 1550px ----------------------  */
+
+@media (min-width: 1550px) {
+  .big-heading-style {
+    font-size: 5rem;
+  }
+  .hero-section-container > * {
+    width: 40vw;
+  }
+  .social-proof-1 {
+    max-width: 30%;
+  }
+  .sub-heading-line-1 {
+    max-width: 65%;
+  }
+  .social-proof-1 {
+    max-width: 50%;
+  }
+  .lower-call-to-action > h2 {
+    margin: 0 max(8rem, 16vw) 1rem max(8rem, 15vw);
+  }
 }
