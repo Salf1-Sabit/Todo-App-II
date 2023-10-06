@@ -15,16 +15,35 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import MessageIcon from "@mui/icons-material/Message";
+import AddIcon from "@mui/icons-material/Add";
 import TodayIcon from "@mui/icons-material/Today";
 import UpcomingIcon from "@mui/icons-material/Upcoming";
 import WorkspacesIcon from "@mui/icons-material/Workspaces";
 import GroupsIcon from "@mui/icons-material/Groups";
+import { Avatar } from "@mui/material";
+
+import Person1 from "../../assets/images/person-2.jpg";
+
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -91,6 +110,10 @@ function ResponsiveDrawer(props) {
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
           backgroundColor: "#5762E3",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
         }}
       >
         <Toolbar>
@@ -107,6 +130,47 @@ function ResponsiveDrawer(props) {
             Today
           </Typography>
         </Toolbar>
+        <div>
+          <IconButton sx={{ marginLeft: 1, color: "#fff" }}>
+            <AddIcon />
+          </IconButton>
+
+          <IconButton sx={{ marginLeft: 1, color: "#fff" }}>
+            <MessageIcon />
+          </IconButton>
+
+          <IconButton sx={{ marginLeft: 1, color: "#fff" }}>
+            <NotificationsIcon />
+          </IconButton>
+
+          <IconButton
+            aria-controls={open ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+            sx={{ marginLeft: 1, marginRight: 1, color: "#fff" }}
+          >
+            <Avatar
+              alt="Remy Sharp"
+              src={Person1}
+              sx={{ width: 32, height: 32 }}
+            />
+          </IconButton>
+
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <MenuItem onClick={handleClose}>Profile</MenuItem>
+            <MenuItem onClick={handleClose}>My account</MenuItem>
+            <MenuItem onClick={handleClose}>Logout</MenuItem>
+          </Menu>
+        </div>
       </AppBar>
       <Box
         component="nav"
