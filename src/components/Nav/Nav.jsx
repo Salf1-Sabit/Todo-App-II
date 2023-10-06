@@ -23,7 +23,7 @@ import Button from "@mui/material/Button";
 import BrandName from "../brand-name/BrandName";
 
 const drawerWidth = 240;
-const navItems = ["home", "pricing", "contact"];
+const navItems = ["todoapp", "home", "pricing", "contact"];
 
 function DrawerAppBar(props) {
   const { window } = props;
