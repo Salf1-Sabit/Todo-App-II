@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+:root {
+  --big-heading-size: 2.5rem;
+  --regular-paragraph-size: 20px;
+  --blue: #5762e3;
+}
+
+.appDrawer {
+  position: relative;
+  /* left: -100%; */
+  width: 300px;
+  height: 100%;
+  background-color: #fafafa;
+  padding: 2.5rem 1rem 2.5rem 2rem;
+  font-family: "Inter";
+  font-size: var(--regular-paragraph-size);
+  transition: 0.5s ease-in-out;
+}
+
+@media (min-width: 900px) {
+  /* .appDrawer {
+    left: 0;
+  } */
+}
