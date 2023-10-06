@@ -2,12 +2,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 // NavBar Navigations
 import Home from "./pages/home/Home";
-import Login from "./pages/Login";
+import TodoApp from "./pages/todoApp/TodoApp";
+import Login from "./pages/login/Login";
 import Admin from "./pages/admin/Admin";
 import Pricing from "./pages/pricing/Pricing";
 import About from "./pages/about/About";
 import Contact from "./pages/contact/Contact";
-import Registration from "./pages/Registration";
+import Registration from "./pages/registration/Registration";
 import Users from "./pages/admin/right-side/Users";
 import MonitorTasks from "./pages/admin/right-side/MonitorTasks";
 import Analytics from "./pages/admin/right-side/Analytics";
@@ -24,6 +25,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/todoapp" element={<TodoApp />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Registration />} />
