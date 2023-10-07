@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+:root {
+  --big-heading-size: 2.5rem;
+  --regular-paragraph-size: 22px;
+  --blue: #5762e3;
+}
+
+footer {
+  background-color: var(--blue);
+  color: #fff;
+  padding: 1.5rem;
+}
+
+footer > p {
+  /* copyright */
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.footer-container > * {
+  flex-basis: 100%;
+}
+
+.footer-container h2 {
+  /* brand-name */
+  font-weight: 800;
+}
+
+.navbar-link {
+  color: #fff;
+  text-decoration: none;
+}
+
+.child-1 > p {
+  max-width: 20rem;
+}
+
+.child-2,
+.child-3 {
+  display: flex;
+  flex-direction: column;
+}

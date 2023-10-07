@@ -1,0 +1,226 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+:root {
+  --big-heading-size: 2.5rem;
+  --regular-paragraph-size: 22px;
+  --blue: #5762e3;
+}
+
+/* ---------------- Utility Classes ------------------ */
+
+.big-heading-style {
+  font-weight: 900;
+  font-size: var(--big-heading-size);
+  text-align: center;
+}
+
+.sub-heading-style {
+  text-align: center;
+}
+
+/* ---------------- Page 1 ------------------ */
+
+.hero-section {
+  margin: clamp(1.5em, 6vw, 5em);
+}
+
+.social-proof-1 {
+  margin-top: 1em;
+}
+
+.hero-section-img {
+  width: 100%;
+}
+
+.feature-sub-heading {
+  text-align: center;
+}
+
+.button-social-proof-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.card-title {
+  font-size: 1.5rem;
+}
+
+/* ---------------- Page 2 ------------------ */
+
+.features-section {
+  padding: 1.5em;
+  background-color: #f7f7f8;
+}
+
+.card-headline {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5em;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ---------------- Page 3 -> Section 1 ------------------ */
+
+.social-proof-section {
+  margin: 1.5em;
+}
+
+.upper-proof {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.upper-proof > * {
+  flex-basis: 100%;
+}
+
+.social-proof-person-name {
+  opacity: 70%;
+}
+
+.person-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+}
+
+/* ---------------- Page 3 -> Section 2 ------------------ */
+
+.lower-call-to-action {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.lower-call-to-action > h4 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 2em;
+}
+
+/* ---------------------- Responsive 630px ----------------------  */
+
+@media (min-width: 630px) {
+  .feature-main-heading-1 {
+    margin: 0 max(8rem, 15vw) 1rem max(8rem, 15vw);
+  }
+}
+
+/* ---------------------- Responsive 670px ----------------------  */
+
+@media (min-width: 670px) {
+  .hero-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-section-container {
+    display: flex;
+    gap: 0.5em;
+  }
+
+  .hero-section-container > * {
+    flex-basis: 100%;
+  }
+
+  .main-heading {
+    text-align: left;
+  }
+
+  .sub-heading-line-1 {
+    max-width: 80%;
+  }
+
+  .sub-heading-style {
+    text-align: left;
+  }
+
+  .button-social-proof-group {
+    justify-content: start;
+    align-items: start;
+    flex-direction: column-reverse;
+  }
+
+  .right-side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+/* ---------------------- Responsive 800px ----------------------  */
+
+@media (min-width: 800px) {
+  .card-container {
+    flex-direction: row;
+    margin: 0 6vw;
+  }
+  .card-container > * {
+    flex-basis: 100%;
+  }
+  p {
+    font-size: 1.2rem;
+  }
+  .features-section {
+    padding: 2.5rem;
+  }
+  .lower-call-to-action > h2 {
+    margin: 0 max(10rem, 16vw) 1rem max(10rem, 15vw);
+  }
+}
+
+/* ---------------------- Responsive 1050px ----------------------  */
+
+@media (min-width: 1050px) {
+  .left-side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .button-social-proof-group {
+    align-items: center;
+    flex-direction: row;
+    gap: 1rem;
+  }
+  .social-proof-1 {
+    max-width: 40%;
+  }
+}
+
+/* ---------------------- Responsive 1550px ----------------------  */
+
+@media (min-width: 1550px) {
+  .big-heading-style {
+    font-size: 5rem;
+  }
+  .hero-section-container > * {
+    width: 40vw;
+  }
+  .social-proof-1 {
+    max-width: 30%;
+  }
+  .sub-heading-line-1 {
+    max-width: 65%;
+  }
+  .social-proof-1 {
+    max-width: 50%;
+  }
+  .lower-call-to-action > h2 {
+    margin: 0 max(8rem, 16vw) 1rem max(8rem, 15vw);
+  }
+}
