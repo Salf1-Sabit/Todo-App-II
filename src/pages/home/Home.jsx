@@ -2,6 +2,9 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
+// FONT
+import "@fontsource/inter/"; // Specify weight
+
 import {
   Toolbar,
   Button,

@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import "./appbar.css";
 import { NavLink } from "react-router-dom";
 
 import Person1 from "../../assets/images/person-2.jpg";
 
+// FONT
+import "@fontsource/inter/"; // Specify weight
+
+// MUI ITEMS
 import {
   Drawer,
   Box,
@@ -16,8 +20,6 @@ import {
   ThemeProvider,
 } from "@mui/material";
 import { Avatar } from "@mui/material";
-
-// MUI ITEMS
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -39,10 +41,12 @@ import MessageIcon from "@mui/icons-material/Message";
 import AddIcon from "@mui/icons-material/Add";
 
 const drawerWidth = 240;
-
 const Appbar2 = (props) => {
   // MUI THEME
   const theme = createTheme({
+    typography: {
+      fontFamily: "Inter",
+    },
     palette: {
       primary: {
         light: "#7780e8",
@@ -117,7 +121,7 @@ const Appbar2 = (props) => {
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              <GroupsIcon sx={{ color: "#6200ea" }} />
+              <GroupsIcon sx={{ color: "#9c27b0" }} />
             </ListItemIcon>
             <ListItemText primary={"Team"} />
           </ListItemButton>
