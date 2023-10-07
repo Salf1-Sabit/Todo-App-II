@@ -35,8 +35,23 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 
 const AddTaskCard = () => {
+  // TITLE STATE
+  const [title, setTitle] = useState("");
+
+  function handleTitle(e) {
+    setTitle(e.target.value);
+  }
+
+  // DESCRIPOTION STATE
+  const [description, setDescription] = useState("");
+
+  function handleDescription(e) {
+    setDescription(e.target.value);
+  }
+
   //ADD BUTTON CONTEXT
-  const toggleAddTaskButton = useContext(TodoAppContext);
+  const { toggleAddTaskButton, allTodos, setAllTodos } =
+    useContext(TodoAppContext);
 
   // MUI THEME
   const theme = createTheme({
@@ -58,6 +73,14 @@ const AddTaskCard = () => {
 
   const handleSaveClick = () => {
     setSnackbarOpen(true);
+    const now = new Date();
+    console.log(now, title, description);
+    setAllTodos([
+      ...allTodos,
+      { id: now, title: title, description: description },
+    ]);
+    setTitle("");
+    setDescription("");
   };
 
   const handleSnackbarClose = (event, reason) => {
@@ -94,6 +117,9 @@ const AddTaskCard = () => {
                 maxRows={4}
                 multiline
                 variant="standard"
+                value={title}
+                onChange={handleTitle}
+                required
               />
               <TextField
                 id="standard-multiline-flexible"
@@ -102,6 +128,8 @@ const AddTaskCard = () => {
                 maxRows={4}
                 variant="standard"
                 sx={{ marginTop: ".5rem" }}
+                value={description}
+                onChange={handleDescription}
               />
             </div>
           </CardContent>
@@ -141,6 +169,7 @@ const AddTaskCard = () => {
                   color="primary"
                   onClick={handleSaveClick}
                   sx={{ fontWeight: 600 }}
+                  disabled={title === ""}
                 >
                   Add task
                 </Button>

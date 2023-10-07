@@ -13,7 +13,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 const AddTaskButton = () => {
   //ADD BUTTON CONTEXT
-  const toggleAddTaskButton = useContext(TodoAppContext);
+  const { toggleAddTaskButton } = useContext(TodoAppContext);
 
   // MUI THEME
   const theme = createTheme({

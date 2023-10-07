@@ -41,3 +41,7 @@
   padding: 0.3em;
   gap: 0.3em;
 }
+
+.todo-child-container {
+  margin-top: 0.5rem;
+}

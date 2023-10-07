@@ -14,28 +14,24 @@ import AddTaskButton from "../../components/add-task-button-group/AddTaskButton"
 import { month, weekday } from "../../data/currentDateData";
 import Appbar from "../../components/appBar/Appbar";
 import AddTaskCard from "../../components/add-task-card/AddTaskCard";
+import TodoCard from "../../components/todo-card/TodoCard";
 
 // MUI IMPORTS
 import {
+  Alert,
+  AlertTitle,
   Box,
   Divider,
   IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
   Menu,
+  MenuItem,
 } from "@mui/material";
-
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 
 // ICONS
 import TuneIcon from "@mui/icons-material/Tune";
-import LayersIcon from "@mui/icons-material/Layers";
-import SortIcon from "@mui/icons-material/Sort";
 
 // GLOBAL VARIABLES
 const drawerWidth = 240;
@@ -44,8 +40,13 @@ let date = new Date();
 let curDate = date.getDate();
 let mon = date.getMonth();
 let weekDay = date.getDay();
+const hour = date.getHours();
+const minute = date.getMinutes();
 
 function TodoApp() {
+  // TodoCard container
+  const [allTodos, setAllTodos] = useState([]);
+
   // AddTaskButton State
   const [addTaskButtonIsOpen, setAddTaskButtonIsOpen] = useState(true);
 
@@ -79,7 +80,9 @@ function TodoApp() {
   });
 
   return (
-    <TodoAppContext.Provider value={toggleAddTaskButton}>
+    <TodoAppContext.Provider
+      value={{ toggleAddTaskButton, allTodos, setAllTodos }}
+    >
       <ThemeProvider theme={theme}>
         <Box sx={{ display: "flex" }}>
           <CssBaseline />
@@ -103,6 +106,8 @@ function TodoApp() {
                   <h3>
                     Today
                     <span className="current-date">
+                      <span>{" " + hour + ":"}</span>
+                      <span>{minute}</span>
                       <span>
                         {" " + weekday[weekDay].substring(0, 3) + " "}
                       </span>
@@ -129,31 +134,34 @@ function TodoApp() {
                     "aria-labelledby": "basic-button",
                   }}
                 >
-                  <List>
-                    <ListItem disablePadding>
-                      <ListItemButton>
-                        <ListItemIcon>
-                          <SortIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Sorting" fontSize="small" />
-                      </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                      <ListItemButton>
-                        <ListItemIcon>
-                          <LayersIcon fontSize="small" />
-                        </ListItemIcon>
-                        <ListItemText primary="Grouping" />
-                      </ListItemButton>
-                    </ListItem>
-                  </List>
+                  <MenuItem onClick={handleClose}>Sorting</MenuItem>
+                  <MenuItem onClick={handleClose}>Grouping</MenuItem>
                 </Menu>
               </div>
 
               <Divider />
 
               <div className="todo-child-container">
+                {allTodos.length ? (
+                  allTodos.map((details) => {
+                    return (
+                      <TodoCard
+                        key={details.id}
+                        id={details.id}
+                        taskTitle={details.title}
+                        taskDescription={details.description}
+                      />
+                    );
+                  })
+                ) : (
+                  <Alert severity="success">
+                    <AlertTitle>Congratulations</AlertTitle>
+                    Empty to-do list, full potential. Use this moment to dream,
+                    plan, and set new goals. The journey of a thousand tasks
+                    begins with this first step —{" "}
+                    <strong>be ready for tomorrow's adventures!</strong>
+                  </Alert>
+                )}
                 {!addTaskButtonIsOpen ? <AddTaskCard /> : <AddTaskButton />}
               </div>
             </div>
