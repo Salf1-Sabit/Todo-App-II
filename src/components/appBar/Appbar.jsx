@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import "./appbar.css";
 import { NavLink } from "react-router-dom";
@@ -40,8 +40,14 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MessageIcon from "@mui/icons-material/Message";
 import AddIcon from "@mui/icons-material/Add";
 
+// IMPORTED LOCAL CONTEXTS
+import { TodoAppContext } from "../../components/contexts/TodoAppContext";
+
 const drawerWidth = 240;
 const Appbar2 = (props) => {
+  //ADD BUTTON CONTEXT
+  const { toggleAddTaskButton } = useContext(TodoAppContext);
+
   // MUI THEME
   const theme = createTheme({
     typography: {
@@ -160,7 +166,10 @@ const Appbar2 = (props) => {
           </Toolbar>
           <div>
             <Tooltip title="Add task">
-              <IconButton sx={{ marginLeft: 1, color: "#fff" }}>
+              <IconButton
+                onClick={toggleAddTaskButton}
+                sx={{ marginLeft: 1, color: "#fff" }}
+              >
                 <AddIcon />
               </IconButton>
             </Tooltip>

@@ -73,6 +73,7 @@ const AddTaskCard = () => {
 
   const handleSaveClick = () => {
     setSnackbarOpen(true);
+    console.log("added todos: " + snackbarOpen);
     const now = new Date();
     console.log(now, title, description);
     setAllTodos([
@@ -89,6 +90,7 @@ const AddTaskCard = () => {
     }
 
     setSnackbarOpen(false);
+    console.log("added todos: " + snackbarOpen);
   };
 
   return (
