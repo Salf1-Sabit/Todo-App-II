@@ -150,7 +150,7 @@ function DrawerAppBar(props) {
                 }}
                 variant="outlined"
               >
-                Sign Up
+                Log In
               </Button>
             </Box>
           </Toolbar>

@@ -150,6 +150,10 @@ function TodoApp() {
                         id={details.id}
                         taskTitle={details.title}
                         taskDescription={details.description}
+                        dueTime={details.dueTime}
+                        dueDate={details.dueDate}
+                        dueMonth={details.dueMonth}
+                        dueYear={details.dueYear}
                       />
                     );
                   })
@@ -162,7 +166,11 @@ function TodoApp() {
                     <strong>be ready for tomorrow's adventures!</strong>
                   </Alert>
                 )}
-                {!addTaskButtonIsOpen ? <AddTaskCard /> : <AddTaskButton />}
+                {!addTaskButtonIsOpen ? (
+                  <AddTaskCard taskTitle={""} taskDescription={""} />
+                ) : (
+                  <AddTaskButton />
+                )}
               </div>
             </div>
           </Box>
