@@ -17,6 +17,8 @@ import { TodoCardContext } from "../../components/contexts/TodoCardContext";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import {
   Checkbox,
   FormControlLabel,
@@ -30,12 +32,18 @@ import {
   Slider,
   Grid,
   Input,
+  Divider,
+  Tooltip,
+  FormControl,
+  InputLabel,
+  Select,
 } from "@mui/material";
 
 // ICONS
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import FlagIcon from "@mui/icons-material/Flag";
 
 // MODAL STYLE
 const style = {
@@ -49,6 +57,14 @@ const style = {
   p: 4,
 };
 
+// PRIORITY COLORS
+const priorityColors = [
+  { r: 220, g: 47, b: 2 },
+  { r: 244, g: 140, b: 6 },
+  { r: 83, g: 144, b: 217 },
+  { r: 125, g: 125, b: 125 },
+];
+
 const TodoCard = ({
   id,
   taskTitle,
@@ -59,7 +75,11 @@ const TodoCard = ({
   dueYear,
 }) => {
   console.log("FROM TODOCARD: " + dueTime + " " + dueDate + " " + dueMonth);
-  const [value, setValue] = React.useState(30);
+  // PROGRESS STATE
+  const [value, setValue] = React.useState(0);
+
+  // PRIORITY STATE
+  const [priorityValue, setPriorityValue] = React.useState(4);
 
   const handleSliderChange = (event, newValue) => {
     setValue(newValue);
@@ -81,6 +101,11 @@ const TodoCard = ({
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  // PRIORITY MODAL
+  const [priorityOpen, setPriorityOpen] = React.useState(false);
+  const handlePriorityOpen = () => setPriorityOpen(true);
+  const handlePriorityClose = () => setPriorityOpen(false);
 
   // EditTaskButton State
   const [editTaskButtonIsOpen, setEditTaskButtonIsOpen] = useState(false);
@@ -137,6 +162,16 @@ const TodoCard = ({
     console.info("You clicked the Date Chip.");
   };
 
+  // MENU UTILITES
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const menuOpen = Boolean(anchorEl);
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <div>
       <TodoCardContext.Provider value={toggleEditTaskButton}>
@@ -168,23 +203,66 @@ const TodoCard = ({
 
                   {isMouseEntered && (
                     <div className="header-right">
-                      <IconButton
-                        sx={{ "&:hover": { color: "#5762e3" } }}
-                        onClick={toggleEditTaskButton}
-                      >
-                        <EditIcon />
-                      </IconButton>
+                      <Tooltip title="Edit task">
+                        <IconButton
+                          sx={{ "&:hover": { color: "#5762e3" } }}
+                          onClick={toggleEditTaskButton}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
 
-                      <IconButton
-                        sx={{ "&:hover": { color: "#5762e3" } }}
-                        onClick={deleteTodos}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
+                      <Tooltip title="Delete task">
+                        <IconButton
+                          sx={{ "&:hover": { color: "#5762e3" } }}
+                          onClick={deleteTodos}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
 
-                      <IconButton sx={{ "&:hover": { color: "#5762e3" } }}>
-                        <MoreHorizIcon />
-                      </IconButton>
+                      <Tooltip title="More task actions">
+                        <IconButton
+                          aria-controls={menuOpen ? "basic-menu" : undefined}
+                          aria-haspopup="true"
+                          aria-expanded={menuOpen ? "true" : undefined}
+                          onClick={handleMenuClick}
+                          sx={{ "&:hover": { color: "#5762e3" } }}
+                        >
+                          <MoreHorizIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={menuOpen}
+                        onClose={handleMenuClose}
+                        MenuListProps={{
+                          "aria-labelledby": "basic-button",
+                        }}
+                      >
+                        <MenuItem onClick={handleMenuClose}>Edit Task</MenuItem>
+                        <Divider />
+                        <MenuItem onClick={handleMenuClose}>Priority</MenuItem>
+                        <MenuItem>
+                          <Tooltip title="Priority 1">
+                            <FlagIcon sx={{ color: "#dc2f02" }} />
+                          </Tooltip>
+                          <Tooltip title="Priority 2">
+                            <FlagIcon sx={{ color: "#f48c06" }} />
+                          </Tooltip>
+                          <Tooltip title="Priority 3">
+                            <FlagIcon sx={{ color: "#5390d9" }} />
+                          </Tooltip>
+                          <Tooltip title="Priority 4">
+                            <FlagIcon sx={{ color: "#ced4da" }} />
+                          </Tooltip>
+                        </MenuItem>
+                        <Divider />
+                        <MenuItem onClick={handleMenuClose}>
+                          <typography>Delete</typography>
+                        </MenuItem>
+                      </Menu>
                     </div>
                   )}
                   <Snackbar
@@ -228,6 +306,7 @@ const TodoCard = ({
                       onClick={handleDateClick}
                     />
                   )}
+
                   {/* CARD PROGRESS BAR  */}
                   <Chip
                     onClick={handleOpen}
@@ -276,6 +355,81 @@ const TodoCard = ({
                           </Grid>
                         </Grid>
                       </Box>
+                    </Box>
+                  </Modal>
+
+                  {/* PRIORITY  */}
+                  <Chip
+                    onClick={handlePriorityOpen}
+                    label={`Priority ${priorityValue}`}
+                    sx={{
+                      color: `rgb(${priorityColors[priorityValue - 1].r}, ${
+                        priorityColors[priorityValue - 1].g
+                      }, ${priorityColors[priorityValue - 1].b})`,
+                      border: `1px solid rgb(${
+                        priorityColors[priorityValue - 1].r
+                      }, ${priorityColors[priorityValue - 1].g}, ${
+                        priorityColors[priorityValue - 1].b
+                      })`,
+                      backgroundColor: `rgba(${
+                        priorityColors[priorityValue - 1].r
+                      }, ${priorityColors[priorityValue - 1].g}, ${
+                        priorityColors[priorityValue - 1].b
+                      }, 0.1)`,
+                    }}
+                    aria-describedby={id}
+                  />
+                  <Modal
+                    open={priorityOpen}
+                    onClose={handlePriorityClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                    <Box sx={style}>
+                      <Typography
+                        id="modal-modal-title"
+                        variant="h6"
+                        component="h2"
+                      >
+                        Priority
+                      </Typography>
+                      <FormControl sx={{ m: 1, minWidth: 200 }} size="small">
+                        <InputLabel id="demo-select-small-label">
+                          Value
+                        </InputLabel>
+                        <Select
+                          labelId="demo-select-small-label"
+                          id="demo-select-small"
+                          value={priorityValue}
+                          label="Age"
+                          onChange={(e) => setPriorityValue(e.target.value)}
+                        >
+                          <MenuItem value={1}>
+                            <IconButton>
+                              <FlagIcon sx={{ color: "#dc2f02" }} />
+                            </IconButton>
+                            1
+                          </MenuItem>
+                          <MenuItem value={2}>
+                            <IconButton>
+                              <FlagIcon sx={{ color: "#f48c06" }} />
+                            </IconButton>
+                            2
+                          </MenuItem>
+                          <MenuItem value={3}>
+                            <IconButton>
+                              <FlagIcon sx={{ color: "#5390d9" }} />
+                            </IconButton>
+                            3
+                          </MenuItem>
+                          <MenuItem value={4}>
+                            <IconButton>
+                              <FlagIcon sx={{ color: "#ced4da" }} />
+                            </IconButton>
+                            4
+                          </MenuItem>
+                        </Select>
+                      </FormControl>
                     </Box>
                   </Modal>
                 </Stack>

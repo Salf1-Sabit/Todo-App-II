@@ -25,6 +25,7 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Tooltip,
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -36,6 +37,7 @@ import TuneIcon from "@mui/icons-material/Tune";
 // GLOBAL VARIABLES
 const drawerWidth = 240;
 
+// DATE UTILITES
 let date = new Date();
 let curDate = date.getDate();
 let mon = date.getMonth();
@@ -117,14 +119,16 @@ function TodoApp() {
                   </h3>
                 </div>
 
-                <IconButton
-                  onClick={handleClick}
-                  aria-controls={open ? "basic-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
-                >
-                  <TuneIcon />
-                </IconButton>
+                <Tooltip title="View">
+                  <IconButton
+                    onClick={handleClick}
+                    aria-controls={open ? "basic-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                  >
+                    <TuneIcon />
+                  </IconButton>
+                </Tooltip>
                 <Menu
                   id="basic-menu"
                   anchorEl={anchorEl}
