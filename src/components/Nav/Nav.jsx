@@ -73,6 +73,7 @@ function DrawerAppBar(props) {
             to={"/login"}
             component={Link}
             sx={{ textAlign: "center" }}
+            variant="contained"
           >
             <ListItemText
               sx={{ color: "primary.main", textTransform: "capitalize" }}

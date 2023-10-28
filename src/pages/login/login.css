@@ -1,0 +1,101 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+:root {
+  --big-heading-size: 2.5rem;
+  --regular-paragraph-size: 22px;
+  --blue: #5762e3;
+}
+
+.register-bg {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center-container {
+  padding: 2rem;
+  width: 500px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+
+.brand-name {
+  margin-bottom: 1.5rem;
+}
+
+.regiter-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sub-headings {
+  margin-bottom: 1rem;
+}
+
+.sub-headings > .heading-1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.sub-headings > .heading-2 {
+  font-weight: 400;
+}
+
+.agree-to-terms {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.have-account {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.register-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.password-container,
+.email-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.password-container > .password-rules,
+.email-container > .email-rules {
+  opacity: 0.7;
+  font-size: 14px;
+}
+
+.login-with-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #b2bfc9;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.login-with-google-text {
+  font-weight: 500;
+}
+
+.forgot-password {
+  color: var(--blue);
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}

@@ -1,95 +1,109 @@
 import React from "react";
 
-import { Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+// IMPORT CSS
+import "./login.css";
+
+// FONT
+import "@fontsource/inter/"; // Specify weight
+
+// IMPORT IMAGES
+import GoogleIcon from "../../assets/images/google.png";
+
+// IMPORT LOCAL COMPONENTS
+import BrandName from "../../components/brand-name/BrandName";
+
+// MUI COMPONENTS
+import {
+  Button,
+  Divider,
+  TextField,
+  ThemeProvider,
+  createTheme,
+} from "@mui/material";
 import { useState } from "react";
 
-const Login = () => {
-  const navigate = useNavigate();
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-  });
+// MUI THEME
+const theme = createTheme({
+  typography: {
+    fontFamily: "Inter",
+  },
+  palette: {
+    primary: {
+      light: "#7780e8",
+      main: "#5763e3",
+      dark: "#3545dc",
+      contrastText: "#fff",
+    },
+  },
+});
 
-  const { email, password } = data;
-  const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const url =
-      "http://localhost/php-react/register-login-php-simple/login.php";
-
-    const sendData = {
-      email: data.email,
-      password: data.password,
-    };
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify(sendData),
-    }).then((res) => {
-      console.log(res);
-      if (res.status === 200) {
-        alert("You're successfully logged in!");
-        navigate("/");
-      } else {
-        alert("Sorry! You're credentials are incorrect");
-      }
-    });
-  };
+const Registration = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
-    <div>
-      <div
-        style={{
-          width: "30%",
-          marginLeft: "35%",
-          marginTop: "13%",
-        }}
-      >
-        <h2 style={{ textAlign: "center" }}>Sign In</h2>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="example@gmail.com"
-              name="email"
-              defaultValue={email}
-              onChange={handleChange}
+    <ThemeProvider theme={theme}>
+      <div className="register-bg">
+        <div className="center-container">
+          <BrandName className="brand-name" />
+          <div className="sub-headings">
+            <div className="heading-1">Login to your account</div>
+            <div className="heading-2">
+              Enter your credentials to access your account
+            </div>
+          </div>
+          <div className="login-with-google">
+            <img
+              style={{ width: "25px", height: "25px" }}
+              src={GoogleIcon}
+              alt="googleIcon"
             />
-            <Form.Text className="text-muted">
-              We'll never share your email with anyone else.
-            </Form.Text>
-          </Form.Group>
+            <div className="login-with-google-text">Continue with google</div>
+          </div>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              name="password"
-              defaultValue={password}
-              onChange={handleChange}
-            />
-          </Form.Group>
+          <Divider sx={{ marginBottom: "1rem" }}>OR</Divider>
 
-          <Button className="w-100" variant="primary" type="submit">
-            Sign In
-          </Button>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Text className="text-muted">
-              Don't have an account? Create one
-            </Form.Text>
-          </Form.Group>
-        </Form>
+          <div className="regiter-inputs">
+            <div className="email-container">
+              <TextField
+                required
+                id="outlined-required"
+                label="Email"
+                size="small"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="password-container">
+              <TextField
+                required
+                id="outlined-password-input"
+                label="Password"
+                type="password"
+                autoComplete="current-password"
+                size="small"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="agree-to-terms">
+            <div className="forgot-password">Forgot password?</div>
+          </div>
+          <div className="register-footer">
+            <Button>Create account</Button>
+            <Button
+              className="register-button"
+              variant="contained"
+              disableElevation
+            >
+              Sign In
+            </Button>
+          </div>
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 };
 
-export default Login;
+export default Registration;
