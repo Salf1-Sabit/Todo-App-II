@@ -7,6 +7,7 @@ import Modal from "@mui/material/Modal";
 import "./todoCard.css";
 
 // IMPORTED LOCAL COMPONENTS
+import Toastifier from "../toastifier/Toastifier";
 import EditTaskCard from "../edit-task-card/EditTaskCard";
 
 // IMPORTED LOCAL CONTEXTS
@@ -24,8 +25,6 @@ import {
   FormControlLabel,
   IconButton,
   createTheme,
-  Snackbar,
-  Alert,
   Stack,
   Chip,
   ThemeProvider,
@@ -37,6 +36,10 @@ import {
   FormControl,
   InputLabel,
   Select,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  Button,
 } from "@mui/material";
 
 // ICONS
@@ -141,25 +144,42 @@ const TodoCard = ({
   };
 
   // ADD BUTTON CONTEXT
-  const { allTodos, setAllTodos } = useContext(TodoAppContext);
-
-  // Snackbar Toggle
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-
-  const handleSnackbarClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setSnackbarOpen(false);
-  };
+  const {
+    allTodos,
+    setAllTodos,
+    setSnackbarOpen,
+    setAlertMessage,
+    setAlertSeverity,
+  } = useContext(TodoAppContext);
 
   // DELETE TODOS ACTION
   const deleteTodos = () => {
-    setSnackbarOpen(true);
-    console.log(snackbarOpen);
+    // setSnackbarOpen(true);
+    // console.log(snackbarOpen);
     const newAllTodos = allTodos.filter((todo) => todo.id !== id);
     setAllTodos(newAllTodos);
+  };
+
+  const handleDeleteTodos = () => {
+    handleDeleteDialogOpen();
+  };
+
+  // DELETE DIALOG STATE
+  const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
+
+  const handleDeleteDialogOpen = () => {
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteDialogCloseWithoutDelete = () => {
+    setDeleteDialogOpen(false);
+  };
+  const handleDeleteDialogCloseWithDelete = () => {
+    setDeleteDialogOpen(false);
+    deleteTodos();
+    setAlertSeverity("warning");
+    setAlertMessage("Task is deleted successfully");
+    setSnackbarOpen(true);
   };
 
   // CARD MOUSE ENTERED EVENT HANDLER
@@ -195,6 +215,18 @@ const TodoCard = ({
     setAnchorEl(null);
   };
 
+  // HANDLE EDIT TASK BUTTON (MENU)
+  const handleEditTask = () => {
+    setAnchorEl(null);
+    toggleEditTaskButton();
+  };
+
+  // HANDLE DELTE TASK BUTTON (MENU)
+  const handleDeleteTask = () => {
+    setAnchorEl(null);
+    handleDeleteDialogOpen();
+  };
+
   return (
     <div>
       <TodoCardContext.Provider
@@ -216,7 +248,7 @@ const TodoCard = ({
               dueDate={dueDate}
               dueMonth={dueMonth}
               dueYear={dueYear}
-              dueDateTime={dueDateTime}
+              dueDateTime={cardDueDateTime}
             />
           ) : (
             <Card
@@ -249,11 +281,10 @@ const TodoCard = ({
                           <EditIcon />
                         </IconButton>
                       </Tooltip>
-
                       <Tooltip title="Delete task">
                         <IconButton
                           sx={{ "&:hover": { color: "#5762e3" } }}
-                          onClick={deleteTodos}
+                          onClick={handleDeleteTodos}
                         >
                           <DeleteIcon />
                         </IconButton>
@@ -279,44 +310,76 @@ const TodoCard = ({
                           "aria-labelledby": "basic-button",
                         }}
                       >
-                        <MenuItem onClick={handleMenuClose}>Edit Task</MenuItem>
+                        <MenuItem onClick={handleEditTask}>Edit Task</MenuItem>
                         <Divider />
                         <MenuItem onClick={handleMenuClose}>Priority</MenuItem>
                         <MenuItem>
-                          <Tooltip title="Priority 1">
-                            <FlagIcon sx={{ color: "#dc2f02" }} />
+                          <Tooltip title="P1">
+                            <FlagIcon
+                              sx={{ color: "#dc2f02" }}
+                              onClick={() => setPriorityValue(1)}
+                            />
                           </Tooltip>
-                          <Tooltip title="Priority 2">
-                            <FlagIcon sx={{ color: "#f48c06" }} />
+                          <Tooltip title="P2">
+                            <FlagIcon
+                              sx={{ color: "#f48c06" }}
+                              onClick={() => setPriorityValue(2)}
+                            />
                           </Tooltip>
-                          <Tooltip title="Priority 3">
-                            <FlagIcon sx={{ color: "#5390d9" }} />
+                          <Tooltip title="P3">
+                            <FlagIcon
+                              sx={{ color: "#5390d9" }}
+                              onClick={() => setPriorityValue(3)}
+                            />
                           </Tooltip>
-                          <Tooltip title="Priority 4">
-                            <FlagIcon sx={{ color: "#ced4da" }} />
+                          <Tooltip title="P4">
+                            <FlagIcon
+                              sx={{ color: "#ced4da" }}
+                              onClick={() => setPriorityValue(4)}
+                            />
                           </Tooltip>
                         </MenuItem>
                         <Divider />
-                        <MenuItem onClick={handleMenuClose}>
+                        <MenuItem onClick={handleDeleteTask}>
                           <typography>Delete</typography>
                         </MenuItem>
                       </Menu>
+                      <Toastifier />
+
+                      {/* DELETE DIALOG */}
+                      <div>
+                        <Dialog
+                          open={deleteDialogOpen}
+                          onClose={handleClose}
+                          aria-labelledby="alert-dialog-title"
+                          aria-describedby="alert-dialog-description"
+                        >
+                          <DialogTitle id="alert-dialog-title">
+                            {`Are you sure you want to delete ${cardTitle}?`}
+                          </DialogTitle>
+                          <DialogActions>
+                            <Button
+                              size="small"
+                              color="primary"
+                              sx={{ fontWeight: 600 }}
+                              onClick={handleDeleteDialogCloseWithoutDelete}
+                            >
+                              CANCEL
+                            </Button>
+                            <Button
+                              size="small"
+                              color="primary"
+                              sx={{ fontWeight: 600 }}
+                              onClick={handleDeleteDialogCloseWithDelete}
+                              autoFocus
+                            >
+                              DELETE
+                            </Button>
+                          </DialogActions>
+                        </Dialog>
+                      </div>
                     </div>
                   )}
-                  <Snackbar
-                    open={snackbarOpen}
-                    autoHideDuration={3000}
-                    onClose={handleSnackbarClose}
-                  >
-                    <Alert
-                      onClose={handleSnackbarClose}
-                      severity="warning"
-                      sx={{ width: "100%" }}
-                      variant="filled"
-                    >
-                      Your task is successfully deleted!
-                    </Alert>
-                  </Snackbar>
                 </div>
 
                 {/* CARD DESCRIPTION  */}
@@ -334,7 +397,7 @@ const TodoCard = ({
                   direction="row"
                   spacing={1}
                 >
-                  {dueYear !== 1970 && (
+                  {date2.getFullYear() !== 1970 && (
                     <Chip
                       variant="outlined"
                       label={
@@ -452,25 +515,25 @@ const TodoCard = ({
                             <IconButton>
                               <FlagIcon sx={{ color: "#dc2f02" }} />
                             </IconButton>
-                            1
+                            P1
                           </MenuItem>
                           <MenuItem value={2}>
                             <IconButton>
                               <FlagIcon sx={{ color: "#f48c06" }} />
                             </IconButton>
-                            2
+                            P2
                           </MenuItem>
                           <MenuItem value={3}>
                             <IconButton>
                               <FlagIcon sx={{ color: "#5390d9" }} />
                             </IconButton>
-                            3
+                            P3
                           </MenuItem>
                           <MenuItem value={4}>
                             <IconButton>
                               <FlagIcon sx={{ color: "#ced4da" }} />
                             </IconButton>
-                            4
+                            P4
                           </MenuItem>
                         </Select>
                       </FormControl>

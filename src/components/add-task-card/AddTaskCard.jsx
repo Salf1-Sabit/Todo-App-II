@@ -6,19 +6,14 @@ import "./addTaskCard.css";
 // FONT
 import "@fontsource/inter/"; // Specify weight
 
+// IMPORTED LOCAL COMPONENTS
+import Toastifier from "../toastifier/Toastifier";
+
 // IMPORTED LOCAL CONTEXTS
 import { TodoAppContext } from "../../components/contexts/TodoAppContext";
 
 // MUI IMPORTS
-import {
-  Alert,
-  Divider,
-  TextField,
-  ThemeProvider,
-  createTheme,
-} from "@mui/material";
-
-import Snackbar from "@mui/material/Snackbar";
+import { Divider, TextField, ThemeProvider, createTheme } from "@mui/material";
 
 // DATE PICKER
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
@@ -35,7 +30,9 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 
 const AddTaskCard = ({ taskTitle, taskDescription }) => {
+  // DUE-DATE-TIME STATE
   const [dueDateTime, setDueDateTime] = React.useState(null);
+
   // TITLE STATE
   const [title, setTitle] = useState(taskTitle);
 
@@ -49,6 +46,10 @@ const AddTaskCard = ({ taskTitle, taskDescription }) => {
   function handleDescription(e) {
     setDescription(e.target.value);
   }
+
+  // SNACKBAR CONTEXT
+  const { setSnackbarOpen, setAlertMessage, setAlertSeverity } =
+    useContext(TodoAppContext);
 
   // ADD BUTTON CONTEXT
   const { toggleAddTaskButton, allTodos, setAllTodos } =
@@ -69,11 +70,10 @@ const AddTaskCard = ({ taskTitle, taskDescription }) => {
     },
   });
 
-  // Snackbar Toggle
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-
   // SAVE CLICK HANDLER
   const handleSaveClick = () => {
+    setAlertMessage("Task is successfully added!");
+    setAlertSeverity("success");
     setSnackbarOpen(true);
     const now = new Date();
 
@@ -117,14 +117,6 @@ const AddTaskCard = ({ taskTitle, taskDescription }) => {
     ]);
     setTitle("");
     setDescription("");
-  };
-
-  const handleSnackbarClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setSnackbarOpen(false);
   };
 
   return (
@@ -202,27 +194,14 @@ const AddTaskCard = ({ taskTitle, taskDescription }) => {
                   variant="contained"
                   size="small"
                   color="primary"
-                  onClick={handleSaveClick}
                   sx={{ fontWeight: 600 }}
+                  onClick={handleSaveClick}
                   disabled={title === ""}
                 >
                   Add task
                 </Button>
-                <Snackbar
-                  open={snackbarOpen}
-                  autoHideDuration={3000}
-                  onClose={handleSnackbarClose}
-                >
-                  <Alert
-                    onClose={handleSnackbarClose}
-                    severity="success"
-                    sx={{ width: "100%" }}
-                    variant="filled"
-                  >
-                    Your task is successfully added!
-                  </Alert>
-                </Snackbar>
               </CardActions>
+              <Toastifier />
             </div>
           </div>
         </Card>

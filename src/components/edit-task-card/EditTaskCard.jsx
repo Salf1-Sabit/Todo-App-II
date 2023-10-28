@@ -10,15 +10,7 @@ import "@fontsource/inter/"; // Specify weight
 import { TodoCardContext } from "../../components/contexts/TodoCardContext";
 
 // MUI IMPORTS
-import {
-  Alert,
-  Divider,
-  TextField,
-  ThemeProvider,
-  createTheme,
-} from "@mui/material";
-
-import Snackbar from "@mui/material/Snackbar";
+import { Divider, TextField, ThemeProvider, createTheme } from "@mui/material";
 
 // DATE PICKER
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
@@ -32,15 +24,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 
-const EditTaskCard = ({
-  taskTitle,
-  taskDescription,
-  dueTime,
-  dueDate,
-  dueMonth,
-  dueYear,
-  dueDateTime,
-}) => {
+const EditTaskCard = ({ taskTitle, taskDescription, dueDateTime }) => {
   // TODO-CARD EDIT BUTTON CONTEXT
   const {
     toggleEditTaskButton,
@@ -82,25 +66,13 @@ const EditTaskCard = ({
     },
   });
 
-  // Snackbar Toggle
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-
   // SAVE CLICK HANDLER
   const handleSaveClick = () => {
-    setSnackbarOpen(true);
     setIsMouseEntered(false);
     setCardTitle(title);
     setCardDescription(description);
     setCardDueDateTime(editedDueTime);
     toggleEditTaskButton();
-  };
-
-  const handleSnackbarClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setSnackbarOpen(false);
   };
 
   return (
@@ -184,20 +156,6 @@ const EditTaskCard = ({
                 >
                   Save
                 </Button>
-                <Snackbar
-                  open={snackbarOpen}
-                  autoHideDuration={3000}
-                  onClose={handleSnackbarClose}
-                >
-                  <Alert
-                    onClose={handleSnackbarClose}
-                    severity="success"
-                    sx={{ width: "100%" }}
-                    variant="filled"
-                  >
-                    Your task is successfully saved!
-                  </Alert>
-                </Snackbar>
               </CardActions>
             </div>
           </div>

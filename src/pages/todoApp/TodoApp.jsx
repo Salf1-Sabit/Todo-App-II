@@ -46,6 +46,11 @@ const hour = date.getHours();
 const minute = date.getMinutes();
 
 function TodoApp() {
+  // SNACKBAR UTILITIES
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertSeverity, setAlertSeverity] = useState("success");
+
   // TodoCard container
   const [allTodos, setAllTodos] = useState([]);
 
@@ -83,7 +88,17 @@ function TodoApp() {
 
   return (
     <TodoAppContext.Provider
-      value={{ toggleAddTaskButton, allTodos, setAllTodos }}
+      value={{
+        toggleAddTaskButton,
+        allTodos,
+        setAllTodos,
+        snackbarOpen,
+        setSnackbarOpen,
+        alertMessage,
+        setAlertMessage,
+        alertSeverity,
+        setAlertSeverity,
+      }}
     >
       <ThemeProvider theme={theme}>
         <Box sx={{ display: "flex" }}>
