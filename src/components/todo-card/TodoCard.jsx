@@ -37,9 +37,10 @@ import {
   InputLabel,
   Select,
   Dialog,
-  DialogTitle,
   DialogActions,
   Button,
+  Alert,
+  AlertTitle,
 } from "@mui/material";
 
 // ICONS
@@ -177,8 +178,8 @@ const TodoCard = ({
   const handleDeleteDialogCloseWithDelete = () => {
     setDeleteDialogOpen(false);
     deleteTodos();
-    setAlertSeverity("warning");
-    setAlertMessage("Task is deleted successfully");
+    setAlertSeverity("success");
+    setAlertMessage("The task was deleted successfully!");
     setSnackbarOpen(true);
   };
 
@@ -354,28 +355,34 @@ const TodoCard = ({
                           aria-labelledby="alert-dialog-title"
                           aria-describedby="alert-dialog-description"
                         >
-                          <DialogTitle id="alert-dialog-title">
-                            {`Are you sure you want to delete ${cardTitle}?`}
-                          </DialogTitle>
-                          <DialogActions>
-                            <Button
-                              size="small"
-                              color="primary"
-                              sx={{ fontWeight: 600 }}
-                              onClick={handleDeleteDialogCloseWithoutDelete}
-                            >
-                              CANCEL
-                            </Button>
-                            <Button
-                              size="small"
-                              color="primary"
-                              sx={{ fontWeight: 600 }}
-                              onClick={handleDeleteDialogCloseWithDelete}
-                              autoFocus
-                            >
-                              DELETE
-                            </Button>
-                          </DialogActions>
+                          <Alert severity="warning">
+                            <AlertTitle> Confirm Task Deletion </AlertTitle>
+                            Are you absolutely certain you want to delete this
+                            task? Once deleted, the task and all associated
+                            information will be permanently removed and cannot
+                            be undone. Please double-check to ensure you no
+                            longer need this task, as this action is
+                            irreversible.
+                            <DialogActions>
+                              <Button
+                                size="small"
+                                color="warning"
+                                sx={{ fontWeight: 600 }}
+                                onClick={handleDeleteDialogCloseWithoutDelete}
+                              >
+                                CANCEL
+                              </Button>
+                              <Button
+                                size="small"
+                                color="warning"
+                                sx={{ fontWeight: 600 }}
+                                onClick={handleDeleteDialogCloseWithDelete}
+                                autoFocus
+                              >
+                                DELETE
+                              </Button>
+                            </DialogActions>
+                          </Alert>
                         </Dialog>
                       </div>
                     </div>

@@ -39,6 +39,7 @@ import MenuItem from "@mui/material/MenuItem";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MessageIcon from "@mui/icons-material/Message";
 import AddIcon from "@mui/icons-material/Add";
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 
 // IMPORTED LOCAL CONTEXTS
 import { TodoAppContext } from "../../components/contexts/TodoAppContext";
@@ -102,14 +103,27 @@ const Appbar2 = (props) => {
           </ListItem>
         </NavLink>
 
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <UpcomingIcon color="secondary" />
-            </ListItemIcon>
-            <ListItemText primary={"Upcoming"} />
-          </ListItemButton>
-        </ListItem>
+        <NavLink className="nav-link" to="/upcoming">
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <UpcomingIcon color="secondary" />
+              </ListItemIcon>
+              <ListItemText primary={"Upcoming"} />
+            </ListItemButton>
+          </ListItem>
+        </NavLink>
+
+        <NavLink className="nav-link" to="/completed">
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <AssignmentTurnedInIcon color="success" />
+              </ListItemIcon>
+              <ListItemText primary={"Completed"} />
+            </ListItemButton>
+          </ListItem>
+        </NavLink>
       </List>
 
       <Divider />

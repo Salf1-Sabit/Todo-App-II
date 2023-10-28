@@ -47,13 +47,15 @@ const AddTaskCard = ({ taskTitle, taskDescription }) => {
     setDescription(e.target.value);
   }
 
-  // SNACKBAR CONTEXT
-  const { setSnackbarOpen, setAlertMessage, setAlertSeverity } =
-    useContext(TodoAppContext);
-
   // ADD BUTTON CONTEXT
-  const { toggleAddTaskButton, allTodos, setAllTodos } =
-    useContext(TodoAppContext);
+  const {
+    toggleAddTaskButton,
+    allTodos,
+    setAllTodos,
+    setSnackbarOpen,
+    setAlertMessage,
+    setAlertSeverity,
+  } = useContext(TodoAppContext);
 
   // MUI THEME
   const theme = createTheme({
@@ -72,7 +74,7 @@ const AddTaskCard = ({ taskTitle, taskDescription }) => {
 
   // SAVE CLICK HANDLER
   const handleSaveClick = () => {
-    setAlertMessage("Task is successfully added!");
+    setAlertMessage("The task was added successfully!");
     setAlertSeverity("success");
     setSnackbarOpen(true);
     const now = new Date();

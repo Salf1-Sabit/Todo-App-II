@@ -15,6 +15,7 @@ import Analytics from "./pages/admin/right-side/Analytics";
 import Feedback from "./pages/admin/right-side/Feedback";
 import Help from "./pages/admin/right-side/Help";
 import Settings from "./pages/admin/right-side/Settings";
+import ErrorPage from "./pages/errorPage/ErrorPage";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -25,7 +26,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/todoapp" element={<TodoApp />} />
+          <Route path="/today" element={<TodoApp />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Registration />} />
@@ -38,6 +39,7 @@ function App() {
           <Route path="/admin/feedback" element={<Feedback />} />
           <Route path="/admin/help" element={<Help />} />
           <Route path="/admin/settings" element={<Settings />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
     </Router>

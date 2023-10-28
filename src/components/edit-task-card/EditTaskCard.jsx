@@ -8,6 +8,7 @@ import "@fontsource/inter/"; // Specify weight
 
 // IMPORTED LOCAL CONTEXTS
 import { TodoCardContext } from "../../components/contexts/TodoCardContext";
+import { TodoAppContext } from "../contexts/TodoAppContext";
 
 // MUI IMPORTS
 import { Divider, TextField, ThemeProvider, createTheme } from "@mui/material";
@@ -33,6 +34,9 @@ const EditTaskCard = ({ taskTitle, taskDescription, dueDateTime }) => {
     setCardDescription,
     setCardDueDateTime,
   } = useContext(TodoCardContext);
+
+  const { setSnackbarOpen, setAlertMessage, setAlertSeverity } =
+    useContext(TodoAppContext);
 
   // DUE-DATE STATE
   const [editedDueTime, setEditedDueTime] = React.useState(dueDateTime);
@@ -73,6 +77,9 @@ const EditTaskCard = ({ taskTitle, taskDescription, dueDateTime }) => {
     setCardDescription(description);
     setCardDueDateTime(editedDueTime);
     toggleEditTaskButton();
+    setAlertMessage("The task was saved successfully!");
+    setAlertSeverity("success");
+    setSnackbarOpen(true);
   };
 
   return (
