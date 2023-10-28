@@ -50,7 +50,7 @@ const AddTaskCard = ({ taskTitle, taskDescription }) => {
     setDescription(e.target.value);
   }
 
-  //ADD BUTTON CONTEXT
+  // ADD BUTTON CONTEXT
   const { toggleAddTaskButton, allTodos, setAllTodos } =
     useContext(TodoAppContext);
 
@@ -76,12 +76,15 @@ const AddTaskCard = ({ taskTitle, taskDescription }) => {
   const handleSaveClick = () => {
     setSnackbarOpen(true);
     const now = new Date();
+
+    // DESTRUCTURE THE DATE NORMAL FORM
     const date = new Date(dueDateTime);
     const dueTime = date.toLocaleString("en-US", {
       hour: "numeric",
       minute: "numeric",
       hour12: true,
     });
+
     console.log(
       "From AddTaskCard-Save: " +
         now +
@@ -97,6 +100,8 @@ const AddTaskCard = ({ taskTitle, taskDescription }) => {
         month[date.getMonth()].substring(0, 3) +
         date.getFullYear()
     );
+
+    // UPDATE THE TODO LIST
     setAllTodos([
       ...allTodos,
       {
@@ -107,6 +112,7 @@ const AddTaskCard = ({ taskTitle, taskDescription }) => {
         dueDate: date.getDate(),
         dueMonth: month[date.getMonth()].substring(0, 3),
         dueYear: date.getFullYear(),
+        dueDateTime: dueDateTime,
       },
     ]);
     setTitle("");
@@ -176,6 +182,7 @@ const AddTaskCard = ({ taskTitle, taskDescription }) => {
                       slotProps={{ textField: { size: "small" } }}
                       value={dueDateTime}
                       onChange={(newValue) => setDueDateTime(newValue)}
+                      sx={{ width: 2 / 6 }}
                     />
                   </DemoContainer>
                 </LocalizationProvider>

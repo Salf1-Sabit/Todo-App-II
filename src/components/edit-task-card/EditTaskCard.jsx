@@ -7,7 +7,6 @@ import "./editTaskCard.css";
 import "@fontsource/inter/"; // Specify weight
 
 // IMPORTED LOCAL CONTEXTS
-import { TodoAppContext } from "../../components/contexts/TodoAppContext";
 import { TodoCardContext } from "../../components/contexts/TodoCardContext";
 
 // MUI IMPORTS
@@ -22,12 +21,10 @@ import {
 import Snackbar from "@mui/material/Snackbar";
 
 // DATE PICKER
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
-// TIME PICKER
-import { MobileTimePicker } from "@mui/x-date-pickers/MobileTimePicker";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
 // ICONS
 import Card from "@mui/material/Card";
@@ -35,7 +32,27 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 
-const AddTaskCard = ({ taskTitle, taskDescription }) => {
+const EditTaskCard = ({
+  taskTitle,
+  taskDescription,
+  dueTime,
+  dueDate,
+  dueMonth,
+  dueYear,
+  dueDateTime,
+}) => {
+  // TODO-CARD EDIT BUTTON CONTEXT
+  const {
+    toggleEditTaskButton,
+    setIsMouseEntered,
+    setCardTitle,
+    setCardDescription,
+    setCardDueDateTime,
+  } = useContext(TodoCardContext);
+
+  // DUE-DATE STATE
+  const [editedDueTime, setEditedDueTime] = React.useState(dueDateTime);
+
   // TITLE STATE
   const [title, setTitle] = useState(taskTitle);
 
@@ -49,10 +66,6 @@ const AddTaskCard = ({ taskTitle, taskDescription }) => {
   function handleDescription(e) {
     setDescription(e.target.value);
   }
-
-  //ADD BUTTON CONTEXT
-  const { allTodos, setAllTodos } = useContext(TodoAppContext);
-  const { toggleEditTaskButton } = useContext(TodoCardContext);
 
   // MUI THEME
   const theme = createTheme({
@@ -72,16 +85,14 @@ const AddTaskCard = ({ taskTitle, taskDescription }) => {
   // Snackbar Toggle
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
+  // SAVE CLICK HANDLER
   const handleSaveClick = () => {
     setSnackbarOpen(true);
-    const now = new Date();
-    console.log(now, title, description);
-    setAllTodos([
-      ...allTodos,
-      { id: now, title: title, description: description },
-    ]);
-    setTitle("");
-    setDescription("");
+    setIsMouseEntered(false);
+    setCardTitle(title);
+    setCardDescription(description);
+    setCardDueDateTime(editedDueTime);
+    toggleEditTaskButton();
   };
 
   const handleSnackbarClose = (event, reason) => {
@@ -141,16 +152,15 @@ const AddTaskCard = ({ taskTitle, taskDescription }) => {
             <div className="card-bottom-left">
               <CardActions>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    label="Due date"
-                    sx={{ width: 2 / 6 }}
-                    slotProps={{ textField: { size: "small" } }}
-                  />
-                  <MobileTimePicker
-                    label="Time"
-                    sx={{ width: 2 / 6 }}
-                    slotProps={{ textField: { size: "small" } }}
-                  />
+                  <DemoContainer components={["DateTimePicker"]}>
+                    <DateTimePicker
+                      label="Due Date and Time"
+                      slotProps={{ textField: { size: "small" } }}
+                      value={editedDueTime}
+                      onChange={(newValue) => setEditedDueTime(newValue)}
+                      sx={{ width: 2 / 6 }}
+                    />
+                  </DemoContainer>
                 </LocalizationProvider>
               </CardActions>
             </div>
@@ -172,7 +182,7 @@ const AddTaskCard = ({ taskTitle, taskDescription }) => {
                   sx={{ fontWeight: 600 }}
                   disabled={title === ""}
                 >
-                  Add task
+                  Save
                 </Button>
                 <Snackbar
                   open={snackbarOpen}
@@ -185,7 +195,7 @@ const AddTaskCard = ({ taskTitle, taskDescription }) => {
                     sx={{ width: "100%" }}
                     variant="filled"
                   >
-                    Your task is successfully updated!
+                    Your task is successfully saved!
                   </Alert>
                 </Snackbar>
               </CardActions>
@@ -197,4 +207,4 @@ const AddTaskCard = ({ taskTitle, taskDescription }) => {
   );
 };
 
-export default AddTaskCard;
+export default EditTaskCard;

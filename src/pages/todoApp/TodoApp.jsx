@@ -158,6 +158,7 @@ function TodoApp() {
                         dueDate={details.dueDate}
                         dueMonth={details.dueMonth}
                         dueYear={details.dueYear}
+                        dueDateTime={details.dueDateTime}
                       />
                     );
                   })

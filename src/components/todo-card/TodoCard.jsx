@@ -44,6 +44,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import FlagIcon from "@mui/icons-material/Flag";
+import { month } from "../../data/currentDateData";
 
 // MODAL STYLE
 const style = {
@@ -73,8 +74,30 @@ const TodoCard = ({
   dueDate,
   dueMonth,
   dueYear,
+  dueDateTime,
 }) => {
-  console.log("FROM TODOCARD: " + dueTime + " " + dueDate + " " + dueMonth);
+  // CARD STATES
+  const [cardTitle, setCardTitle] = useState(taskTitle);
+  const [cardDescription, setCardDescription] = useState(taskDescription);
+  const [cardDueDateTime, setCardDueDateTime] = useState(dueDateTime);
+
+  console.log(
+    "FROM TODOCARD: " +
+      cardTitle +
+      " " +
+      cardDescription +
+      " " +
+      cardDueDateTime
+  );
+
+  // DESTRUCTURE THE DATE NORMAL FORM
+  const date2 = new Date(cardDueDateTime);
+  const dueTime2 = date2.toLocaleString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  });
+
   // PROGRESS STATE
   const [value, setValue] = React.useState(0);
 
@@ -111,6 +134,9 @@ const TodoCard = ({
   const [editTaskButtonIsOpen, setEditTaskButtonIsOpen] = useState(false);
 
   const toggleEditTaskButton = () => {
+    if (editTaskButtonIsOpen) {
+      setIsMouseEntered(false);
+    }
     setEditTaskButtonIsOpen(!editTaskButtonIsOpen);
   };
 
@@ -138,9 +164,6 @@ const TodoCard = ({
 
   // CARD MOUSE ENTERED EVENT HANDLER
   const [isMouseEntered, setIsMouseEntered] = useState(false);
-  const toggleMouseEnter = () => {
-    setIsMouseEntered((prevState) => !prevState);
-  };
 
   // MUI THEME
   const theme = createTheme({
@@ -174,12 +197,26 @@ const TodoCard = ({
 
   return (
     <div>
-      <TodoCardContext.Provider value={toggleEditTaskButton}>
+      <TodoCardContext.Provider
+        value={{
+          toggleEditTaskButton,
+          setIsMouseEntered,
+          setCardTitle,
+          setCardDescription,
+          setCardDueDateTime,
+        }}
+      >
         <ThemeProvider theme={theme}>
           {editTaskButtonIsOpen ? (
             <EditTaskCard
-              taskTitle={taskTitle}
-              taskDescription={taskDescription}
+              id={id}
+              taskTitle={cardTitle}
+              taskDescription={cardDescription}
+              dueTime={dueTime}
+              dueDate={dueDate}
+              dueMonth={dueMonth}
+              dueYear={dueYear}
+              dueDateTime={dueDateTime}
             />
           ) : (
             <Card
@@ -190,17 +227,18 @@ const TodoCard = ({
                 maxWidth: "100%",
                 backgroundColor: `${isMouseEntered && "#fafafa"} `,
               }}
-              onMouseEnter={toggleMouseEnter}
-              onMouseLeave={toggleMouseEnter}
+              onMouseEnter={() => setIsMouseEntered(true)}
+              onMouseLeave={() => setIsMouseEntered(false)}
             >
               <CardContent>
                 {/* CARD HEADER  */}
                 <div className="card-header">
                   <FormControlLabel
                     control={<Checkbox color="success" />}
-                    label={taskTitle}
+                    label={cardTitle}
                   />
 
+                  {/* MOUSE ENTERED ACTIONS  */}
                   {isMouseEntered && (
                     <div className="header-right">
                       <Tooltip title="Edit task">
@@ -287,7 +325,7 @@ const TodoCard = ({
                   variant="body2"
                   color="text.secondary"
                 >
-                  {taskDescription}
+                  {cardDescription}
                 </Typography>
 
                 {/* CARD DATE | TIME CHIP  */}
@@ -300,7 +338,13 @@ const TodoCard = ({
                     <Chip
                       variant="outlined"
                       label={
-                        dueTime + " " + dueDate + " " + dueMonth + " " + dueYear
+                        dueTime2 +
+                        " " +
+                        date2.getDate() +
+                        " " +
+                        month[date2.getMonth()].substring(0, 3) +
+                        " " +
+                        date2.getFullYear()
                       }
                       color="secondary"
                       onClick={handleDateClick}
