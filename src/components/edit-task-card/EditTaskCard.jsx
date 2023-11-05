@@ -6,6 +6,9 @@ import "./editTaskCard.css";
 // FONT
 import "@fontsource/inter/"; // Specify weight
 
+// IMPORT SERVICES
+import { BASE_URL } from "../../services/helper";
+
 // IMPORTED LOCAL CONTEXTS
 import { TodoCardContext } from "../../components/contexts/TodoCardContext";
 import { TodoAppContext } from "../contexts/TodoAppContext";
@@ -24,8 +27,16 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
+import axios from "axios";
 
-const EditTaskCard = ({ taskTitle, taskDescription, dueDateTime }) => {
+const EditTaskCard = ({
+  _id,
+  title,
+  description,
+  dueDateTime,
+  priority,
+  progress,
+}) => {
   // TODO-CARD EDIT BUTTON CONTEXT
   const {
     toggleEditTaskButton,
@@ -42,14 +53,14 @@ const EditTaskCard = ({ taskTitle, taskDescription, dueDateTime }) => {
   const [editedDueTime, setEditedDueTime] = React.useState(dueDateTime);
 
   // TITLE STATE
-  const [title, setTitle] = useState(taskTitle);
+  const [thisTitle, setTitle] = useState(title);
 
   function handleTitle(e) {
     setTitle(e.target.value);
   }
 
   // DESCRIPOTION STATE
-  const [description, setDescription] = useState(taskDescription);
+  const [thisDescription, setDescription] = useState(description);
 
   function handleDescription(e) {
     setDescription(e.target.value);
@@ -73,13 +84,22 @@ const EditTaskCard = ({ taskTitle, taskDescription, dueDateTime }) => {
   // SAVE CLICK HANDLER
   const handleSaveClick = () => {
     setIsMouseEntered(false);
-    setCardTitle(title);
-    setCardDescription(description);
+    setCardTitle(thisTitle);
+    setCardDescription(thisDescription);
     setCardDueDateTime(editedDueTime);
     toggleEditTaskButton();
     setAlertMessage("The task was saved successfully!");
     setAlertSeverity("success");
     setSnackbarOpen(true);
+    axios
+      .patch(BASE_URL + "/api/updatetodo", {
+        _id,
+        thisTitle,
+        thisDescription,
+        editedDueTime,
+      })
+      .then((res) => {})
+      .catch((err) => {});
   };
 
   return (
@@ -119,7 +139,7 @@ const EditTaskCard = ({ taskTitle, taskDescription, dueDateTime }) => {
                 maxRows={4}
                 variant="standard"
                 sx={{ marginTop: ".5rem" }}
-                value={description}
+                value={thisDescription}
                 onChange={handleDescription}
               />
             </div>
@@ -159,7 +179,7 @@ const EditTaskCard = ({ taskTitle, taskDescription, dueDateTime }) => {
                   color="primary"
                   onClick={handleSaveClick}
                   sx={{ fontWeight: 600 }}
-                  disabled={title === ""}
+                  disabled={thisTitle === ""}
                 >
                   Save
                 </Button>

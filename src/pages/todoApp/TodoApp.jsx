@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // FONT
 import "@fontsource/inter/"; // Specify weight
@@ -8,6 +9,9 @@ import "./todoApp.css";
 
 // IMPORTED LOCAL CONTEXTS
 import { TodoAppContext } from "../../components/contexts/TodoAppContext";
+
+// IMPORT SERVICES
+import { BASE_URL } from "../../services/helper";
 
 // IMPORTED LOCAL COMPONENTS
 import AddTaskButton from "../../components/add-task-button-group/AddTaskButton";
@@ -33,6 +37,7 @@ import Toolbar from "@mui/material/Toolbar";
 
 // ICONS
 import TuneIcon from "@mui/icons-material/Tune";
+import axios from "axios";
 
 // GLOBAL VARIABLES
 const drawerWidth = 240;
@@ -84,6 +89,33 @@ function TodoApp() {
         contrastText: "#fff",
       },
     },
+  });
+
+  const email = localStorage.getItem("email");
+  useEffect(() => {
+    const loadAllTodos = async () => {
+      await axios
+        .get(BASE_URL + "/api/gettodo", {
+          params: {
+            email: email,
+          },
+        })
+        .then((res) => {
+          setAllTodos(res.data.allTodos);
+        })
+        .catch((err) => {});
+    };
+    loadAllTodos();
+  }, [email]);
+
+  console.log(allTodos);
+
+  // If not logged in navigate to the home page
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("email")) {
+      navigate("/");
+    }
   });
 
   return (
@@ -163,17 +195,16 @@ function TodoApp() {
               <div className="todo-child-container">
                 {allTodos.length ? (
                   allTodos.map((details) => {
+                    console.log("details => ", details);
                     return (
                       <TodoCard
-                        key={details.id}
-                        id={details.id}
-                        taskTitle={details.title}
-                        taskDescription={details.description}
-                        dueTime={details.dueTime}
-                        dueDate={details.dueDate}
-                        dueMonth={details.dueMonth}
-                        dueYear={details.dueYear}
+                        key={details._id}
+                        _id={details._id}
+                        title={details.title}
+                        description={details.description}
                         dueDateTime={details.dueDateTime}
+                        priority={details.priority}
+                        progress={details.progress}
                       />
                     );
                   })

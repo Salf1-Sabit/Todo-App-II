@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
 
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-
 // CSS
 import "./todoCard.css";
+
+// IMPORT SERVICES
+import { BASE_URL } from "../../services/helper";
 
 // IMPORTED LOCAL COMPONENTS
 import Toastifier from "../toastifier/Toastifier";
@@ -20,6 +20,8 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
 import {
   Checkbox,
   FormControlLabel,
@@ -49,6 +51,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import FlagIcon from "@mui/icons-material/Flag";
 import { month } from "../../data/currentDateData";
+import axios from "axios";
 
 // MODAL STYLE
 const style = {
@@ -71,28 +74,28 @@ const priorityColors = [
 ];
 
 const TodoCard = ({
-  id,
-  taskTitle,
-  taskDescription,
-  dueTime,
-  dueDate,
-  dueMonth,
-  dueYear,
+  _id,
+  title,
+  description,
   dueDateTime,
+  createdOn,
+  priority,
+  progress,
 }) => {
+  console.log("CREATED ID: ", _id);
   // CARD STATES
-  const [cardTitle, setCardTitle] = useState(taskTitle);
-  const [cardDescription, setCardDescription] = useState(taskDescription);
+  const [cardTitle, setCardTitle] = useState(title);
+  const [cardDescription, setCardDescription] = useState(description);
   const [cardDueDateTime, setCardDueDateTime] = useState(dueDateTime);
-
-  console.log(
-    "FROM TODOCARD: " +
-      cardTitle +
-      " " +
-      cardDescription +
-      " " +
-      cardDueDateTime
-  );
+  const date = new Date(dueDateTime);
+  const dueTime = date.toLocaleString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  });
+  const dueDate = date.getDate();
+  const dueMonth = month[date.getMonth()];
+  const dueYear = date.getFullYear();
 
   // DESTRUCTURE THE DATE NORMAL FORM
   const date2 = new Date(cardDueDateTime);
@@ -106,7 +109,9 @@ const TodoCard = ({
   const [value, setValue] = React.useState(0);
 
   // PRIORITY STATE
-  const [priorityValue, setPriorityValue] = React.useState(4);
+  const [priorityValue, setPriorityValue] = React.useState(
+    priority ? priority : 4
+  );
 
   const handleSliderChange = (event, newValue) => {
     setValue(newValue);
@@ -157,7 +162,7 @@ const TodoCard = ({
   const deleteTodos = () => {
     // setSnackbarOpen(true);
     // console.log(snackbarOpen);
-    const newAllTodos = allTodos.filter((todo) => todo.id !== id);
+    const newAllTodos = allTodos.filter((todo) => todo._id !== _id);
     setAllTodos(newAllTodos);
   };
 
@@ -181,6 +186,14 @@ const TodoCard = ({
     setAlertSeverity("success");
     setAlertMessage("The task was deleted successfully!");
     setSnackbarOpen(true);
+    axios
+      .delete(BASE_URL + `/api/deletetodo/${_id}`, {
+        params: {
+          _id: _id,
+        },
+      })
+      .then((res) => {})
+      .catch((err) => {});
   };
 
   // CARD MOUSE ENTERED EVENT HANDLER
@@ -228,6 +241,68 @@ const TodoCard = ({
     handleDeleteDialogOpen();
   };
 
+  // HANDLE PRIORITY CHANGE 1
+  const handlePriorityChange1 = (e) => {
+    setPriorityValue(e.target.value);
+    console.log("ID: ", _id);
+    console.log("handlePriorityChange1: ", e.target.value);
+    axios
+      .patch(BASE_URL + "/api/updatetodo", {
+        _id,
+        priorityValue: e.target.value,
+      })
+      .then((res) => {})
+      .catch((err) => {});
+  };
+
+  // HANDLE PRIORITY CHANGE 2
+  const handlePriorityChange2 = () => {
+    setPriorityValue(1);
+    axios
+      .patch(BASE_URL + "/api/updatetodo", {
+        _id,
+        priorityValue: 1,
+      })
+      .then((res) => {})
+      .catch((err) => {});
+  };
+
+  // HANDLE PRIORITY CHANGE 3
+  const handlePriorityChange3 = () => {
+    setPriorityValue(2);
+    axios
+      .patch(BASE_URL + "/api/updatetodo", {
+        _id,
+        priorityValue: 2,
+      })
+      .then((res) => {})
+      .catch((err) => {});
+  };
+
+  // HANDLE PRIORITY CHANGE 4
+  const handlePriorityChange4 = async () => {
+    await setPriorityValue(3);
+    await axios
+      .patch(BASE_URL + "/api/updatetodo", {
+        _id,
+        priorityValue: 3,
+      })
+      .then((res) => {})
+      .catch((err) => {});
+  };
+
+  // HANDLE PRIORITY CHANGE 5
+  const handlePriorityChange5 = () => {
+    setPriorityValue(4);
+    axios
+      .patch(BASE_URL + "/api/updatetodo", {
+        _id: _id,
+        priorityValue: 4,
+      })
+      .then((res) => {})
+      .catch((err) => {});
+  };
+
   return (
     <div>
       <TodoCardContext.Provider
@@ -242,14 +317,16 @@ const TodoCard = ({
         <ThemeProvider theme={theme}>
           {editTaskButtonIsOpen ? (
             <EditTaskCard
-              id={id}
-              taskTitle={cardTitle}
-              taskDescription={cardDescription}
+              _id={_id}
+              title={cardTitle}
+              description={cardDescription}
               dueTime={dueTime}
               dueDate={dueDate}
               dueMonth={dueMonth}
               dueYear={dueYear}
               dueDateTime={cardDueDateTime}
+              priority={priority}
+              progress={progress}
             />
           ) : (
             <Card
@@ -318,25 +395,25 @@ const TodoCard = ({
                           <Tooltip title="P1">
                             <FlagIcon
                               sx={{ color: "#dc2f02" }}
-                              onClick={() => setPriorityValue(1)}
+                              onClick={handlePriorityChange2}
                             />
                           </Tooltip>
                           <Tooltip title="P2">
                             <FlagIcon
                               sx={{ color: "#f48c06" }}
-                              onClick={() => setPriorityValue(2)}
+                              onClick={handlePriorityChange3}
                             />
                           </Tooltip>
                           <Tooltip title="P3">
                             <FlagIcon
                               sx={{ color: "#5390d9" }}
-                              onClick={() => setPriorityValue(3)}
+                              onClick={handlePriorityChange4}
                             />
                           </Tooltip>
                           <Tooltip title="P4">
                             <FlagIcon
                               sx={{ color: "#ced4da" }}
-                              onClick={() => setPriorityValue(4)}
+                              onClick={handlePriorityChange5}
                             />
                           </Tooltip>
                         </MenuItem>
@@ -404,7 +481,7 @@ const TodoCard = ({
                   direction="row"
                   spacing={1}
                 >
-                  {date2.getFullYear() !== 1970 && (
+                  {date2.getFullYear() > 1970 && (
                     <Chip
                       variant="outlined"
                       label={
@@ -425,9 +502,9 @@ const TodoCard = ({
                   <Chip
                     onClick={handleOpen}
                     variant="outlined"
-                    label={`Progress: ${value}%`}
+                    label={`Progress: ${progress}%`}
                     color="success"
-                    aria-describedby={id}
+                    aria-describedby={_id}
                   />
                   <Modal
                     open={open}
@@ -441,20 +518,22 @@ const TodoCard = ({
                         variant="h6"
                         component="h2"
                       >
-                        Progress: {value}%
+                        Progress: {progress}%
                       </Typography>
                       <Box sx={{ width: 250 }}>
                         <Grid container spacing={2} alignItems="center">
                           <Grid item xs>
                             <Slider
-                              value={typeof value === "number" ? value : 0}
+                              value={
+                                typeof progress === "number" ? progress : 0
+                              }
                               onChange={handleSliderChange}
                               aria-labelledby="input-slider"
                             />
                           </Grid>
                           <Grid item>
                             <Input
-                              value={value}
+                              value={progress}
                               size="small"
                               onChange={handleInputChange}
                               onBlur={handleBlur}
@@ -491,7 +570,7 @@ const TodoCard = ({
                         priorityColors[priorityValue - 1].b
                       }, 0.1)`,
                     }}
-                    aria-describedby={id}
+                    aria-describedby={_id}
                   />
                   <Modal
                     open={priorityOpen}
@@ -516,7 +595,7 @@ const TodoCard = ({
                           id="demo-select-small"
                           value={priorityValue}
                           label="Age"
-                          onChange={(e) => setPriorityValue(e.target.value)}
+                          onChange={handlePriorityChange1}
                         >
                           <MenuItem value={1}>
                             <IconButton>

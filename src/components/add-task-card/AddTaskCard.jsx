@@ -3,6 +3,9 @@ import React, { useState, useContext } from "react";
 // CSS
 import "./addTaskCard.css";
 
+// IMPORT SERVICES
+import { BASE_URL } from "../../services/helper";
+
 // FONT
 import "@fontsource/inter/"; // Specify weight
 
@@ -28,8 +31,12 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
+import axios from "axios";
 
 const AddTaskCard = ({ taskTitle, taskDescription }) => {
+  // TASK ID
+  const [_id, setId] = useState();
+
   // DUE-DATE-TIME STATE
   const [dueDateTime, setDueDateTime] = React.useState(null);
 
@@ -103,11 +110,21 @@ const AddTaskCard = ({ taskTitle, taskDescription }) => {
         date.getFullYear()
     );
 
+    const email = localStorage.getItem("email");
+    const desc = description;
+    axios
+      .post(BASE_URL + "/api/addtodo", { email, title, desc, dueDateTime })
+      .then((res) => {
+        console.log("From addTODORESPONSE: ", res.data.todo.todo._id);
+        setId(res.data.todo.todo._id);
+      })
+      .catch((err) => {});
+
     // UPDATE THE TODO LIST
     setAllTodos([
       ...allTodos,
       {
-        id: now,
+        _id: _id,
         title: title,
         description: description,
         dueTime: dueTime,

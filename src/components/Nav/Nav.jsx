@@ -23,7 +23,7 @@ import Button from "@mui/material/Button";
 import BrandName from "../brand-name/BrandName";
 
 const drawerWidth = 240;
-const navItems = ["today", "home", "pricing", "contact"];
+const navItems = ["pricing", "contact"];
 
 function DrawerAppBar(props) {
   const { window } = props;
@@ -54,6 +54,19 @@ function DrawerAppBar(props) {
       </Typography>
       <Divider />
       <List>
+        <ListItem disablePadding>
+          <ListItemButton
+            to={"/"}
+            component={Link}
+            sx={{ textAlign: "center" }}
+            variant="contained"
+          >
+            <ListItemText
+              sx={{ color: "primary.main", textTransform: "capitalize" }}
+              primary={"Home"}
+            />
+          </ListItemButton>
+        </ListItem>
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
             <ListItemButton
@@ -62,7 +75,7 @@ function DrawerAppBar(props) {
               sx={{ textAlign: "center" }}
             >
               <ListItemText
-                sx={{ textTransform: "capitalize" }}
+                sx={{ color: "primary.main", textTransform: "capitalize" }}
                 primary={item}
               />
             </ListItemButton>
@@ -77,7 +90,7 @@ function DrawerAppBar(props) {
           >
             <ListItemText
               sx={{ color: "primary.main", textTransform: "capitalize" }}
-              primary={"Sign up"}
+              primary={"Log in"}
             />
           </ListItemButton>
         </ListItem>
@@ -116,6 +129,26 @@ function DrawerAppBar(props) {
               TODO HIVE<span style={{ color: "#5762e3" }}>.</span>
             </Typography>
 
+            <Box
+              sx={{
+                display: { xs: "none", sm: "block" },
+              }}
+            >
+              <Button
+                to="/"
+                component={Link}
+                sx={{
+                  textTransform: "uppercase",
+                  fontWeight: 400,
+                  fontSize: 16,
+                  fontFamily: "Inter",
+                  color: "#000",
+                }}
+              >
+                Home
+              </Button>
+            </Box>
+
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
               {navItems.map((item) => (
                 <Button
@@ -123,9 +156,9 @@ function DrawerAppBar(props) {
                   component={Link}
                   key={item}
                   sx={{
-                    textTransform: "capitalize",
+                    textTransform: "uppercase",
                     fontWeight: 400,
-                    fontSize: 18,
+                    fontSize: 16,
                     fontFamily: "Inter",
                     color: "#000",
                   }}
@@ -143,13 +176,13 @@ function DrawerAppBar(props) {
                 to="/login"
                 component={Link}
                 sx={{
-                  textTransform: "capitalize",
+                  textTransform: "uppercase",
                   fontWeight: 400,
-                  fontSize: 18,
+                  fontSize: 16,
                   fontFamily: "Inter",
-                  color: "primary.main",
                 }}
-                variant="outlined"
+                size="small"
+                variant="contained"
               >
                 Log In
               </Button>

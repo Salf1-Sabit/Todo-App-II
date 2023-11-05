@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "./appbar.css";
 import { NavLink } from "react-router-dom";
-
-import Person1 from "../../assets/images/person-2.jpg";
 
 // FONT
 import "@fontsource/inter/"; // Specify weight
@@ -18,6 +17,7 @@ import {
   Tooltip,
   createTheme,
   ThemeProvider,
+  Chip,
 } from "@mui/material";
 import { Avatar } from "@mui/material";
 import Divider from "@mui/material/Divider";
@@ -34,7 +34,7 @@ import WorkspacesIcon from "@mui/icons-material/Workspaces";
 import GroupsIcon from "@mui/icons-material/Groups";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import Menu from "@mui/material/Menu";
+import Menu, { MenuPaper } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MessageIcon from "@mui/icons-material/Message";
@@ -46,6 +46,9 @@ import { TodoAppContext } from "../../components/contexts/TodoAppContext";
 
 const drawerWidth = 240;
 const Appbar2 = (props) => {
+  // USER FULL NAME
+  const fullName = localStorage.getItem("fullName");
+
   //ADD BUTTON CONTEXT
   const { toggleAddTaskButton } = useContext(TodoAppContext);
 
@@ -82,6 +85,14 @@ const Appbar2 = (props) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  // HANDLE LOGOUT
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    setAnchorEl(null);
+    localStorage.removeItem("email");
+    navigate("/");
   };
 
   const { window } = props;
@@ -214,7 +225,7 @@ const Appbar2 = (props) => {
               >
                 <Avatar
                   alt="Remy Sharp"
-                  src={Person1}
+                  // src={Person1}
                   sx={{ width: 32, height: 32 }}
                 />
               </IconButton>
@@ -229,9 +240,11 @@ const Appbar2 = (props) => {
                 "aria-labelledby": "basic-button",
               }}
             >
+              <MenuItem sx={{ color: "primary.main" }}>{fullName}</MenuItem>
+              <Divider />
               <MenuItem onClick={handleClose}>Profile</MenuItem>
               <MenuItem onClick={handleClose}>My account</MenuItem>
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </div>
         </AppBar>

@@ -1,6 +1,6 @@
-import React from "react";
+import { React, useEffect } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // FONT
 import "@fontsource/inter/"; // Specify weight
@@ -40,6 +40,14 @@ const Home = () => {
     typography: {
       fontFamily: "Inter",
     },
+  });
+
+  // If still logged in navigate to the app
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("email")) {
+      navigate("/today");
+    }
   });
 
   return (

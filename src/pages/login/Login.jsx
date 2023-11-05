@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
+
+// CROSS PLATFORM RESOURCE SHARING
+import axios from "axios";
 
 // IMPORT CSS
 import "./login.css";
@@ -10,7 +13,11 @@ import "@fontsource/inter/"; // Specify weight
 import GoogleIcon from "../../assets/images/google.png";
 
 // IMPORT LOCAL COMPONENTS
+// import Toastifier2 from "../../components/toastifier/Toastifier2";
 import BrandName from "../../components/brand-name/BrandName";
+
+// IMPORT SERVICES
+import { BASE_URL } from "../../services/helper";
 
 // MUI COMPONENTS
 import {
@@ -21,6 +28,7 @@ import {
   createTheme,
 } from "@mui/material";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 // MUI THEME
 const theme = createTheme({
@@ -38,8 +46,37 @@ const theme = createTheme({
 });
 
 const Registration = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleLogin = () => {
+    axios
+      .post(BASE_URL + "/login", { email, password })
+      .then((res) => {
+        navigate("/today");
+        console.log(
+          "login response: " +
+            res.data.success +
+            " " +
+            res.data.id +
+            " " +
+            res.data.message
+        );
+        localStorage.setItem("email", res.data.email);
+        localStorage.setItem("fullName", res.data.fullName);
+      })
+      .catch((err) => {
+        navigate("/login");
+      });
+  };
+
+  // If still logged in navigate to the app
+  useEffect(() => {
+    if (localStorage.getItem("email")) {
+      navigate("/today");
+    }
+  });
 
   return (
     <ThemeProvider theme={theme}>
@@ -91,14 +128,19 @@ const Registration = () => {
             <div className="forgot-password">Forgot password?</div>
           </div>
           <div className="register-footer">
-            <Button>Create account</Button>
+            <Link to="/register">
+              <Button>Create account</Button>
+            </Link>
             <Button
               className="register-button"
               variant="contained"
+              onClick={handleLogin}
               disableElevation
             >
               Sign In
             </Button>
+
+            {/* <Toastifier2 /> */}
           </div>
         </div>
       </div>
