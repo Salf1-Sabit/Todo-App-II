@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 // CSS
 import "./todoCard.css";
@@ -7,7 +7,6 @@ import "./todoCard.css";
 import { BASE_URL } from "../../services/helper";
 
 // IMPORTED LOCAL COMPONENTS
-import Toastifier from "../toastifier/Toastifier";
 import EditTaskCard from "../edit-task-card/EditTaskCard";
 
 // IMPORTED LOCAL CONTEXTS
@@ -50,6 +49,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import FlagIcon from "@mui/icons-material/Flag";
+
 import { month } from "../../data/currentDateData";
 import axios from "axios";
 
@@ -81,13 +81,14 @@ const TodoCard = ({
   createdOn,
   priority,
   progress,
+  cardStatus,
 }) => {
-  console.log("CREATED ID: ", _id);
   // CARD STATES
   const [cardTitle, setCardTitle] = useState(title);
   const [cardDescription, setCardDescription] = useState(description);
   const [cardDueDateTime, setCardDueDateTime] = useState(dueDateTime);
-  const date = new Date(dueDateTime);
+
+  const date = new Date(cardDueDateTime);
   const dueTime = date.toLocaleString("en-US", {
     hour: "numeric",
     minute: "numeric",
@@ -97,16 +98,8 @@ const TodoCard = ({
   const dueMonth = month[date.getMonth()];
   const dueYear = date.getFullYear();
 
-  // DESTRUCTURE THE DATE NORMAL FORM
-  const date2 = new Date(cardDueDateTime);
-  const dueTime2 = date2.toLocaleString("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-  });
-
   // PROGRESS STATE
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(progress ? progress : 0);
 
   // PRIORITY STATE
   const [priorityValue, setPriorityValue] = React.useState(
@@ -115,10 +108,24 @@ const TodoCard = ({
 
   const handleSliderChange = (event, newValue) => {
     setValue(newValue);
+    axios
+      .patch(BASE_URL + "/api/updatetodo", {
+        _id,
+        progress: newValue,
+      })
+      .then((res) => {})
+      .catch((err) => {});
   };
 
   const handleInputChange = (event) => {
     setValue(event.target.value === "" ? 0 : Number(event.target.value));
+    axios
+      .patch(BASE_URL + "/api/updatetodo", {
+        _id,
+        progress: event.target.value === "" ? 0 : Number(event.target.value),
+      })
+      .then((res) => {})
+      .catch((err) => {});
   };
 
   const handleBlur = () => {
@@ -160,8 +167,6 @@ const TodoCard = ({
 
   // DELETE TODOS ACTION
   const deleteTodos = () => {
-    // setSnackbarOpen(true);
-    // console.log(snackbarOpen);
     const newAllTodos = allTodos.filter((todo) => todo._id !== _id);
     setAllTodos(newAllTodos);
   };
@@ -244,8 +249,6 @@ const TodoCard = ({
   // HANDLE PRIORITY CHANGE 1
   const handlePriorityChange1 = (e) => {
     setPriorityValue(e.target.value);
-    console.log("ID: ", _id);
-    console.log("handlePriorityChange1: ", e.target.value);
     axios
       .patch(BASE_URL + "/api/updatetodo", {
         _id,
@@ -303,6 +306,34 @@ const TodoCard = ({
       .catch((err) => {});
   };
 
+  // HANDLE TODO STATUS
+
+  const [todoStatus, setTodoStatus] = useState(cardStatus);
+  const handleTodoStatus = (e) => {
+    setTodoStatus(e.target.checked);
+    console.log("e.target.checked: ", todoStatus);
+
+    if (todoStatus === false) {
+      setAlertMessage("To-do completed! 🎉");
+      setAlertSeverity("success");
+      setSnackbarOpen(true);
+    } else {
+      setAlertMessage("To-do incomplete. Give it another go!");
+      setAlertSeverity("warning");
+      setSnackbarOpen(true);
+    }
+  };
+
+  useEffect(() => {
+    axios
+      .patch(BASE_URL + "/api/updatetodo", {
+        _id,
+        todoStatus,
+      })
+      .then((res) => {})
+      .catch((err) => {});
+  }, [todoStatus, _id]);
+
   return (
     <div>
       <TodoCardContext.Provider
@@ -344,7 +375,14 @@ const TodoCard = ({
                 {/* CARD HEADER  */}
                 <div className="card-header">
                   <FormControlLabel
-                    control={<Checkbox color="success" />}
+                    control={
+                      <Checkbox
+                        value={"hello"}
+                        color="success"
+                        checked={todoStatus}
+                        onChange={handleTodoStatus}
+                      />
+                    }
                     label={cardTitle}
                   />
 
@@ -422,7 +460,6 @@ const TodoCard = ({
                           <typography>Delete</typography>
                         </MenuItem>
                       </Menu>
-                      <Toastifier />
 
                       {/* DELETE DIALOG */}
                       <div>
@@ -481,17 +518,17 @@ const TodoCard = ({
                   direction="row"
                   spacing={1}
                 >
-                  {date2.getFullYear() > 1970 && (
+                  {date.getFullYear() > 1970 && (
                     <Chip
                       variant="outlined"
                       label={
-                        dueTime2 +
+                        dueTime +
                         " " +
-                        date2.getDate() +
+                        date.getDate() +
                         " " +
-                        month[date2.getMonth()].substring(0, 3) +
+                        month[date.getMonth()].substring(0, 3) +
                         " " +
-                        date2.getFullYear()
+                        date.getFullYear()
                       }
                       color="secondary"
                       onClick={handleDateClick}
@@ -502,7 +539,7 @@ const TodoCard = ({
                   <Chip
                     onClick={handleOpen}
                     variant="outlined"
-                    label={`Progress: ${progress}%`}
+                    label={`Progress: ${value}%`}
                     color="success"
                     aria-describedby={_id}
                   />
@@ -518,22 +555,20 @@ const TodoCard = ({
                         variant="h6"
                         component="h2"
                       >
-                        Progress: {progress}%
+                        Progress: {value}%
                       </Typography>
                       <Box sx={{ width: 250 }}>
                         <Grid container spacing={2} alignItems="center">
                           <Grid item xs>
                             <Slider
-                              value={
-                                typeof progress === "number" ? progress : 0
-                              }
+                              value={typeof value === "number" ? value : 0}
                               onChange={handleSliderChange}
                               aria-labelledby="input-slider"
                             />
                           </Grid>
                           <Grid item>
                             <Input
-                              value={progress}
+                              value={value}
                               size="small"
                               onChange={handleInputChange}
                               onBlur={handleBlur}

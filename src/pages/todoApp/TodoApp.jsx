@@ -34,10 +34,10 @@ import {
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
-
 // ICONS
 import TuneIcon from "@mui/icons-material/Tune";
 import axios from "axios";
+import Toastifier from "../../components/toastifier/Toastifier";
 
 // GLOBAL VARIABLES
 const drawerWidth = 240;
@@ -51,6 +51,16 @@ const hour = date.getHours();
 const minute = date.getMinutes();
 
 function TodoApp() {
+  // HANDLE PAGE TITLE
+  const [pageTitle, setPageTitle] = useState("Today");
+
+  // EMPTY PAGE CARD STATE
+  const [emptyPageTitle, setEmptyPageTitle] = useState("Congratulations");
+  const [emptyPageDescription, setEmptyPageDescription] = useState(
+    "Empty to-do list, full potential. Use this moment to dream,   plan, and set new goals. The journey of a thousand tasks   begins with this first step — be ready for tomorrow's adventures!"
+  );
+  const [emptyPageCardSeverity, setEmptyPageCardSeverity] = useState("success");
+
   // SNACKBAR UTILITIES
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
@@ -92,6 +102,7 @@ function TodoApp() {
   });
 
   const email = localStorage.getItem("email");
+  // SETTING UNCOMPLETED TODOS
   useEffect(() => {
     const loadAllTodos = async () => {
       await axios
@@ -108,8 +119,6 @@ function TodoApp() {
     loadAllTodos();
   }, [email]);
 
-  console.log(allTodos);
-
   // If not logged in navigate to the home page
   const navigate = useNavigate();
   useEffect(() => {
@@ -117,10 +126,10 @@ function TodoApp() {
       navigate("/");
     }
   });
-
   return (
     <TodoAppContext.Provider
       value={{
+        setPageTitle,
         toggleAddTaskButton,
         allTodos,
         setAllTodos,
@@ -130,12 +139,17 @@ function TodoApp() {
         setAlertMessage,
         alertSeverity,
         setAlertSeverity,
+        setEmptyPageTitle,
+        setEmptyPageDescription,
+        setEmptyPageCardSeverity,
       }}
     >
       <ThemeProvider theme={theme}>
         <Box sx={{ display: "flex" }}>
           <CssBaseline />
           <Appbar />
+
+          {/* Main Background  */}
           <Box
             component="main"
             sx={{
@@ -149,11 +163,12 @@ function TodoApp() {
             }}
           >
             <Toolbar />
+
             <div className="todo-parent-container">
               <div className="page-header">
                 <div className="page-heading">
                   <h3>
-                    Today
+                    {pageTitle}
                     <span className="current-date">
                       <span>{" " + hour + ":"}</span>
                       <span>{minute}</span>
@@ -205,16 +220,14 @@ function TodoApp() {
                         dueDateTime={details.dueDateTime}
                         priority={details.priority}
                         progress={details.progress}
+                        cardStatus={details.todoStatus}
                       />
                     );
                   })
                 ) : (
-                  <Alert severity="success">
-                    <AlertTitle>Congratulations</AlertTitle>
-                    Empty to-do list, full potential. Use this moment to dream,
-                    plan, and set new goals. The journey of a thousand tasks
-                    begins with this first step —{" "}
-                    <strong>be ready for tomorrow's adventures!</strong>
+                  <Alert severity={emptyPageCardSeverity}>
+                    <AlertTitle>{emptyPageTitle}</AlertTitle>
+                    {emptyPageDescription}
                   </Alert>
                 )}
                 {!addTaskButtonIsOpen ? (
@@ -225,6 +238,7 @@ function TodoApp() {
               </div>
             </div>
           </Box>
+          <Toastifier />
         </Box>
       </ThemeProvider>
     </TodoAppContext.Provider>

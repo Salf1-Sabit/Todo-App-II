@@ -9,9 +9,6 @@ import { BASE_URL } from "../../services/helper";
 // FONT
 import "@fontsource/inter/"; // Specify weight
 
-// IMPORTED LOCAL COMPONENTS
-import Toastifier from "../toastifier/Toastifier";
-
 // IMPORTED LOCAL CONTEXTS
 import { TodoAppContext } from "../../components/contexts/TodoAppContext";
 
@@ -220,7 +217,6 @@ const AddTaskCard = ({ taskTitle, taskDescription }) => {
                   Add task
                 </Button>
               </CardActions>
-              <Toastifier />
             </div>
           </div>
         </Card>

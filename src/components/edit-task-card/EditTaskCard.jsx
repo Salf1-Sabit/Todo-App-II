@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import dayjs from "dayjs";
 
 // CSS
 import "./editTaskCard.css";
@@ -29,14 +30,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import axios from "axios";
 
-const EditTaskCard = ({
-  _id,
-  title,
-  description,
-  dueDateTime,
-  priority,
-  progress,
-}) => {
+const EditTaskCard = ({ _id, title, description, dueDateTime }) => {
   // TODO-CARD EDIT BUTTON CONTEXT
   const {
     toggleEditTaskButton,
@@ -128,7 +122,7 @@ const EditTaskCard = ({
                 maxRows={4}
                 multiline
                 variant="standard"
-                value={title}
+                value={thisTitle}
                 onChange={handleTitle}
                 required
               />
@@ -155,8 +149,8 @@ const EditTaskCard = ({
                     <DateTimePicker
                       label="Due Date and Time"
                       slotProps={{ textField: { size: "small" } }}
-                      value={editedDueTime}
-                      onChange={(newValue) => setEditedDueTime(newValue)}
+                      value={dayjs(editedDueTime)}
+                      onChange={(newVal) => setEditedDueTime(dayjs(newVal))}
                       sx={{ width: 2 / 6 }}
                     />
                   </DemoContainer>
