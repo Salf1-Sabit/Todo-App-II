@@ -108,8 +108,8 @@ const Admin = () => {
               marginTop: "55px",
             }}
           >
-            <Typography variant="h5" fontWeight={400}>
-              Welcome, <span style={{ fontWeight: "600" }}>Admin</span>
+            <Typography variant="h6" fontWeight={700}>
+              Welcome, Admin
             </Typography>
 
             {/* TOP -> SMALL CARDS  */}
@@ -154,22 +154,22 @@ const Admin = () => {
                   series={[
                     {
                       data: [4, 8, 10, 6, 3, 2, 9],
-                      color: "#aca9bb",
+                      color: "#3d5d9f",
                       label: "Registration",
                     },
                     {
                       data: [2, 5, 3, 7, 9, 3, 7],
-                      color: "#474554",
+                      color: "#7E5DE3",
                       label: "Login",
                     },
                     {
                       data: [7, 11, 4, 5, 7, 6, 10],
-                      color: "#518071",
+                      color: "#57e3d1",
                       label: "Task created",
                     },
                     {
                       data: [6, 9, 3, 7, 12, 4, 6],
-                      color: "#ff666a",
+                      color: "#3d9f92",
                       label: "Task completed",
                     },
                   ]}
@@ -189,19 +189,19 @@ const Admin = () => {
                           id: 0,
                           value: totalTasks,
                           label: "Total Task",
-                          color: "#474554",
+                          color: "#3d5d9f",
                         },
                         {
                           id: 1,
                           value: totalCompletedTasks,
                           label: "Completed",
-                          color: "#518071",
+                          color: "#7e5de3",
                         },
                         {
                           id: 2,
                           value: totalTotalIncompletedTasks,
                           label: "Incompleted",
-                          color: "#ff666a",
+                          color: "#57e3d1",
                         },
                       ],
                       highlightScope: { faded: "global", highlighted: "item" },
@@ -223,8 +223,8 @@ const Admin = () => {
                     width={400}
                     height={300}
                     series={[
-                      { data: pData, label: "Registration", color: "#aca9bb" },
-                      { data: uData, label: "Login", color: "#474554" },
+                      { data: pData, label: "Registration", color: "#7e5de3" },
+                      { data: uData, label: "Login", color: "#3d5d9f" },
                     ]}
                     xAxis={[
                       {

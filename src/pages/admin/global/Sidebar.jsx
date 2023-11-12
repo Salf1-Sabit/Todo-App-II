@@ -17,12 +17,15 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
+// MUI ICON
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleIcon from "@mui/icons-material/People";
 import FeedbackIcon from "@mui/icons-material/Feedback";
 import HelpIcon from "@mui/icons-material/Help";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+
 import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
@@ -150,7 +153,7 @@ export default function Sidebar() {
         </DrawerHeader>
         <Divider />
         <List>
-          {/* Homw  */}
+          {/* Home  */}
           <ListItem
             disablePadding
             sx={{ display: "block" }}
@@ -175,6 +178,7 @@ export default function Sidebar() {
               <ListItemText primary={"Home"} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
+
           {/* Users  */}
           <ListItem
             disablePadding
@@ -198,6 +202,32 @@ export default function Sidebar() {
                 <PeopleIcon />
               </ListItemIcon>
               <ListItemText primary={"Users"} sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+
+          {/* Tasks  */}
+          <ListItem
+            disablePadding
+            sx={{ display: "block" }}
+            onClick={() => navigate("/admin/tasks")}
+          >
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <AssignmentIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Tasks"} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
         </List>

@@ -13,7 +13,7 @@
   border-radius: 5px;
   width: 100%;
   color: #fff;
-  transition: 800ms;
+  transition: 100ms;
 }
 
 .small-card > .small-text {
@@ -26,23 +26,23 @@
 }
 
 .small-card:nth-child(1) {
-  background-color: #aca9bb;
+  background-color: #3d5d9f;
 }
 
 .small-card:nth-child(2) {
-  background-color: #474554;
+  background-color: #7e5de3;
 }
 
 .small-card:nth-child(3) {
-  background-color: #518071;
+  background-color: #5762e3;
 }
 
 .small-card:nth-child(4) {
-  background-color: #ff666a;
+  background-color: #3d9f92;
 }
 
 .small-card:hover {
-  background-color: #5762e3;
+  scale: 1.01;
 }
 
 .bottom-table-charts {

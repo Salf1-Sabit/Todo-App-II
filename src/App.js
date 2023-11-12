@@ -10,6 +10,7 @@ import About from "./pages/about/About";
 import Contact from "./pages/contact/Contact";
 import Registration from "./pages/registration/Registration";
 import Users from "./pages/admin/right-side/Users";
+import Tasks from "./pages/admin/right-side/Tasks";
 import MonitorTasks from "./pages/admin/right-side/MonitorTasks";
 import Analytics from "./pages/admin/right-side/Analytics";
 import Feedback from "./pages/admin/right-side/Feedback";
@@ -33,6 +34,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/users" element={<Users />} />
+          <Route path="/admin/tasks" element={<Tasks />} />
           <Route path="/admin/monitor-tasks" element={<MonitorTasks />} />
           <Route path="/admin/analytics" element={<Analytics />} />
           <Route path="/admin/feedback" element={<Feedback />} />

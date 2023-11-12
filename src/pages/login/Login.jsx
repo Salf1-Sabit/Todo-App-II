@@ -13,7 +13,6 @@ import "@fontsource/inter/"; // Specify weight
 import GoogleIcon from "../../assets/images/google.png";
 
 // IMPORT LOCAL COMPONENTS
-// import Toastifier2 from "../../components/toastifier/Toastifier2";
 import BrandName from "../../components/brand-name/BrandName";
 
 // IMPORT SERVICES
@@ -45,7 +44,11 @@ const theme = createTheme({
   },
 });
 
+let date = new Date();
+let curTime = new Date(date.getTime());
+
 const Registration = () => {
+  console.log("CUR TIME : ", curTime);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -59,16 +62,12 @@ const Registration = () => {
         } else {
           navigate("/today");
         }
-        console.log(
-          "login response: " +
-            res.data.success +
-            " " +
-            res.data.id +
-            " " +
-            res.data.message
-        );
         localStorage.setItem("email", res.data.email);
         localStorage.setItem("fullName", res.data.fullName);
+        axios
+          .patch(BASE_URL + "/api/updateuser", { email, curTime })
+          .then((res) => {})
+          .catch((err) => {});
       })
       .catch((err) => {
         navigate("/login");
