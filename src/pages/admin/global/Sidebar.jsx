@@ -105,13 +105,19 @@ export default function Sidebar() {
     setOpen(false);
   };
 
+  // HANDLE LOGOUT
+  const handleLogout = () => {
+    localStorage.removeItem("email");
+    navigate("/");
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
         position="fixed"
         open={open}
-        sx={{ backgroundColor: "#F8F9FA", color: "#101418" }}
+        sx={{ backgroundColor: "#5762E3", color: "white" }}
       >
         <Toolbar>
           <IconButton
@@ -133,7 +139,7 @@ export default function Sidebar() {
       </AppBar>
 
       <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
+        <DrawerHeader sx={{ display: "flex", alignItems: "center" }}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
@@ -294,6 +300,7 @@ export default function Sidebar() {
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
               }}
+              onClick={handleLogout}
             >
               <ListItemIcon
                 sx={{

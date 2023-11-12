@@ -52,7 +52,7 @@ const minute = date.getMinutes();
 
 function TodoApp() {
   // HANDLE PAGE TITLE
-  const [pageTitle, setPageTitle] = useState("Today");
+  const [pageTitle, setPageTitle] = useState("Incomplete");
 
   // EMPTY PAGE CARD STATE
   const [emptyPageTitle, setEmptyPageTitle] = useState("Congratulations");
@@ -124,8 +124,11 @@ function TodoApp() {
   useEffect(() => {
     if (!localStorage.getItem("email")) {
       navigate("/");
+    } else if (localStorage.getItem("email") === "admin@gmail.com") {
+      navigate("/admin");
     }
   });
+
   return (
     <TodoAppContext.Provider
       value={{
@@ -164,7 +167,18 @@ function TodoApp() {
           >
             <Toolbar />
 
+            {/* INCOMPLETED TODOS  */}
             <div className="todo-parent-container">
+              <div style={{ marginBottom: "1rem" }}>
+                {!addTaskButtonIsOpen ? (
+                  <AddTaskCard taskTitle={""} taskDescription={""} />
+                ) : (
+                  <Divider>
+                    <AddTaskButton />
+                  </Divider>
+                )}
+              </div>
+
               <div className="page-header">
                 <div className="page-heading">
                   <h3>
@@ -210,19 +224,21 @@ function TodoApp() {
               <div className="todo-child-container">
                 {allTodos.length ? (
                   allTodos.map((details) => {
-                    console.log("details => ", details);
-                    return (
-                      <TodoCard
-                        key={details._id}
-                        _id={details._id}
-                        title={details.title}
-                        description={details.description}
-                        dueDateTime={details.dueDateTime}
-                        priority={details.priority}
-                        progress={details.progress}
-                        cardStatus={details.todoStatus}
-                      />
-                    );
+                    if (details.todoStatus === false) {
+                      return (
+                        <TodoCard
+                          key={details._id}
+                          _id={details._id}
+                          title={details.title}
+                          description={details.description}
+                          dueDateTime={details.dueDateTime}
+                          priority={details.priority}
+                          progress={details.progress}
+                          cardStatus={details.todoStatus}
+                        />
+                      );
+                    }
+                    return true;
                   })
                 ) : (
                   <Alert severity={emptyPageCardSeverity}>
@@ -230,10 +246,79 @@ function TodoApp() {
                     {emptyPageDescription}
                   </Alert>
                 )}
-                {!addTaskButtonIsOpen ? (
-                  <AddTaskCard taskTitle={""} taskDescription={""} />
+              </div>
+            </div>
+
+            {/* COMPLETED TODOS  */}
+            <div className="todo-parent-container">
+              <div className="page-header">
+                <div className="page-heading">
+                  <h3>
+                    {"Completed"}
+                    <span className="current-date">
+                      <span>{" " + hour + ":"}</span>
+                      <span>{minute}</span>
+                      <span>
+                        {" " + weekday[weekDay].substring(0, 3) + " "}
+                      </span>
+                      <span>{curDate}</span>
+                      <span>{" " + month[mon].substring(0, 3) + " "}</span>
+                    </span>
+                  </h3>
+                </div>
+
+                <Tooltip title="View">
+                  <IconButton
+                    onClick={handleClick}
+                    aria-controls={open ? "basic-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                  >
+                    <TuneIcon />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                >
+                  <MenuItem onClick={handleClose}>Sorting</MenuItem>
+                  <MenuItem onClick={handleClose}>Grouping</MenuItem>
+                </Menu>
+              </div>
+
+              <Divider />
+
+              <div className="todo-child-container">
+                {allTodos.length ? (
+                  allTodos.map((details) => {
+                    if (details.todoStatus === true) {
+                      return (
+                        <TodoCard
+                          key={details._id}
+                          _id={details._id}
+                          title={details.title}
+                          description={details.description}
+                          dueDateTime={details.dueDateTime}
+                          priority={details.priority}
+                          progress={details.progress}
+                          cardStatus={details.todoStatus}
+                        />
+                      );
+                    }
+                    return true;
+                  })
                 ) : (
-                  <AddTaskButton />
+                  <Alert severity="info">
+                    <AlertTitle>{emptyPageTitle}</AlertTitle>
+                    {
+                      "Your todo list is empty, which means you've successfully tackled all your tasks. Enjoy the sense of accomplishment, and whenever you're ready for your next set of goals, feel free to add new tasks. Keep up the great work!"
+                    }
+                  </Alert>
                 )}
               </div>
             </div>

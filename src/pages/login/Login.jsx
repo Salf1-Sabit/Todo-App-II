@@ -54,7 +54,11 @@ const Registration = () => {
     axios
       .post(BASE_URL + "/login", { email, password })
       .then((res) => {
-        navigate("/today");
+        if (res.data.email === "admin@gmail.com") {
+          navigate("/admin");
+        } else {
+          navigate("/today");
+        }
         console.log(
           "login response: " +
             res.data.success +

@@ -1,132 +1,252 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
+// IMPORT LOCAL COMPONENTS
 import Sidebar from "./global/Sidebar";
-import { Box, Typography } from "@mui/material/";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
 
-const columns = [
-  { id: "name", label: "Name", minWidth: 170 },
-  { id: "hours", label: "Hours", minWidth: 100 },
-  {
-    id: "members",
-    label: "Team Members",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
-  },
-  {
-    id: "progress",
-    label: "Progress",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
-  },
-];
+// MUI IMPORTS
+import { Box, Typography, createTheme } from "@mui/material/";
+import { BarChart } from "@mui/x-charts/BarChart";
+import { PieChart } from "@mui/x-charts/PieChart";
+import { LineChart } from "@mui/x-charts/LineChart";
 
-function createData(name, hours, members, progress) {
-  return { name, hours, members, progress };
-}
+// IMPORT FONT
+import "@fontsource/inter/"; // Specify weight
 
-const rows = [
-  createData("India", 34, 10, "63%"),
-  createData("China", 47, 14, "94%"),
-  createData("Italy", 120, 8, "40%"),
-  createData("United States", 34, 3, "20%"),
-  createData("Canada", 22, 5, "70%"),
-  createData("Australia", 54, 17, "92%"),
-  createData("Germany", 19, 8, "34%"),
-  createData("Ireland", 70, 23, "27%"),
-  createData("Mexico", 63, 19, "50%"),
-  createData("Japan", 20, 13, "77%"),
-  createData("France", 79, 5, "40%"),
-  createData("United King", 17, 7, "24%"),
-  createData("Russia", 23, 15, "17%"),
-  createData("Nigeria", 24, 3, "11%"),
-  createData("Brazil", 11, 4, "85%"),
-];
+// IMPORT CSS
+import "./Admin.css";
+import { ThemeProvider } from "@emotion/react";
+
+// IMPORT LOCAL DATA
+import { month } from "../../data/currentDateData";
+import { BASE_URL } from "../../services/helper";
+import axios from "axios";
+
+// DATE UTILITES
+let date = new Date();
+let curDate = date.getDate();
+let mon = date.getMonth();
+let curDate2 = curDate - 1;
+let curDate3 = curDate - 2;
+let curDate4 = curDate - 3;
+let curDate5 = curDate - 4;
+let curDate6 = curDate - 5;
+let curDate7 = curDate - 6;
+
+// LINE CHAR DATA
+const uData = [2, 5, 3, 7, 9, 3, 7];
+const pData = [4, 8, 10, 6, 3, 2, 9];
 
 const Admin = () => {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  // ADMIN PAGE PROTECTION
+  // If not logged in navigate to the home page
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("email") !== "admin@gmail.com") {
+      navigate("/");
+    }
+  });
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+  // MUI THEME
+  const theme = createTheme({
+    typography: {
+      fontFamily: "Inter",
+    },
+    palette: {
+      primary: {
+        light: "#7780e8",
+        main: "#5763e3",
+        dark: "#3545dc",
+        contrastText: "#fff",
+      },
+    },
+  });
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+  // USERS & TASKS COUNT STATES
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [totalTasks, setTotalTasks] = useState(0);
+  const [totalCompletedTasks, setTotalCompletedTasks] = useState(0);
+  const [totalTotalIncompletedTasks, setTotalTotalIncompletedTasks] =
+    useState(0);
+
+  const email = localStorage.getItem("email");
+  // SETTING UNCOMPLETED TODOS
+  useEffect(() => {
+    const loadAllTodos = async () => {
+      await axios
+        .get(BASE_URL + "/api/gettodo", {
+          params: {
+            email: email,
+          },
+        })
+        .then((res) => {
+          setTotalUsers(res.data.allUsers.length);
+          setTotalTasks(res.data.fullTodos.length);
+          setTotalCompletedTasks(
+            res.data.fullTodos.filter((todo) => todo.todoStatus === true).length
+          );
+          setTotalTotalIncompletedTasks(
+            res.data.fullTodos.filter((todo) => todo.todoStatus === false)
+              .length
+          );
+        })
+        .catch((err) => {});
+    };
+    loadAllTodos();
+  }, [email]);
+
   return (
     <>
-      <Box sx={{ display: "flex" }}>
-        <Sidebar />
-        <Box component="main" sx={{ flexGrow: 1, p: 3, marginTop: "55px" }}>
-          <Typography variant="h5">Active Projects</Typography>
+      <ThemeProvider theme={theme}>
+        <Box sx={{ display: "flex" }}>
+          <Sidebar />
+          <Box
+            component="main"
+            sx={{
+              flexGrow: 1,
+              p: 3,
+              marginTop: "55px",
+            }}
+          >
+            <Typography variant="h5" fontWeight={400}>
+              Welcome, <span style={{ fontWeight: "600" }}>Admin</span>
+            </Typography>
 
-          {/* Table  */}
-          <Paper sx={{ width: "100%", overflow: "hidden" }}>
-            <TableContainer sx={{ maxHeight: 440 }}>
-              <Table stickyHeader aria-label="sticky table">
-                <TableHead>
-                  <TableRow>
-                    {columns.map((column) => (
-                      <TableCell
-                        key={column.id}
-                        align={column.align}
-                        style={{ minWidth: column.minWidth }}
-                      >
-                        {column.label}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {rows
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      return (
-                        <TableRow
-                          hover
-                          role="checkbox"
-                          tabIndex={-1}
-                          key={row.code}
-                        >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
-                        </TableRow>
-                      );
-                    })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <TablePagination
-              rowsPerPageOptions={[10, 25, 100]}
-              component="div"
-              count={rows.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </Paper>
+            {/* TOP -> SMALL CARDS  */}
+            <div className="small-cards-container">
+              <div className="small-card">
+                <div className="small-text">Total Users</div>
+                <div className="big-text">{totalUsers}</div>
+              </div>
+              <div className="small-card">
+                <div className="small-text">Total Tasks</div>
+                <div className="big-text">{totalTasks}</div>
+              </div>
+              <div className="small-card">
+                <div className="small-text">Completed Tasks</div>
+                <div className="big-text">{totalCompletedTasks}</div>
+              </div>
+              <div className="small-card">
+                <div className="small-text">Incompleted Tasks</div>
+                <div className="big-text">{totalTotalIncompletedTasks}</div>
+              </div>
+            </div>
+
+            {/* BOTTOM -> USERS TABLE & PIE CHART  */}
+            <div className="bottom-table-charts">
+              {/* BAR CONTAINER  */}
+              <div className="bar-container">
+                <BarChart
+                  xAxis={[
+                    {
+                      scaleType: "band",
+                      data: [
+                        curDate7 + " " + month[mon].substring(0, 3),
+                        curDate6 + " " + month[mon].substring(0, 3),
+                        curDate5 + " " + month[mon].substring(0, 3),
+                        curDate4 + " " + month[mon].substring(0, 3),
+                        curDate3 + " " + month[mon].substring(0, 3),
+                        curDate2 + " " + month[mon].substring(0, 3),
+                        curDate + " " + month[mon].substring(0, 3),
+                      ],
+                    },
+                  ]}
+                  series={[
+                    {
+                      data: [4, 8, 10, 6, 3, 2, 9],
+                      color: "#aca9bb",
+                      label: "Registration",
+                    },
+                    {
+                      data: [2, 5, 3, 7, 9, 3, 7],
+                      color: "#474554",
+                      label: "Login",
+                    },
+                    {
+                      data: [7, 11, 4, 5, 7, 6, 10],
+                      color: "#518071",
+                      label: "Task created",
+                    },
+                    {
+                      data: [6, 9, 3, 7, 12, 4, 6],
+                      color: "#ff666a",
+                      label: "Task completed",
+                    },
+                  ]}
+                  width={1220}
+                  height={600}
+                />
+              </div>
+
+              {/* PIE & LINE CONTAINER  */}
+              <div className="pie-line-container">
+                {/* PIE CHART  */}
+                <PieChart
+                  series={[
+                    {
+                      data: [
+                        {
+                          id: 0,
+                          value: totalTasks,
+                          label: "Total Task",
+                          color: "#474554",
+                        },
+                        {
+                          id: 1,
+                          value: totalCompletedTasks,
+                          label: "Completed",
+                          color: "#518071",
+                        },
+                        {
+                          id: 2,
+                          value: totalTotalIncompletedTasks,
+                          label: "Incompleted",
+                          color: "#ff666a",
+                        },
+                      ],
+                      highlightScope: { faded: "global", highlighted: "item" },
+                      faded: {
+                        innerRadius: 30,
+                        additionalRadius: -30,
+                        color: "gray",
+                      },
+                    },
+                  ]}
+                  width={400}
+                  height={220}
+                  sx={{ padding: ".5rem", marginTop: "1rem" }}
+                />
+
+                {/* LINE CHART  */}
+                <div className="line-chart-container">
+                  <LineChart
+                    width={400}
+                    height={300}
+                    series={[
+                      { data: pData, label: "Registration", color: "#aca9bb" },
+                      { data: uData, label: "Login", color: "#474554" },
+                    ]}
+                    xAxis={[
+                      {
+                        scaleType: "point",
+                        data: [
+                          curDate7 + " " + month[mon].substring(0, 3),
+                          curDate6 + " " + month[mon].substring(0, 3),
+                          curDate5 + " " + month[mon].substring(0, 3),
+                          curDate4 + " " + month[mon].substring(0, 3),
+                          curDate3 + " " + month[mon].substring(0, 3),
+                          curDate2 + " " + month[mon].substring(0, 3),
+                          curDate + " " + month[mon].substring(0, 3),
+                        ],
+                      },
+                    ]}
+                  />
+                </div>
+              </div>
+            </div>
+          </Box>
         </Box>
-      </Box>
+      </ThemeProvider>
     </>
   );
 };

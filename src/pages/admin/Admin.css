@@ -1,3 +1,71 @@
 .admin-main {
   display: flex;
 }
+
+.small-cards-container {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.small-card {
+  padding: 1rem;
+  border-radius: 5px;
+  width: 100%;
+  color: #fff;
+  transition: 800ms;
+}
+
+.small-card > .small-text {
+  font-weight: 600;
+}
+
+.small-card > .big-text {
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+
+.small-card:nth-child(1) {
+  background-color: #aca9bb;
+}
+
+.small-card:nth-child(2) {
+  background-color: #474554;
+}
+
+.small-card:nth-child(3) {
+  background-color: #518071;
+}
+
+.small-card:nth-child(4) {
+  background-color: #ff666a;
+}
+
+.small-card:hover {
+  background-color: #5762e3;
+}
+
+.bottom-table-charts {
+  display: flex;
+  margin-top: 1.5rem;
+  gap: 1rem;
+}
+
+.pie-line-container {
+  width: 35%;
+  height: 100%;
+  border: 1px solid #dfdfdf;
+  border-radius: 5px;
+}
+
+.bar-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #dfdfdf;
+  border-radius: 5px;
+}
+
+.line-chart-container {
+  margin-top: 5rem;
+}

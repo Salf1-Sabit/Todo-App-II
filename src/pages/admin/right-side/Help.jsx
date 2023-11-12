@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Sidebar from "../global/Sidebar";
 import { Box, Typography } from "@mui/material/";
+import { useNavigate } from "react-router-dom";
 
 const Help = () => {
+  // PAGE PROTECTION (ONLY ADMIN ACCESS)
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("email") !== "admin@gmail.com") {
+      navigate("/");
+    }
+  });
+
   return (
     <>
       <Box sx={{ display: "flex" }}>
