@@ -7,6 +7,9 @@ import { useNavigate } from "react-router-dom";
 // IMPORT BASE URL
 import { BASE_URL } from "../../../services/helper";
 
+// IMPORT DATA UTILITES
+import { month } from "../../../data/currentDateData";
+
 // MUI IMPORT
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -79,23 +82,22 @@ const Admin = () => {
                 Registered Users
               </Typography>
 
-              {/* TABLE  */}
-              <TableContainer component={Paper} sx={{ marginTop: "1rem" }}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                  <TableHead>
-                    <TableRow sx={{ bgcolor: "#5762e3" }}>
-                      <TableCell sx={{ color: "#fff" }}>Name</TableCell>
-                      <TableCell sx={{ color: "#fff" }}>Email</TableCell>
-                      <TableCell sx={{ color: "#fff" }}>
-                        Registration date
-                      </TableCell>
-                      <TableCell sx={{ color: "#fff" }}>Last login</TableCell>
-                      <TableCell sx={{ color: "#fff" }}>Is admin</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {allUser.length ? (
-                      allUser.map((user) => (
+              {allUser.length ? (
+                <TableContainer component={Paper} sx={{ marginTop: "1rem" }}>
+                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                      <TableRow sx={{ bgcolor: "#5762e3" }}>
+                        <TableCell sx={{ color: "#fff" }}>Name</TableCell>
+                        <TableCell sx={{ color: "#fff" }}>Email</TableCell>
+                        <TableCell sx={{ color: "#fff" }}>
+                          Registration date
+                        </TableCell>
+                        <TableCell sx={{ color: "#fff" }}>Last login</TableCell>
+                        <TableCell sx={{ color: "#fff" }}>Is admin</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {allUser.map((user) => (
                         <TableRow
                           key={user._id}
                           sx={{
@@ -106,19 +108,39 @@ const Admin = () => {
                             {user.fullName}
                           </TableCell>
                           <TableCell>{user.email}</TableCell>
-                          <TableCell>{user.createdOn}</TableCell>
-                          <TableCell>{user.lastLogin}</TableCell>
+                          <TableCell>
+                            {new Date(user.createdOn).getHours() +
+                              ":" +
+                              new Date(user.createdOn).getMinutes() +
+                              " " +
+                              new Date(user.createdOn).getDate() +
+                              " " +
+                              month[new Date(user.createdOn).getMonth()] +
+                              " " +
+                              new Date(user.createdOn).getFullYear()}
+                          </TableCell>
+                          <TableCell>
+                            {new Date(user.lastLogin).getHours() +
+                              ":" +
+                              new Date(user.lastLogin).getMinutes() +
+                              " " +
+                              new Date(user.lastLogin).getDate() +
+                              " " +
+                              month[new Date(user.lastLogin).getMonth()] +
+                              " " +
+                              new Date(user.lastLogin).getFullYear()}
+                          </TableCell>
                           <TableCell>
                             {user.email === "admin@gmail.com" ? (
                               <div
                                 style={{
-                                  color: "#2E7D32",
+                                  color: "#3D9F92",
                                   fontWeight: "500",
                                   width: "fit-content",
-                                  border: "1px solid #2E7D32",
+                                  border: "1px solid #3D9F92",
                                   padding: ".1rem .8rem",
                                   borderRadius: "5px",
-                                  backgroundColor: "rgba(46, 125, 50, .07)",
+                                  backgroundColor: "rgba(61, 159, 146, .07)",
                                 }}
                               >
                                 Yes
@@ -126,13 +148,13 @@ const Admin = () => {
                             ) : (
                               <div
                                 style={{
-                                  color: "#D32F2F",
+                                  color: "#7E5DE3",
                                   fontWeight: "500",
                                   width: "fit-content",
-                                  border: "1px solid #D32F2F",
+                                  border: "1px solid #7E5DE3",
                                   padding: ".1rem .8rem",
                                   borderRadius: "5px",
-                                  backgroundColor: "rgba(211, 47, 47, .08)",
+                                  backgroundColor: "rgba(126, 93, 227, .07)",
                                 }}
                               >
                                 No
@@ -140,22 +162,22 @@ const Admin = () => {
                             )}
                           </TableCell>
                         </TableRow>
-                      ))
-                    ) : (
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          padding: "1rem",
-                        }}
-                      >
-                        <CircularProgress />
-                      </Box>
-                    )}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              ) : (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "1rem",
+                  }}
+                >
+                  <CircularProgress />
+                </Box>
+              )}
             </div>
           </Box>
         </Box>

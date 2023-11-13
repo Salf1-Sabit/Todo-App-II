@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+:root {
+  --big-heading-size: 2.5rem;
+  --regular-paragraph-size: 22px;
+  --blue: #5762e3;
+}
+
+.about-page-heading {
+  margin-top: 1rem;
+  font-size: 3rem;
+  text-align: center;
+  font-weight: 900;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.about-top {
+  display: flex;
+  margin: 1rem 5rem;
+  gap: 1rem;
+}
+
+.about-card {
+  flex: 1;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin-bottom: 1rem;
+}
+
+.about-card-heading {
+  font-size: 1.3rem;
+  font-weight: 800;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.about-card-subheading {
+  font-weight: 600;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.heading-top-margin {
+  margin-top: 1rem;
+}
+
+.about-card-desc {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.about-img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 1000px) {
+  .about-top {
+    flex-direction: column;
+  }
+  .about-page-heading {
+    font-size: 2.5rem;
+  }
+}

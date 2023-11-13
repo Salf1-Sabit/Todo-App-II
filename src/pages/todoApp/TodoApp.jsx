@@ -25,6 +25,7 @@ import {
   Alert,
   AlertTitle,
   Box,
+  CircularProgress,
   Divider,
   IconButton,
   Menu,
@@ -51,6 +52,9 @@ const hour = date.getHours();
 const minute = date.getMinutes();
 
 function TodoApp() {
+  // PAGE LOADING STATE
+  const [pageLoading, setPageLoading] = useState(true); // Add loading state
+
   // HANDLE PAGE TITLE
   const [pageTitle, setPageTitle] = useState("Incomplete");
 
@@ -125,7 +129,7 @@ function TodoApp() {
   }, [navigate]);
 
   const email = localStorage.getItem("email");
-  // SETTING UNCOMPLETED TODOS
+  // LOADING ALL TODOS
   useEffect(() => {
     const loadAllTodos = async () => {
       await axios
@@ -138,6 +142,7 @@ function TodoApp() {
           setAllTodos(res.data.allTodos);
         })
         .catch((err) => {});
+      setPageLoading(false);
     };
     loadAllTodos();
   }, [email]);
@@ -165,178 +170,191 @@ function TodoApp() {
           <CssBaseline />
           <Appbar />
 
-          {/* Main Background  */}
-          <Box
-            component="main"
-            sx={{
-              flexGrow: 1,
-              p: 3,
-              width: { sm: `calc(100% - ${drawerWidth}px)` },
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Toolbar />
+          {pageLoading ? (
+            <CircularProgress
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            />
+          ) : (
+            <>
+              {/* Main Background  */}
+              <Box
+                component="main"
+                sx={{
+                  flexGrow: 1,
+                  p: 3,
+                  width: { sm: `calc(100% - ${drawerWidth}px)` },
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Toolbar />
 
-            {/* INCOMPLETED TODOS  */}
-            <div className="todo-parent-container">
-              <div style={{ marginBottom: "1rem" }}>
-                {!addTaskButtonIsOpen ? (
-                  <AddTaskCard taskTitle={""} taskDescription={""} />
-                ) : (
-                  <Divider>
-                    <AddTaskButton />
-                  </Divider>
-                )}
-              </div>
+                {/* INCOMPLETED TODOS  */}
+                <div className="todo-parent-container">
+                  <div style={{ marginBottom: "1rem" }}>
+                    {!addTaskButtonIsOpen ? (
+                      <AddTaskCard taskTitle={""} taskDescription={""} />
+                    ) : (
+                      <Divider>
+                        <AddTaskButton />
+                      </Divider>
+                    )}
+                  </div>
 
-              <div className="page-header">
-                <div className="page-heading">
-                  <h3>
-                    {pageTitle}
-                    <span className="current-date">
-                      <span>{" " + hour + ":"}</span>
-                      <span>{minute}</span>
-                      <span>
-                        {" " + weekday[weekDay].substring(0, 3) + " "}
-                      </span>
-                      <span>{curDate}</span>
-                      <span>{" " + month[mon].substring(0, 3) + " "}</span>
-                    </span>
-                  </h3>
+                  <div className="page-header">
+                    <div className="page-heading">
+                      <h3>
+                        {pageTitle}
+                        <span className="current-date">
+                          <span>{" " + hour + ":"}</span>
+                          <span>{minute}</span>
+                          <span>
+                            {" " + weekday[weekDay].substring(0, 3) + " "}
+                          </span>
+                          <span>{curDate}</span>
+                          <span>{" " + month[mon].substring(0, 3) + " "}</span>
+                        </span>
+                      </h3>
+                    </div>
+
+                    <Tooltip title="View">
+                      <IconButton
+                        onClick={handleClick}
+                        aria-controls={open ? "basic-menu" : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? "true" : undefined}
+                      >
+                        <TuneIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Menu
+                      id="basic-menu"
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleClose}
+                      MenuListProps={{
+                        "aria-labelledby": "basic-button",
+                      }}
+                    >
+                      <MenuItem onClick={handleClose}>Sorting</MenuItem>
+                      <MenuItem onClick={handleClose}>Grouping</MenuItem>
+                    </Menu>
+                  </div>
+
+                  <Divider />
+
+                  <div className="todo-child-container">
+                    {allTodos.length ? (
+                      allTodos.map((details) => {
+                        if (details.todoStatus === false) {
+                          return (
+                            <TodoCard
+                              key={details._id}
+                              _id={details._id}
+                              title={details.title}
+                              description={details.description}
+                              dueDateTime={details.dueDateTime}
+                              priority={details.priority}
+                              progress={details.progress}
+                              cardStatus={details.todoStatus}
+                            />
+                          );
+                        }
+                        return true;
+                      })
+                    ) : (
+                      <Alert severity={emptyPageCardSeverity}>
+                        <AlertTitle>{emptyPageTitle}</AlertTitle>
+                        {emptyPageDescription}
+                      </Alert>
+                    )}
+                  </div>
                 </div>
 
-                <Tooltip title="View">
-                  <IconButton
-                    onClick={handleClick}
-                    aria-controls={open ? "basic-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? "true" : undefined}
-                  >
-                    <TuneIcon />
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  id="basic-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                  MenuListProps={{
-                    "aria-labelledby": "basic-button",
-                  }}
-                >
-                  <MenuItem onClick={handleClose}>Sorting</MenuItem>
-                  <MenuItem onClick={handleClose}>Grouping</MenuItem>
-                </Menu>
-              </div>
+                {/* COMPLETED TODOS  */}
+                <div className="todo-parent-container">
+                  <div className="page-header">
+                    <div className="page-heading">
+                      <h3>
+                        {"Completed"}
+                        <span className="current-date">
+                          <span>{" " + hour + ":"}</span>
+                          <span>{minute}</span>
+                          <span>
+                            {" " + weekday[weekDay].substring(0, 3) + " "}
+                          </span>
+                          <span>{curDate}</span>
+                          <span>{" " + month[mon].substring(0, 3) + " "}</span>
+                        </span>
+                      </h3>
+                    </div>
 
-              <Divider />
+                    <Tooltip title="View">
+                      <IconButton
+                        onClick={handleClick}
+                        aria-controls={open ? "basic-menu" : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? "true" : undefined}
+                      >
+                        <TuneIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Menu
+                      id="basic-menu"
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleClose}
+                      MenuListProps={{
+                        "aria-labelledby": "basic-button",
+                      }}
+                    >
+                      <MenuItem onClick={handleClose}>Sorting</MenuItem>
+                      <MenuItem onClick={handleClose}>Grouping</MenuItem>
+                    </Menu>
+                  </div>
 
-              <div className="todo-child-container">
-                {allTodos.length ? (
-                  allTodos.map((details) => {
-                    if (details.todoStatus === false) {
-                      return (
-                        <TodoCard
-                          key={details._id}
-                          _id={details._id}
-                          title={details.title}
-                          description={details.description}
-                          dueDateTime={details.dueDateTime}
-                          priority={details.priority}
-                          progress={details.progress}
-                          cardStatus={details.todoStatus}
-                        />
-                      );
-                    }
-                    return true;
-                  })
-                ) : (
-                  <Alert severity={emptyPageCardSeverity}>
-                    <AlertTitle>{emptyPageTitle}</AlertTitle>
-                    {emptyPageDescription}
-                  </Alert>
-                )}
-              </div>
-            </div>
+                  <Divider />
 
-            {/* COMPLETED TODOS  */}
-            <div className="todo-parent-container">
-              <div className="page-header">
-                <div className="page-heading">
-                  <h3>
-                    {"Completed"}
-                    <span className="current-date">
-                      <span>{" " + hour + ":"}</span>
-                      <span>{minute}</span>
-                      <span>
-                        {" " + weekday[weekDay].substring(0, 3) + " "}
-                      </span>
-                      <span>{curDate}</span>
-                      <span>{" " + month[mon].substring(0, 3) + " "}</span>
-                    </span>
-                  </h3>
+                  <div className="todo-child-container">
+                    {allTodos.length ? (
+                      allTodos.map((details) => {
+                        if (details.todoStatus === true) {
+                          return (
+                            <TodoCard
+                              key={details._id}
+                              _id={details._id}
+                              title={details.title}
+                              description={details.description}
+                              dueDateTime={details.dueDateTime}
+                              priority={details.priority}
+                              progress={details.progress}
+                              cardStatus={details.todoStatus}
+                            />
+                          );
+                        }
+                        return true;
+                      })
+                    ) : (
+                      <Alert severity="info">
+                        <AlertTitle>{emptyPageTitle}</AlertTitle>
+                        {
+                          "Your todo list is empty, which means you've successfully tackled all your tasks. Enjoy the sense of accomplishment, and whenever you're ready for your next set of goals, feel free to add new tasks. Keep up the great work!"
+                        }
+                      </Alert>
+                    )}
+                  </div>
                 </div>
-
-                <Tooltip title="View">
-                  <IconButton
-                    onClick={handleClick}
-                    aria-controls={open ? "basic-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? "true" : undefined}
-                  >
-                    <TuneIcon />
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  id="basic-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                  MenuListProps={{
-                    "aria-labelledby": "basic-button",
-                  }}
-                >
-                  <MenuItem onClick={handleClose}>Sorting</MenuItem>
-                  <MenuItem onClick={handleClose}>Grouping</MenuItem>
-                </Menu>
-              </div>
-
-              <Divider />
-
-              <div className="todo-child-container">
-                {allTodos.length ? (
-                  allTodos.map((details) => {
-                    if (details.todoStatus === true) {
-                      return (
-                        <TodoCard
-                          key={details._id}
-                          _id={details._id}
-                          title={details.title}
-                          description={details.description}
-                          dueDateTime={details.dueDateTime}
-                          priority={details.priority}
-                          progress={details.progress}
-                          cardStatus={details.todoStatus}
-                        />
-                      );
-                    }
-                    return true;
-                  })
-                ) : (
-                  <Alert severity="info">
-                    <AlertTitle>{emptyPageTitle}</AlertTitle>
-                    {
-                      "Your todo list is empty, which means you've successfully tackled all your tasks. Enjoy the sense of accomplishment, and whenever you're ready for your next set of goals, feel free to add new tasks. Keep up the great work!"
-                    }
-                  </Alert>
-                )}
-              </div>
-            </div>
-          </Box>
-          <Toastifier />
+              </Box>
+              <Toastifier />
+            </>
+          )}
         </Box>
       </ThemeProvider>
     </TodoAppContext.Provider>

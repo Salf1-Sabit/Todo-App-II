@@ -7,6 +7,9 @@ import { useNavigate } from "react-router-dom";
 // IMPORT BASE URL
 import { BASE_URL } from "../../../services/helper";
 
+// IMPORT DATA UTILITES
+import { month } from "../../../data/currentDateData";
+
 // MUI IMPORT
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -25,6 +28,15 @@ import EditIcon from "@mui/icons-material/Edit";
 import "@fontsource/inter/"; // Specify weight
 import { ThemeProvider } from "@emotion/react";
 import axios from "axios";
+
+// PRIORTIY COLORS
+const priorityColors = ["#D32F2F", "#ED6C02", "#0288D1", "#6E6E6E"];
+const RGBA = [
+  "rgba(211, 47, 47, .07)",
+  "rgba(237, 108, 2, .07)",
+  "rgba(2, 136, 209, .07)",
+  "rgba(0, 0, 0, .07)",
+];
 
 const Admin = () => {
   // PAGE PROTECTION (ONLY ADMIN ACCESS)
@@ -83,22 +95,24 @@ const Admin = () => {
               </Typography>
 
               {/* TABLE  */}
-              <TableContainer component={Paper} sx={{ marginTop: "1rem" }}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                  <TableHead>
-                    <TableRow sx={{ bgcolor: "#5762e3" }}>
-                      <TableCell sx={{ color: "#fff" }}>Title</TableCell>
-                      <TableCell sx={{ color: "#fff" }}>Description</TableCell>
-                      <TableCell sx={{ color: "#fff" }}>Deadline</TableCell>
-                      <TableCell sx={{ color: "#fff" }}>Priority</TableCell>
-                      <TableCell sx={{ color: "#fff" }}>Progress</TableCell>
-                      <TableCell sx={{ color: "#fff" }}>Status</TableCell>
-                      <TableCell sx={{ color: "#fff" }}>Actions</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {allTask.length ? (
-                      allTask.map((todo) => (
+              {allTask.length ? (
+                <TableContainer component={Paper} sx={{ marginTop: "1rem" }}>
+                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                      <TableRow sx={{ bgcolor: "#5762e3" }}>
+                        <TableCell sx={{ color: "#fff" }}>Title</TableCell>
+                        <TableCell sx={{ color: "#fff" }}>
+                          Description
+                        </TableCell>
+                        <TableCell sx={{ color: "#fff" }}>Deadline</TableCell>
+                        <TableCell sx={{ color: "#fff" }}>Progress</TableCell>
+                        <TableCell sx={{ color: "#fff" }}>Priority</TableCell>
+                        <TableCell sx={{ color: "#fff" }}>Status</TableCell>
+                        <TableCell sx={{ color: "#fff" }}>Actions</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {allTask.map((todo) => (
                         <TableRow
                           key={todo._id}
                           sx={{
@@ -109,20 +123,51 @@ const Admin = () => {
                             {todo.title}
                           </TableCell>
                           <TableCell>{todo.description}</TableCell>
-                          <TableCell>{todo.dueDateTime}</TableCell>
-                          <TableCell>{todo.priority}</TableCell>
+                          <TableCell>
+                            {new Date(todo.dueDateTime).getHours() +
+                              ":" +
+                              new Date(todo.dueDateTime).getMinutes() +
+                              " " +
+                              new Date(todo.dueDateTime).getDate() +
+                              " " +
+                              month[new Date(todo.dueDateTime).getMonth()] +
+                              " " +
+                              new Date(todo.dueDateTime).getFullYear()}
+                          </TableCell>
                           <TableCell>{todo.progress}</TableCell>
+                          <TableCell
+                          // sx={{
+                          //   color: priorityColors[todo.priority - 1],
+                          //   fontWeight: "700",
+                          // }}
+                          >
+                            <div
+                              style={{
+                                color: priorityColors[todo.priority - 1],
+                                fontWeight: "500",
+                                width: "fit-content",
+                                border: `1px solid ${
+                                  priorityColors[todo.priority - 1]
+                                }`,
+                                padding: ".1rem .8rem",
+                                borderRadius: "5px",
+                                backgroundColor: RGBA[todo.priority - 1],
+                              }}
+                            >
+                              {todo.priority}
+                            </div>
+                          </TableCell>
                           <TableCell>
                             {todo.todoStatus === true ? (
                               <div
                                 style={{
-                                  color: "#2E7D32",
+                                  color: "#3D9F92",
                                   fontWeight: "500",
                                   width: "fit-content",
-                                  border: "1px solid #2E7D32",
+                                  border: "1px solid #3D9F92",
                                   padding: ".1rem .8rem",
                                   borderRadius: "5px",
-                                  backgroundColor: "rgba(46, 125, 50, .07)",
+                                  backgroundColor: "rgba(61, 159, 146, .07)",
                                 }}
                               >
                                 Complete
@@ -130,13 +175,13 @@ const Admin = () => {
                             ) : (
                               <div
                                 style={{
-                                  color: "#ED6C02",
+                                  color: "#7E5DE3",
                                   fontWeight: "500",
                                   width: "fit-content",
-                                  border: "1px solid #ED6C02",
+                                  border: "1px solid #7E5DE3",
                                   padding: ".1rem .8rem",
                                   borderRadius: "5px",
-                                  backgroundColor: "rgba(211, 47, 47, .08)",
+                                  backgroundColor: "rgba(126, 93, 227, .07)",
                                 }}
                               >
                                 In Progress
@@ -145,30 +190,30 @@ const Admin = () => {
                           </TableCell>
                           <TableCell>
                             <IconButton>
-                              <EditIcon sx={{ color: "#2E7D32" }} />
+                              <EditIcon sx={{ color: "#3D9F92" }} />
                             </IconButton>
 
                             <IconButton>
-                              <DeleteIcon sx={{ color: "#D32F2F" }} />
+                              <DeleteIcon sx={{ color: "#7E5DE3" }} />
                             </IconButton>
                           </TableCell>
                         </TableRow>
-                      ))
-                    ) : (
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          padding: "1rem",
-                        }}
-                      >
-                        <CircularProgress />
-                      </Box>
-                    )}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              ) : (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "1rem",
+                  }}
+                >
+                  <CircularProgress />
+                </Box>
+              )}
             </div>
           </Box>
         </Box>

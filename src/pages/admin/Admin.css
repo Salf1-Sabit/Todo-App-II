@@ -69,3 +69,7 @@
 .line-chart-container {
   margin-top: 5rem;
 }
+
+.responsive-bar-chart {
+  width: 500px;
+}

@@ -1,13 +1,21 @@
 import React from "react";
-import Nav from "../../components/Nav/Nav";
+
+// MUI COMPONENTS
 import { Toolbar } from "@mui/material";
+
+// LINK CSS
+import "./pricing.css";
+
+// LOCAL COMPONENTS
+import Footer from "../../components/footer/Footer";
+import Nav from "../../components/Nav/Nav";
 
 const Pricing = () => {
   return (
     <div>
       <Nav />
       <Toolbar />
-      <h2>WELCOME TO PRICING PAGE</h2>
+      <Footer />
     </div>
   );
 };
