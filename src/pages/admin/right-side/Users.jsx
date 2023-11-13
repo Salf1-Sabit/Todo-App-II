@@ -109,7 +109,7 @@ const Admin = () => {
                           <TableCell>{user.createdOn}</TableCell>
                           <TableCell>{user.lastLogin}</TableCell>
                           <TableCell>
-                            {user.email === "abc@gmail.com" ? (
+                            {user.email === "admin@gmail.com" ? (
                               <div
                                 style={{
                                   color: "#2E7D32",

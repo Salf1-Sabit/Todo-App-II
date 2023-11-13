@@ -130,10 +130,10 @@ const Admin = () => {
                             ) : (
                               <div
                                 style={{
-                                  color: "#D32F2F",
+                                  color: "#ED6C02",
                                   fontWeight: "500",
                                   width: "fit-content",
-                                  border: "1px solid #D32F2F",
+                                  border: "1px solid #ED6C02",
                                   padding: ".1rem .8rem",
                                   borderRadius: "5px",
                                   backgroundColor: "rgba(211, 47, 47, .08)",

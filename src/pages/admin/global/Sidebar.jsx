@@ -1,4 +1,9 @@
 import * as React from "react";
+
+// LINK CSS
+import "./Sidebar.css";
+
+// MUI IMPORTS
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -136,7 +141,7 @@ export default function Sidebar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            DASHBOARD
+            Dashboard
           </Typography>
         </Toolbar>
       </AppBar>
@@ -156,7 +161,10 @@ export default function Sidebar() {
           {/* Home  */}
           <ListItem
             disablePadding
-            sx={{ display: "block" }}
+            sx={{
+              display: "block",
+              "&:hover": { backgroundColor: "rgba(0, 0, 0, .02)" },
+            }}
             onClick={() => navigate("/admin")}
           >
             <ListItemButton
@@ -182,7 +190,10 @@ export default function Sidebar() {
           {/* Users  */}
           <ListItem
             disablePadding
-            sx={{ display: "block" }}
+            sx={{
+              display: "block",
+              "&:hover": { backgroundColor: "rgba(0, 0, 0, .02)" },
+            }}
             onClick={() => navigate("/admin/users")}
           >
             <ListItemButton
@@ -208,7 +219,10 @@ export default function Sidebar() {
           {/* Tasks  */}
           <ListItem
             disablePadding
-            sx={{ display: "block" }}
+            sx={{
+              display: "block",
+              "&:hover": { backgroundColor: "rgba(0, 0, 0, .02)" },
+            }}
             onClick={() => navigate("/admin/tasks")}
           >
             <ListItemButton
@@ -236,7 +250,10 @@ export default function Sidebar() {
           {/* Users Feedback  */}
           <ListItem
             disablePadding
-            sx={{ display: "block" }}
+            sx={{
+              display: "block",
+              "&:hover": { backgroundColor: "rgba(0, 0, 0, .02)" },
+            }}
             onClick={() => navigate("/admin/feedback")}
           >
             <ListItemButton
@@ -265,7 +282,10 @@ export default function Sidebar() {
           {/* Help and Information  */}
           <ListItem
             disablePadding
-            sx={{ display: "block" }}
+            sx={{
+              display: "block",
+              "&:hover": { backgroundColor: "rgba(0, 0, 0, .02)" },
+            }}
             onClick={() => navigate("/admin/help")}
           >
             <ListItemButton
@@ -294,7 +314,10 @@ export default function Sidebar() {
           {/* Settings  */}
           <ListItem
             disablePadding
-            sx={{ display: "block" }}
+            sx={{
+              display: "block",
+              "&:hover": { backgroundColor: "rgba(0, 0, 0, .02)" },
+            }}
             onClick={() => navigate("/admin/settings")}
           >
             <ListItemButton
@@ -323,7 +346,13 @@ export default function Sidebar() {
         <Divider />
         <List>
           {/* Logout  */}
-          <ListItem disablePadding sx={{ display: "block" }}>
+          <ListItem
+            disablePadding
+            sx={{
+              display: "block",
+              "&:hover": { backgroundColor: "rgba(0, 0, 0, .02)" },
+            }}
+          >
             <ListItemButton
               sx={{
                 minHeight: 48,

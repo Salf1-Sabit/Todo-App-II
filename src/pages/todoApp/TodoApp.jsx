@@ -101,6 +101,29 @@ function TodoApp() {
     },
   });
 
+  // If not logged in navigate to the home page
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("email")) {
+      navigate("/");
+    } else if (localStorage.getItem("email") === "admin@gmail.com") {
+      navigate("/admin");
+    } else {
+      let counter = localStorage.getItem("loginCounter");
+      // Step 2: Convert the value to a number (if needed)
+      counter = parseInt(counter, 10) || 0;
+      if (counter) {
+        counter = Number(counter + 1);
+        localStorage.setItem("loginCounter", counter);
+      } else {
+        localStorage.setItem("loginCounter", 1);
+        setAlertMessage("Welcome, " + localStorage.getItem("fullName"));
+        setAlertSeverity("success");
+        setSnackbarOpen(true);
+      }
+    }
+  }, [navigate]);
+
   const email = localStorage.getItem("email");
   // SETTING UNCOMPLETED TODOS
   useEffect(() => {
@@ -118,16 +141,6 @@ function TodoApp() {
     };
     loadAllTodos();
   }, [email]);
-
-  // If not logged in navigate to the home page
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!localStorage.getItem("email")) {
-      navigate("/");
-    } else if (localStorage.getItem("email") === "admin@gmail.com") {
-      navigate("/admin");
-    }
-  });
 
   return (
     <TodoAppContext.Provider

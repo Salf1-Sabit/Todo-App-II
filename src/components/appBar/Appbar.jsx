@@ -115,6 +115,8 @@ const Appbar2 = (props) => {
   const handleLogout = () => {
     setAnchorEl(null);
     localStorage.removeItem("email");
+    localStorage.removeItem("fullName");
+    localStorage.removeItem("loginCounter");
     navigate("/");
   };
 

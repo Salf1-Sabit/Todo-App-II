@@ -212,7 +212,7 @@ const Admin = () => {
                       },
                     },
                   ]}
-                  width={400}
+                  width={402}
                   height={220}
                   sx={{ padding: ".5rem", marginTop: "1rem" }}
                 />

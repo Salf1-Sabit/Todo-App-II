@@ -1,4 +1,10 @@
 import React, { useEffect } from "react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+// FORM VALIDATION
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 // CROSS PLATFORM RESOURCE SHARING
 import axios from "axios";
@@ -21,14 +27,13 @@ import { BASE_URL } from "../../services/helper";
 
 // MUI COMPONENTS
 import {
+  Alert,
   Button,
   Checkbox,
   TextField,
   ThemeProvider,
   createTheme,
 } from "@mui/material";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 
 // MUI THEME
 const theme = createTheme({
@@ -46,15 +51,69 @@ const theme = createTheme({
 });
 
 const Registration = () => {
+  // FORMIK SCHEMA validation
+  const getCharacterValidationError = (str) => {
+    return `Your password must have at least 1 ${str} character`;
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      fullName: "",
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      fullName: Yup.string()
+        .required("Please enter your full name")
+        .max(25, "Must be 25 characters or less"),
+      email: Yup.string()
+        .email("Invalid email address")
+        .required("Please provide your email address"),
+
+      password: Yup.string()
+        .required("Please enter a password")
+        // check minimum characters
+        .min(8, "Password must have at least 8 characters")
+        // different error messages for different requirements
+        .matches(/[0-9]/, getCharacterValidationError("digit"))
+        .matches(/[a-z]/, getCharacterValidationError("lowercase"))
+        .matches(/[A-Z]/, getCharacterValidationError("uppercase")),
+    }),
+    onSubmit: (values) => {
+      axios
+        .post(BASE_URL + "/register", {
+          fullName: formik.values.fullName,
+          email: formik.values.email,
+          password: formik.values.password,
+        })
+        .then((res) => {
+          // setAlertMessage("Congratulations, your registration is complete!");
+          // setAlertSeverity("success");
+          // setSnackbarOpen(true);
+          navigate("/login");
+          console.log(
+            "Register response: " +
+              res.data.success +
+              " " +
+              res.data.message +
+              " " +
+              res.data.user.id +
+              " " +
+              res.data.user.email +
+              " " +
+              res.data.user.fullName
+          );
+        })
+        .catch((err) => {
+          navigate("/register");
+        });
+    },
+  });
+
   // SNACKBAR UTILITIES
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   // const [alertMessage, setAlertMessage] = useState("");
   // const [alertSeverity, setAlertSeverity] = useState("success");
-
-  // REGISTERED DATA STATES
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   // If still logged in navigate to the app
   const navigate = useNavigate();
@@ -64,32 +123,8 @@ const Registration = () => {
     }
   });
 
-  // HANDLE REGISTER
-  const handlRegister = () => {
-    axios
-      .post(BASE_URL + "/register", { fullName, email, password })
-      .then((res) => {
-        // setAlertMessage("Congratulations, your registration is complete!");
-        // setAlertSeverity("success");
-        // setSnackbarOpen(true);
-        navigate("/login");
-        console.log(
-          "Register response: " +
-            res.data.success +
-            " " +
-            res.data.message +
-            " " +
-            res.data.user.id +
-            " " +
-            res.data.user.email +
-            " " +
-            res.data.user.fullName
-        );
-      })
-      .catch((err) => {
-        navigate("/register");
-      });
-  };
+  // AGREED TO TERM STATE
+  const [agreedTerms, setAgreedTerms] = useState(false);
   return (
     <RegisterContext.Provider
       value={{
@@ -107,66 +142,99 @@ const Registration = () => {
               <div className="heading-1">Create your TODO HIVE account</div>
               <div className="heading-2">to continue to TODO HIVE</div>
             </div>
-            <div className="regiter-inputs">
-              <TextField
-                required
-                id="outlined-required"
-                label="Full Name"
-                size="small"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-              />
-              <div className="email-container">
-                <TextField
-                  required
-                  id="outlined-required"
-                  label="Email"
-                  size="small"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <div className="email-rules">
-                  You can use letters, numbers & periods
+            <form onSubmit={formik.handleSubmit}>
+              <div className="regiter-inputs">
+                <div className="fullName-container">
+                  <TextField
+                    id="fullName"
+                    name="fullName"
+                    label="Full Name"
+                    size="small"
+                    value={formik.values.fullName}
+                    {...formik.getFieldProps("fullName")}
+                  />
+
+                  <div>
+                    {formik.touched.fullName && formik.errors.fullName ? (
+                      <Alert
+                        sx={{ marginTop: ".5rem", padding: "0 10px" }}
+                        severity="error"
+                      >
+                        {formik.errors.fullName}
+                      </Alert>
+                    ) : null}
+                  </div>
+                </div>
+                <div className="email-container">
+                  <TextField
+                    id="email"
+                    name="email"
+                    label="Email"
+                    size="small"
+                    value={formik.values.email}
+                    {...formik.getFieldProps("email")}
+                  />
+                  <div>
+                    {formik.touched.email && formik.errors.email ? (
+                      <Alert
+                        sx={{ marginTop: ".5rem", padding: "0 10px" }}
+                        severity="error"
+                      >
+                        {formik.errors.email}
+                      </Alert>
+                    ) : null}
+                  </div>
+                </div>
+                <div className="password-container">
+                  <TextField
+                    id="password"
+                    name="password"
+                    label="Password"
+                    type="password"
+                    autoComplete="current-password"
+                    size="small"
+                    value={formik.values.password}
+                    {...formik.getFieldProps("password")}
+                  />
+                  <div>
+                    {formik.touched.password && formik.errors.password ? (
+                      <Alert
+                        sx={{ marginTop: ".5rem", padding: "0 10px" }}
+                        severity="error"
+                      >
+                        {formik.errors.password}
+                      </Alert>
+                    ) : null}
+                  </div>
                 </div>
               </div>
-              <div className="password-container">
-                <TextField
-                  required
-                  id="outlined-password-input"
-                  label="Password"
-                  type="password"
-                  autoComplete="current-password"
-                  size="small"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <div className="password-rules">
-                  Use 8 or more characters with a mix of letter, numbers &
-                  symbols
+              <div className="agree-to-terms">
+                <div>
+                  <Checkbox
+                    checked={agreedTerms}
+                    onChange={(e) => setAgreedTerms(e.target.checked)}
+                    style={{ paddingLeft: 0 }}
+                  />
                 </div>
+                <div>I agree to the terms & privacy</div>
               </div>
-            </div>
-            <div className="agree-to-terms">
-              <div>
-                <Checkbox style={{ paddingLeft: 0 }} />
+              <div className="register-footer">
+                <Button component={Link} to="/login">
+                  Sign in instead
+                </Button>
+                <Button
+                  className="register-button"
+                  variant="contained"
+                  disableElevation
+                  disabled={agreedTerms === false}
+                  type="submit"
+                >
+                  Create Account
+                </Button>
               </div>
-              <div>I agree to the terms & privacy</div>
-            </div>
-            <div className="register-footer">
-              <Link to="/login">
-                <Button>Sign in instead</Button>
-              </Link>
-              <Button
-                className="register-button"
-                variant="contained"
-                disableElevation
-                onClick={handlRegister}
-              >
-                Create Account
-              </Button>
-              <Toastifier2 />
-            </div>
+            </form>
           </div>
+          <Toastifier2 />
         </div>
       </ThemeProvider>
     </RegisterContext.Provider>
