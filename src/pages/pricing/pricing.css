@@ -1,0 +1,121 @@
+.pricing-page-header {
+  font-size: 3rem;
+  text-align: center;
+  font-weight: 900;
+}
+
+.heading-margin-top {
+  margin-top: 1rem;
+}
+
+.pricing-card-container {
+  display: flex;
+  gap: 3rem;
+  margin: 1rem 25rem 2rem 25rem;
+  justify-content: center;
+}
+
+@media (max-width: 1700px) {
+  .pricing-card-container {
+    margin: 1rem 15rem 2rem 15rem;
+  }
+}
+
+@media (max-width: 1500px) {
+  .pricing-card-container {
+    margin: 1rem 10rem 2rem 10rem;
+  }
+}
+
+@media (max-width: 1285px) {
+  .pricing-card-container {
+    margin: 1rem 5rem 2rem 5rem;
+  }
+}
+
+@media (max-width: 1000px) {
+  .pricing-card-container {
+    flex-direction: column;
+    margin: 1rem 17rem 2rem 17rem;
+  }
+}
+
+.pricing-card {
+  flex: 1;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.1);
+  transition: 200ms;
+}
+
+.pricing-card:hover {
+  box-shadow: 0 0 2rem rgba(89, 101, 227, 0.4);
+}
+
+.circle-logo-container {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0 1rem 0;
+}
+
+.circle {
+  height: 80px;
+  width: 80px;
+  background-color: rgb(89, 101, 227);
+  border-radius: 50%;
+}
+
+.circle:nth-child(2) {
+  margin-left: -30px;
+}
+
+.opacity-level-2 {
+  opacity: 0.7;
+}
+
+.opacity-level-3 {
+  opacity: 0.4;
+}
+
+.plan-type-header,
+.features-heading {
+  font-weight: 800;
+}
+
+.plan-type-header,
+.plan-type-desc {
+  text-align: center;
+}
+
+.faded-text {
+  opacity: 0.7;
+}
+
+.plan-price {
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: #5762e3;
+  text-align: center;
+}
+
+.price-text-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.price-sidetext {
+  color: #5762e3;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.features-list-row {
+  display: flex;
+  gap: 0.5rem;
+}

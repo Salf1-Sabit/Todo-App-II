@@ -16,8 +16,8 @@
 
 .about-top {
   display: flex;
-  margin: 1rem 5rem;
-  gap: 1rem;
+  margin: 1rem 10rem;
+  gap: 2rem;
 }
 
 .about-card {
@@ -26,6 +26,12 @@
   border: 1px solid rgba(0, 0, 0, 0.1);
   padding: 2rem;
   margin-bottom: 1rem;
+  transition: 200ms;
+}
+
+.about-card:hover {
+  /* background-color: rgba(89, 101, 227, 0.05); */
+  box-shadow: 0 0 0.8rem rgba(89, 101, 227, 0.2);
 }
 
 .about-card-heading {

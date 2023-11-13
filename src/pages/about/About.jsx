@@ -21,7 +21,20 @@ const About = () => {
       <Nav />
       <Toolbar />
       <div className="about-page-container">
-        <div className="about-page-heading">Minds behind this project</div>
+        <div className="about-page-heading">
+          Minds behind this project
+          <span
+            style={{
+              fontWeight: "600",
+              fontSize: "5rem",
+              lineHeight: "1rem",
+              color: "#5762E3",
+              opacity: ".8",
+            }}
+          >
+            .
+          </span>
+        </div>
         <div className="about-top">
           <div className="about-card">
             <div className="about-img-container">
@@ -32,7 +45,8 @@ const About = () => {
               />
             </div>
             <div className="about-card-heading heading-top-margin">
-              Al Imtiaz (Project Lead)
+              Al Imtiaz{" "}
+              <span style={{ color: "#7981E9" }}> | Project Lead</span>
             </div>
             <div className="about-card-subheading ">
               Department Head of IT and CSE
@@ -64,7 +78,8 @@ const About = () => {
               />
             </div>
             <div className="about-card-heading heading-top-margin">
-              Sheikh Shalfi Alam Sabit (Developer)
+              Sheikh Shalfi Alam Sabit{" "}
+              <span style={{ color: "#7981E9" }}> | Developer</span>
             </div>
             <div className="about-card-subheading ">
               Bachelor Sciences in Information Technology
