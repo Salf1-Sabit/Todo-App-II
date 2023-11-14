@@ -15,7 +15,6 @@ import { BASE_URL } from "../../services/helper";
 
 // IMPORTED LOCAL COMPONENTS
 import AddTaskButton from "../../components/add-task-button-group/AddTaskButton";
-import { month, weekday } from "../../data/currentDateData";
 import Appbar from "../../components/appBar/Appbar";
 import AddTaskCard from "../../components/add-task-card/AddTaskCard";
 import TodoCard from "../../components/todo-card/TodoCard";
@@ -27,36 +26,32 @@ import {
   Box,
   CircularProgress,
   Divider,
-  IconButton,
-  Menu,
-  MenuItem,
-  Tooltip,
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 // ICONS
-import TuneIcon from "@mui/icons-material/Tune";
 import axios from "axios";
 import Toastifier from "../../components/toastifier/Toastifier";
 
 // GLOBAL VARIABLES
 const drawerWidth = 240;
 
-// DATE UTILITES
-let date = new Date();
-let curDate = date.getDate();
-let mon = date.getMonth();
-let weekDay = date.getDay();
-const hour = date.getHours();
-const minute = date.getMinutes();
-
 function TodoApp() {
+  // ACCORDION STATES
+  const [expanded, setExpanded] = React.useState("panel1");
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+
   // PAGE LOADING STATE
   const [pageLoading, setPageLoading] = useState(true); // Add loading state
-
-  // HANDLE PAGE TITLE
-  const [pageTitle, setPageTitle] = useState("Incomplete");
 
   // EMPTY PAGE CARD STATE
   const [emptyPageTitle, setEmptyPageTitle] = useState("Congratulations");
@@ -80,16 +75,6 @@ function TodoApp() {
     setAddTaskButtonIsOpen(!addTaskButtonIsOpen);
   };
 
-  // MENU TOGGLE
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   // MUI THEME
   const theme = createTheme({
     typography: {
@@ -104,6 +89,9 @@ function TodoApp() {
       },
     },
   });
+
+  // DATE UTILITES
+  const date = new Date();
 
   // If not logged in navigate to the home page
   const navigate = useNavigate();
@@ -150,7 +138,6 @@ function TodoApp() {
   return (
     <TodoAppContext.Provider
       value={{
-        setPageTitle,
         toggleAddTaskButton,
         allTodos,
         setAllTodos,
@@ -196,9 +183,9 @@ function TodoApp() {
               >
                 <Toolbar />
 
-                {/* INCOMPLETED TODOS  */}
+                {/* ADD TODO BUTTON */}
                 <div className="todo-parent-container">
-                  <div style={{ marginBottom: "1rem" }}>
+                  <div>
                     {!addTaskButtonIsOpen ? (
                       <AddTaskCard taskTitle={""} taskDescription={""} />
                     ) : (
@@ -207,149 +194,186 @@ function TodoApp() {
                       </Divider>
                     )}
                   </div>
-
-                  <div className="page-header">
-                    <div className="page-heading">
-                      <h3>
-                        {pageTitle}
-                        <span className="current-date">
-                          <span>{" " + hour + ":"}</span>
-                          <span>{minute}</span>
-                          <span>
-                            {" " + weekday[weekDay].substring(0, 3) + " "}
-                          </span>
-                          <span>{curDate}</span>
-                          <span>{" " + month[mon].substring(0, 3) + " "}</span>
-                        </span>
-                      </h3>
-                    </div>
-
-                    <Tooltip title="View">
-                      <IconButton
-                        onClick={handleClick}
-                        aria-controls={open ? "basic-menu" : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? "true" : undefined}
-                      >
-                        <TuneIcon />
-                      </IconButton>
-                    </Tooltip>
-                    <Menu
-                      id="basic-menu"
-                      anchorEl={anchorEl}
-                      open={open}
-                      onClose={handleClose}
-                      MenuListProps={{
-                        "aria-labelledby": "basic-button",
-                      }}
-                    >
-                      <MenuItem onClick={handleClose}>Sorting</MenuItem>
-                      <MenuItem onClick={handleClose}>Grouping</MenuItem>
-                    </Menu>
-                  </div>
-
-                  <Divider />
-
-                  <div className="todo-child-container">
-                    {allTodos.length ? (
-                      allTodos.map((details) => {
-                        if (details.todoStatus === false) {
-                          return (
-                            <TodoCard
-                              key={details._id}
-                              _id={details._id}
-                              title={details.title}
-                              description={details.description}
-                              dueDateTime={details.dueDateTime}
-                              priority={details.priority}
-                              progress={details.progress}
-                              cardStatus={details.todoStatus}
-                            />
-                          );
-                        }
-                        return true;
-                      })
-                    ) : (
-                      <Alert severity={emptyPageCardSeverity}>
-                        <AlertTitle>{emptyPageTitle}</AlertTitle>
-                        {emptyPageDescription}
-                      </Alert>
-                    )}
-                  </div>
                 </div>
 
-                {/* COMPLETED TODOS  */}
                 <div className="todo-parent-container">
-                  <div className="page-header">
-                    <div className="page-heading">
-                      <h3>
-                        {"Completed"}
-                        <span className="current-date">
-                          <span>{" " + hour + ":"}</span>
-                          <span>{minute}</span>
-                          <span>
-                            {" " + weekday[weekDay].substring(0, 3) + " "}
-                          </span>
-                          <span>{curDate}</span>
-                          <span>{" " + month[mon].substring(0, 3) + " "}</span>
-                        </span>
-                      </h3>
-                    </div>
-
-                    <Tooltip title="View">
-                      <IconButton
-                        onClick={handleClick}
-                        aria-controls={open ? "basic-menu" : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? "true" : undefined}
-                      >
-                        <TuneIcon />
-                      </IconButton>
-                    </Tooltip>
-                    <Menu
-                      id="basic-menu"
-                      anchorEl={anchorEl}
-                      open={open}
-                      onClose={handleClose}
-                      MenuListProps={{
-                        "aria-labelledby": "basic-button",
-                      }}
+                  {/* UPCOMING TASKS  */}
+                  <Accordion
+                    expanded={expanded === "panel1"}
+                    onChange={handleChange("panel1")}
+                    sx={{ bgcolor: "#E5F6FD" }}
+                  >
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1bh-content"
+                      id="panel1bh-header"
                     >
-                      <MenuItem onClick={handleClose}>Sorting</MenuItem>
-                      <MenuItem onClick={handleClose}>Grouping</MenuItem>
-                    </Menu>
-                  </div>
+                      <Typography
+                        sx={{
+                          width: "33%",
+                          flexShrink: 0,
+                          color: "#014361",
+                          fontWeight: "600",
+                        }}
+                      >
+                        Upcoming Tasks
+                      </Typography>
+                      <Typography sx={{ color: "#014361" }}>
+                        Click here to show all of your upcoming tasks
+                      </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <div className="todo-child-container">
+                        {allTodos.length ? (
+                          allTodos.map((details) => {
+                            if (
+                              details.todoStatus === false &&
+                              date <= new Date(details.dueDateTime)
+                            ) {
+                              return (
+                                <TodoCard
+                                  key={details._id}
+                                  _id={details._id}
+                                  title={details.title}
+                                  description={details.description}
+                                  dueDateTime={details.dueDateTime}
+                                  priority={details.priority}
+                                  progress={details.progress}
+                                  cardStatus={details.todoStatus}
+                                  accordionNo={0}
+                                />
+                              );
+                            }
+                            return true;
+                          })
+                        ) : (
+                          <Alert severity={emptyPageCardSeverity}>
+                            <AlertTitle>{emptyPageTitle}</AlertTitle>
+                            {emptyPageDescription}
+                          </Alert>
+                        )}
+                      </div>
+                    </AccordionDetails>
+                  </Accordion>
 
-                  <Divider />
+                  {/* OVERDUE TASKS  */}
+                  <Accordion
+                    expanded={expanded === "panel3"}
+                    onChange={handleChange("panel3")}
+                    sx={{ bgcolor: "#FFF4E5" }}
+                  >
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel3bh-content"
+                      id="panel3bh-header"
+                    >
+                      <Typography
+                        sx={{
+                          width: "33%",
+                          flexShrink: 0,
+                          color: "#663C00",
+                          fontWeight: "600",
+                        }}
+                      >
+                        Overdue Tasks
+                      </Typography>
+                      <Typography sx={{ color: "#663C00" }}>
+                        Click here to show all of your overdue tasks
+                      </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Typography>
+                        <div className="todo-child-container">
+                          {allTodos.length ? (
+                            allTodos.map((details) => {
+                              if (
+                                new Date(details.dueDateTime) < date &&
+                                details.todoStatus === false
+                              ) {
+                                return (
+                                  <TodoCard
+                                    key={details._id}
+                                    _id={details._id}
+                                    title={details.title}
+                                    description={details.description}
+                                    dueDateTime={details.dueDateTime}
+                                    priority={details.priority}
+                                    progress={details.progress}
+                                    cardStatus={details.todoStatus}
+                                    accordionNo={1}
+                                  />
+                                );
+                              }
+                              return true;
+                            })
+                          ) : (
+                            <Alert severity={emptyPageCardSeverity}>
+                              <AlertTitle>{emptyPageTitle}</AlertTitle>
+                              {emptyPageDescription}
+                            </Alert>
+                          )}
+                        </div>
+                      </Typography>
+                    </AccordionDetails>
+                  </Accordion>
 
-                  <div className="todo-child-container">
-                    {allTodos.length ? (
-                      allTodos.map((details) => {
-                        if (details.todoStatus === true) {
-                          return (
-                            <TodoCard
-                              key={details._id}
-                              _id={details._id}
-                              title={details.title}
-                              description={details.description}
-                              dueDateTime={details.dueDateTime}
-                              priority={details.priority}
-                              progress={details.progress}
-                              cardStatus={details.todoStatus}
-                            />
-                          );
-                        }
-                        return true;
-                      })
-                    ) : (
-                      <Alert severity="info">
-                        <AlertTitle>{emptyPageTitle}</AlertTitle>
-                        {
-                          "Your todo list is empty, which means you've successfully tackled all your tasks. Enjoy the sense of accomplishment, and whenever you're ready for your next set of goals, feel free to add new tasks. Keep up the great work!"
-                        }
-                      </Alert>
-                    )}
-                  </div>
+                  {/* COMPLETED TASKS  */}
+                  <Accordion
+                    expanded={expanded === "panel2"}
+                    onChange={handleChange("panel2")}
+                    sx={{ bgcolor: "#EDF7ED" }}
+                  >
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel2bh-content"
+                      id="panel2bh-header"
+                    >
+                      <Typography
+                        sx={{
+                          width: "33%",
+                          flexShrink: 0,
+                          color: "#1E4620",
+                          fontWeight: "600",
+                        }}
+                      >
+                        Completed Tasks
+                      </Typography>
+                      <Typography sx={{ color: "#1E4620" }}>
+                        Click here to show all of your completed tasks
+                      </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <div className="todo-child-container">
+                        {allTodos.length ? (
+                          allTodos.map((details) => {
+                            if (details.todoStatus === true) {
+                              return (
+                                <TodoCard
+                                  key={details._id}
+                                  _id={details._id}
+                                  title={details.title}
+                                  description={details.description}
+                                  dueDateTime={details.dueDateTime}
+                                  priority={details.priority}
+                                  progress={details.progress}
+                                  cardStatus={details.todoStatus}
+                                  accordionNo={2}
+                                />
+                              );
+                            }
+                            return true;
+                          })
+                        ) : (
+                          <Alert severity="info">
+                            <AlertTitle>{emptyPageTitle}</AlertTitle>
+                            {
+                              "Your todo list is empty, which means you've successfully tackled all your tasks. Enjoy the sense of accomplishment, and whenever you're ready for your next set of goals, feel free to add new tasks. Keep up the great work!"
+                            }
+                          </Alert>
+                        )}
+                      </div>
+                    </AccordionDetails>
+                  </Accordion>
                 </div>
               </Box>
               <Toastifier />

@@ -170,28 +170,6 @@ const Appbar2 = (props) => {
             </ListItemButton>
           </ListItem>
         </NavLink>
-
-        {/* <NavLink className="nav-link" onClick={changeUpcomingTodos}>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <UpcomingIcon color="secondary" />
-              </ListItemIcon>
-              <ListItemText primary={"Upcoming"} />
-            </ListItemButton>
-          </ListItem>
-        </NavLink> */}
-
-        {/* <NavLink className="nav-link" onClick={changeCompleteTodos}>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <AssignmentTurnedInIcon color="success" />
-              </ListItemIcon>
-              <ListItemText primary={"Completed"} />
-            </ListItemButton>
-          </ListItem>
-        </NavLink> */}
       </List>
 
       <Divider />

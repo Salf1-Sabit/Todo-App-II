@@ -27,6 +27,7 @@ import {
   Alert,
   Button,
   Divider,
+  Snackbar,
   TextField,
   ThemeProvider,
   createTheme,
@@ -52,6 +53,21 @@ let date = new Date();
 let curTime = new Date(date.getTime());
 
 const Registration = () => {
+  // SNACKBAR
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   const navigate = useNavigate();
   // FORMIK SCHEMA VALIDATION
   const getCharacterValidationError = (str) => {
@@ -99,6 +115,7 @@ const Registration = () => {
             .catch((err) => {});
         })
         .catch((err) => {
+          handleClick();
           navigate("/login");
         });
     },
@@ -201,6 +218,20 @@ const Registration = () => {
             </div>
           </form>
         </div>
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        >
+          <Alert
+            onClose={handleClose}
+            severity="error"
+            sx={{ width: "100%" }}
+            variant="filled"
+          >
+            Oops! Credentials don't match. Please try again.
+          </Alert>
+        </Snackbar>
       </div>
     </ThemeProvider>
   );

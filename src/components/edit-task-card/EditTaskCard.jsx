@@ -30,7 +30,16 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import axios from "axios";
 
-const EditTaskCard = ({ _id, title, description, dueDateTime }) => {
+// ACCORDION COLORS
+const accordionShadowCol = ["#99b4c0", "#c2b199", "#a5b5a6"];
+
+const EditTaskCard = ({
+  _id,
+  title,
+  description,
+  dueDateTime,
+  accordionNo,
+}) => {
   // TODO-CARD EDIT BUTTON CONTEXT
   const {
     toggleEditTaskButton,
@@ -101,11 +110,12 @@ const EditTaskCard = ({ _id, title, description, dueDateTime }) => {
       <ThemeProvider theme={theme}>
         <Card
           sx={{
-            border: 1,
-            borderColor: "grey.300",
             maxWidth: "100%",
             marginTop: "1rem",
-            boxShadow: 0,
+
+            transition: "200ms",
+            borderRadius: "5px",
+            boxShadow: `0 0 10px ${accordionShadowCol[accordionNo]}`,
           }}
         >
           <CardContent>

@@ -73,6 +73,9 @@ const priorityColors = [
   { r: 125, g: 125, b: 125 },
 ];
 
+// ACCORDION COLORS
+const accordionShadowCol = ["#99b4c0", "#c2b199", "#a5b5a6"];
+
 const TodoCard = ({
   _id,
   title,
@@ -82,6 +85,7 @@ const TodoCard = ({
   priority,
   progress,
   cardStatus,
+  accordionNo,
 }) => {
   // CARD STATES
   const [cardTitle, setCardTitle] = useState(title);
@@ -358,15 +362,18 @@ const TodoCard = ({
               dueDateTime={cardDueDateTime}
               priority={priority}
               progress={progress}
+              accordionNo={accordionNo}
             />
           ) : (
             <Card
               sx={{
-                borderRadius: 0,
-                boxShadow: 0,
-                borderBottom: "1px solid #eeeeee",
                 maxWidth: "100%",
-                backgroundColor: `${isMouseEntered && "#fafafa"} `,
+                backgroundColor: "#fff",
+                transition: "200ms",
+                borderRadius: "5px",
+                boxShadow: isMouseEntered
+                  ? `0 0 10px ${accordionShadowCol[accordionNo]}`
+                  : `0 0 3px ${accordionShadowCol[accordionNo]}`,
               }}
               onMouseEnter={() => setIsMouseEntered(true)}
               onMouseLeave={() => setIsMouseEntered(false)}
@@ -599,14 +606,11 @@ const TodoCard = ({
                       }, ${priorityColors[priorityValue - 1].g}, ${
                         priorityColors[priorityValue - 1].b
                       })`,
-                      backgroundColor: `rgba(${
-                        priorityColors[priorityValue - 1].r
-                      }, ${priorityColors[priorityValue - 1].g}, ${
-                        priorityColors[priorityValue - 1].b
-                      }, 0.1)`,
+                      backgroundColor: "#fff",
                     }}
                     aria-describedby={_id}
                   />
+
                   <Modal
                     open={priorityOpen}
                     onClose={handlePriorityClose}
