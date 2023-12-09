@@ -11,7 +11,7 @@
 ![](https://github.com/Salf1-Sabit/Todo-App-II/assets/70028517/6ef21628-48db-45ea-b12d-3e8f1e865bd8)
 
 ## Use case diagram
-![](https://github.com/Salf1-Sabit/Todo-App-II/assets/70028517/b2102c15-e643-4865-9b41-d7ac70499e9b)
+![](https://github.com/Salf1-Sabit/Todo-App-II/assets/70028517/7672c747-208e-4b0a-ab5d-bf853db1f511)
 
 
 # Previews
