@@ -4,6 +4,9 @@
 # Backend Repository Link
 [Github Backend](https://github.com/Salf1-Sabit/Todo-App-II-server-).
 
+# Figma Design link
+[Figma Design link](https://www.figma.com/file/k2S71zIxJ9O0rzTqtXuZ5T/TODO-APP-UI?type=design&node-id=0%3A1&mode=design&t=6HtqSUk3EJEX5IM0-1).
+
 ## Activity diagram
 ![](https://github.com/Salf1-Sabit/Todo-App-II/assets/70028517/b53acafb-6dbc-4bc9-8715-14967885f3ee)
 
