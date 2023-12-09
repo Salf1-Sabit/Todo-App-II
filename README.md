@@ -4,12 +4,17 @@
 # Backend Repository Link
 [Github Backend](https://github.com/Salf1-Sabit/Todo-App-II-server-).
 
-![](https://github.com/Salf1-Sabit/Todo-App-II/assets/70028517/fcdcff2d-7f44-45f2-99a0-f7d82885e1c6)
-![](https://github.com/Salf1-Sabit/Todo-App-II/assets/70028517/2432d502-6ad0-42b3-8610-f622aa99373f)
-![](https://github.com/Salf1-Sabit/Todo-App-II/assets/70028517/3a525f97-1eb7-4fef-9e77-91ed54297e45)
+## Activity diagram
+![](https://github.com/Salf1-Sabit/Todo-App-II/assets/70028517/b53acafb-6dbc-4bc9-8715-14967885f3ee)
+
+## Entity-relationship (ER) diagram
+![](https://github.com/Salf1-Sabit/Todo-App-II/assets/70028517/6ef21628-48db-45ea-b12d-3e8f1e865bd8)
+
+## Use case diagram
+![](https://github.com/Salf1-Sabit/Todo-App-II/assets/70028517/b2102c15-e643-4865-9b41-d7ac70499e9b)
+
 
 # Previews
-
 ## Home Page
 ![](https://github.com/Salf1-Sabit/Todo-App-II/assets/70028517/51a9dcc4-6d02-43fd-86e8-93aeac5f7a75)
 ![](https://github.com/Salf1-Sabit/Todo-App-II/assets/70028517/d1285da8-936a-4f35-8651-6e1722894ae9)
