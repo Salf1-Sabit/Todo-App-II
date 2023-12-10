@@ -10,6 +10,14 @@ TODO HIVE is a robust task management system built on the MERN (MongoDB, Express
 - **User Authentication:** Secure user accounts and access with authentication features.
 - **Admin Dashboard:** Provides administrative capabilities for efficient task oversight.
 
+<details>
+  <summary>Click to expand/collapse</summary>
+  
+  Your content goes here. This could be images, text, or any other markdown content.
+  
+</details>
+
+
 ## Usage
 
 Explore the live demo [here](https://last-semester-project-frontend.netlify.app/)
