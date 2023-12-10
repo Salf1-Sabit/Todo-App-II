@@ -1,10 +1,21 @@
-# Live link
-[Netlify Live Link](https://last-semester-project-frontend.netlify.app/).
+# TODO HIVE - MERN-Based Task Management System
 
-# Backend Repository Link
-[Github Backend](https://github.com/Salf1-Sabit/Todo-App-II-server-).
+TODO HIVE is a robust task management system built on the MERN (MongoDB, Express.js, React, Node.js) stack. This comprehensive platform integrates motivational quotes, user authentication, and an admin dashboard, showcasing expertise in full-stack development and delivering an intuitive UI/UX for seamless task organization.
 
-# Figma Design link
+## Key Features
+
+- **MERN Stack Implementation:** Leveraging MongoDB, Express.js, React, and Node.js for a full-stack solution.
+- **Task Management:** Organize tasks efficiently, ensuring seamless tracking and prioritization.
+- **Motivational Quotes:** Integrated motivational quotes to inspire and energize users.
+- **User Authentication:** Secure user accounts and access with authentication features.
+- **Admin Dashboard:** Provides administrative capabilities for efficient task oversight.
+
+## Usage
+
+Explore the live demo [here](https://last-semester-project-frontend.netlify.app/)
+For access to the backend repository, kindly navigate to [here](https://github.com/Salf1-Sabit/Todo-App-II-server-)
+
+## Figma Design link
 [Figma Design link](https://www.figma.com/file/k2S71zIxJ9O0rzTqtXuZ5T/TODO-APP-UI?type=design&node-id=0%3A1&mode=design&t=6HtqSUk3EJEX5IM0-1).
 
 ## Activity diagram
