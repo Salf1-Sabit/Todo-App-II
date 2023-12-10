@@ -39,8 +39,8 @@ For access to the backend repository, kindly navigate to [here](https://github.c
 
 <details>
   <summary>Use case diagram</summary>
-
-  ![Use case diagram](https://github.com/Salf1-Sabit/Todo-App-II/raw/master/assets/70028517/7672c747-208e-4b0a-ab5d-bf853db1f511.png)
+  
+![Use case diagram](https://github.com/Salf1-Sabit/Todo-App-II/assets/70028517/ec905594-2956-43dc-b27d-34bb1d1b93d7)
 </details>
 
 
