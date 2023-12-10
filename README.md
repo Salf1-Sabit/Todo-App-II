@@ -10,24 +10,21 @@ TODO HIVE is a robust task management system built on the MERN (MongoDB, Express
 - **User Authentication:** Secure user accounts and access with authentication features.
 - **Admin Dashboard:** Provides administrative capabilities for efficient task oversight.
 
-<details>
-  <summary>Click to expand/collapse</summary>
-  
-  Your content goes here. This could be images, text, or any other markdown content.
-  
-</details>
-
-
 ## Usage
 
-Explore the live demo [here](https://last-semester-project-frontend.netlify.app/)
+Explore the live demo [here](https://last-semester-project-frontend.netlify.app/) <br>
 For access to the backend repository, kindly navigate to [here](https://github.com/Salf1-Sabit/Todo-App-II-server-)
 
-## Figma Design link
-[Figma Design link](https://www.figma.com/file/k2S71zIxJ9O0rzTqtXuZ5T/TODO-APP-UI?type=design&node-id=0%3A1&mode=design&t=6HtqSUk3EJEX5IM0-1).
+## Project preplanning
+<details>
+  <summary>Figma Design</summary>
+  [Figma Design link](https://www.figma.com/file/k2S71zIxJ9O0rzTqtXuZ5T/TODO-APP-UI?type=design&node-id=0%3A1&mode=design&t=6HtqSUk3EJEX5IM0-1).
+</details>
 
-## Activity diagram
-![](https://github.com/Salf1-Sabit/Todo-App-II/assets/70028517/b53acafb-6dbc-4bc9-8715-14967885f3ee)
+<details>
+  <summary>Activity diagram</summary>
+  ![](https://github.com/Salf1-Sabit/Todo-App-II/assets/70028517/b53acafb-6dbc-4bc9-8715-14967885f3ee)
+</details>
 
 ## Entity-relationship (ER) diagram
 ![](https://github.com/Salf1-Sabit/Todo-App-II/assets/70028517/6ef21628-48db-45ea-b12d-3e8f1e865bd8)
