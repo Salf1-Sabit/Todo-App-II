@@ -27,8 +27,9 @@ For access to the backend repository, kindly navigate to [here](https://github.c
 <details>
   <summary>Activity diagram</summary>
   
-  ![](https://github.com/Salf1-Sabit/Todo-App-II/assets/70028517/b53acafb-6dbc-4bc9-8715-14967885f3ee)
+  ![Activity Diagram](https://github.com/Salf1-Sabit/Todo-App-II/assets/70028517/b53acafb-6dbc-4bc9-8715-14967885f3ee)
 </details>
+
 
 ## Entity-relationship (ER) diagram
 ![](https://github.com/Salf1-Sabit/Todo-App-II/assets/70028517/6ef21628-48db-45ea-b12d-3e8f1e865bd8)
