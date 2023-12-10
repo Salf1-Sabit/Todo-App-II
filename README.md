@@ -32,8 +32,10 @@ For access to the backend repository, kindly navigate to [here](https://github.c
 
 <details>
   <summary>Entity-relationship (ER) diagram</summary>
-  ![Entity-relationship (ER) diagram](https://github.com/Salf1-Sabit/Todo-App-II/assets/70028517/6ef21628-48db-45ea-b12d-3e8f1e865bd8)
+  
+  ![Entity-relationship (ER) diagram](https://github.com/Salf1-Sabit/Todo-App-II/raw/master/assets/70028517/6ef21628-48db-45ea-b12d-3e8f1e865bd8.jpg)
 </details>
+
 
 <details>
   <summary>Use case diagram</summary>
