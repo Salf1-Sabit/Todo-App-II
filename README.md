@@ -16,10 +16,13 @@ Explore the live demo [here](https://last-semester-project-frontend.netlify.app/
 For access to the backend repository, kindly navigate to [here](https://github.com/Salf1-Sabit/Todo-App-II-server-)
 
 ## Project preplanning
+
 <details>
   <summary>Figma Design</summary>
-  ![Figma Design link](https://www.figma.com/file/k2S71zIxJ9O0rzTqtXuZ5T/TODO-APP-UI?type=design&node-id=0%3A1&mode=design&t=6HtqSUk3EJEX5IM0-1).
+  
+  ![Figma Design](https://www.figma.com/file/k2S71zIxJ9O0rzTqtXuZ5T/TODO-APP-UI?type=design&node-id=0%3A1&mode=design&t=6HtqSUk3EJEX5IM0-1)
 </details>
+
 
 <details>
   <summary>Activity diagram</summary>
