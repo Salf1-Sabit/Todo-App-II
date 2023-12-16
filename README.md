@@ -2,6 +2,8 @@
 
 TODO HIVE is a robust task management system built on the MERN (MongoDB, Express.js, React, Node.js) stack. This comprehensive platform integrates motivational quotes, user authentication, and an admin dashboard, showcasing expertise in full-stack development and delivering an intuitive UI/UX for seamless task organization.
 
+[Click here for Live demo](https://last-semester-project-frontend.netlify.app/)
+
 ## Key Features
 
 - **MERN Stack Implementation:** Leveraging MongoDB, Express.js, React, and Node.js for a full-stack solution.
